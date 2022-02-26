@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeSocialAPI", "BikeSocialAPI\BikeSocialAPI.csproj", "{678AE821-D3EE-4825-BC04-79FDEE6F965B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeSocialBLL", "BikeSocialBLL\BikeSocialBLL.csproj", "{BB92E4B9-7187-48A5-8188-3C2244DE27B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeSocialDAL", "BikeSocialDAL\BikeSocialDAL.csproj", "{0607FB54-D8C8-4B90-A4C0-8B030ACEB93A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{678AE821-D3EE-4825-BC04-79FDEE6F965B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678AE821-D3EE-4825-BC04-79FDEE6F965B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678AE821-D3EE-4825-BC04-79FDEE6F965B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678AE821-D3EE-4825-BC04-79FDEE6F965B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB92E4B9-7187-48A5-8188-3C2244DE27B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB92E4B9-7187-48A5-8188-3C2244DE27B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB92E4B9-7187-48A5-8188-3C2244DE27B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB92E4B9-7187-48A5-8188-3C2244DE27B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0607FB54-D8C8-4B90-A4C0-8B030ACEB93A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0607FB54-D8C8-4B90-A4C0-8B030ACEB93A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0607FB54-D8C8-4B90-A4C0-8B030ACEB93A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0607FB54-D8C8-4B90-A4C0-8B030ACEB93A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
