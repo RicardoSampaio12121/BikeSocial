@@ -6,4 +6,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BikeSocialDAL\BikeSocialDAL.csproj" />
+      <ProjectReference Include="..\BikeSocialEntities\BikeSocialEntities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services\IServices\" />
+    </ItemGroup>
+
 </Project>
