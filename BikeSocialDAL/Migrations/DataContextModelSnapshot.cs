@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BikeSocialDAL.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(DataContext.DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

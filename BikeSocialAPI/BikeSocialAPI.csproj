@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Controllers\" />
       <Folder Include="Models\" />
     </ItemGroup>
 
@@ -25,7 +26,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BikeSocialBLL\BikeSocialBLL.csproj" />
-      <ProjectReference Include="..\BikeSocialUtils\BikeSocialUtils.csproj" />
+      <ProjectReference Include="..\BikeSocialUtils\BikeSocialDI.csproj" />
     </ItemGroup>
 
 </Project>

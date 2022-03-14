@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeSocialDAL", "BikeSocial
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeSocialEntities", "BikeSocialEntities\BikeSocialEntities.csproj", "{188259E3-A070-4AC2-9941-558B6343764F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeSocialUtils", "BikeSocialUtils\BikeSocialUtils.csproj", "{AF14D81C-457F-48DF-84D1-FA374E341436}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeSocialDI", "BikeSocialUtils\BikeSocialDI.csproj", "{AF14D81C-457F-48DF-84D1-FA374E341436}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

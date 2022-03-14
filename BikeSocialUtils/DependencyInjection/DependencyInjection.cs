@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
+﻿//This file contains the source code to the api dependency injections needed
+
 using BikeSocialDAL;
+using BikeSocialDAL.DataContext;
 using BikeSocialDAL.Repositories;
 using BikeSocialDAL.Repositories.Interfaces;
-using BikeSocialBLL.Testes;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BikeSocialUtils.DependencyInjection
 {
+    /// <summary>
+    /// This class has the dependency injections needed for the api
+    /// </summary>
     public class DependencyInjection
     {
         private readonly IConfiguration Configuration;
@@ -21,6 +21,10 @@ namespace BikeSocialUtils.DependencyInjection
             Configuration = config;
         }
 
+        /// <summary>
+        /// This method Injects the dependencies needed for the api
+        /// </summary>
+        /// <param name="services"></param>
         public void InjectDependencies(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options =>
@@ -28,8 +32,8 @@ namespace BikeSocialUtils.DependencyInjection
                 options.UseSqlServer("Server = localhost; Database = BikeSocialDB; Trusted_Connection = True;");
             });
 
-            services.AddScoped<IUser, User>();
-            services.AddScoped<ITeste, testeAddUser>();
+            //-------------------------------------------------Add scopes here---------------------------------------------------------------------------------------------//
+            //IE: services.AddScoped<ITeste, testeAddUser>();
         }
     }
 }
