@@ -8,11 +8,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BikeSocialDAL\BikeSocialDAL.csproj" />
+      <ProjectReference Include="..\BikeSocialDTOs\BikeSocialDTOs.csproj" />
       <ProjectReference Include="..\BikeSocialEntities\BikeSocialEntities.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Services\IServices\" />
     </ItemGroup>
 
 </Project>

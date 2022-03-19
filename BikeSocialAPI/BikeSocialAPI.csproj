@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
+      <Folder Include="DTO%27S\" />
       <Folder Include="Models\" />
     </ItemGroup>
 

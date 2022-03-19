@@ -7,6 +7,8 @@ using BikeSocialDAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BikeSocialBLL.Services;
+using BikeSocialBLL.Services.IServices;
 
 namespace BikeSocialUtils.DependencyInjection
 {
@@ -34,6 +36,8 @@ namespace BikeSocialUtils.DependencyInjection
 
             //-------------------------------------------------Add scopes here---------------------------------------------------------------------------------------------//
             //IE: services.AddScoped<ITeste, testeAddUser>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UsersService>();
         }
     }
 }

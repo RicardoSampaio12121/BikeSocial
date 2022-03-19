@@ -11,11 +11,8 @@ namespace BikeSocialDAL.DataContext
     /// </summary>
     public class DataContext : DbContext
     {
-        public DataContext(){}
+        public DataContext() { }
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-
-        //------------------------------------------------------Put here the DbSet's-------------------------------------------------------------------------------------//
-        //IE: public DbSet<User> Users { get; set; }
 
     }
 }
