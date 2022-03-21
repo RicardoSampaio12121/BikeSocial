@@ -35,7 +35,7 @@ namespace BikeSocialBLL.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ReturnUserDto> Register(GetUserDto user)
+        public async Task<bool> Register(GetUserDto user)
         {
             // Estrutura:
             // -Guardar user
@@ -53,7 +53,7 @@ namespace BikeSocialBLL.Services
             // TODO:
             // -Hash password?
             
-            return
+            return true;
         }
     }
 }
