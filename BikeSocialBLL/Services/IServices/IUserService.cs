@@ -9,6 +9,7 @@ using BikeSocialDTOs;
 namespace BikeSocialBLL.Services.IServices
 {
     public interface IUserService
+
     {
         Task<bool> Login(GetUserDto userDto);
         

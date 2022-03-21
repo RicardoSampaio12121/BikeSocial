@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BikeSocialBLL.Extensions;
 using BikeSocialDAL.Repositories;
 using BikeSocialEntities;
 using BikeSocialDAL.DataContext;
@@ -34,10 +35,18 @@ namespace BikeSocialBLL.Services
         */
 
         // REGISTAR NOVO USER
+
+        public Task<ReturnUserDto> Login(GetUserDto userDto)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public async Task<bool> Register(GetUserDto user)
         {
             // Estrutura:
             // -Guardar user
+
 
             User u = new();
 
@@ -46,7 +55,10 @@ namespace BikeSocialBLL.Services
 
             await _userRepository.Add(u);
             
-            return true;
+        
+
+
+
 
             // Validações:
             // -Já existe algum utilizador com o nome escolhido? Procurar e comparar. Se houver, informar e pedir um diferente
@@ -59,7 +71,10 @@ namespace BikeSocialBLL.Services
 
             // TODO:
             // -Hash password?
+            
+            return true;
         }
+
 
     }
 }

@@ -28,10 +28,15 @@ namespace BikeSocialAPI.Controllers
         {
             var output = await _userService.Register(user);
 
+
             if (output)
                 return Ok();
             else
                 return BadRequest();
         }
+
+            return Ok();
+        } 
+
     }    
 }
