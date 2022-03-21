@@ -17,7 +17,7 @@ namespace BikeSocialAPI.Controllers
         }
 
         [HttpGet("login")]
-        public async Task<IActionResult> Login(GetUserDto user)
+        public async Task<IActionResult<ReturnUserDto>> Login(GetUserDto user)
         {
             var output = await _userService.Login(user);
             return Ok();

@@ -16,7 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DTO%27S\" />
       <Folder Include="Models\" />
     </ItemGroup>
 
@@ -27,6 +26,22 @@
     <ItemGroup>
       <ProjectReference Include="..\BikeSocialBLL\BikeSocialBLL.csproj" />
       <ProjectReference Include="..\BikeSocialUtils\BikeSocialDI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="DTO'S\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="DTO'S\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="DTO'S\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="DTO'S\**" />
     </ItemGroup>
 
 </Project>

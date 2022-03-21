@@ -6,10 +6,5 @@ using System.Threading.Tasks;
 
 namespace BikeSocialEntities
 {
-    public class User
-    {
-        public string username { get; set; }
-        public string password { get; set; }
-        
-    }
+    public record User(string username, string password);
 }
