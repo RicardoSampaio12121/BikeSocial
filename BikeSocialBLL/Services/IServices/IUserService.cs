@@ -9,9 +9,11 @@ using BikeSocialDTOs;
 namespace BikeSocialBLL.Services.IServices
 {
     public interface IUserService
-    { // Assinaturas das funções
-        Task<ReturnUserDto> Login(GetUserDto userDto);
+
+    {
+        Task<bool> Login(GetUserDto userDto);
         
+        // devia estar aqui algo deste género para o register?
         Task<bool> Register(GetUserDto userDto);
     }
 }

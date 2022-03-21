@@ -2,7 +2,8 @@
 
 //using BikeSocialEntities;
 using Microsoft.EntityFrameworkCore;
-
+using BikeSocialDTOs;
+using BikeSocialEntities;
 
 namespace BikeSocialDAL.DataContext
 {
@@ -14,5 +15,9 @@ namespace BikeSocialDAL.DataContext
         public DataContext() { }
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+    => options.UseSqlServer("Server = localhost; Database = BikeSocialDB; Trusted_Connection = True;");
+
+        public DbSet<User> Users { get; set; }
     }
 }

@@ -22,12 +22,21 @@ namespace BikeSocialAPI.Controllers
             var output = await _userService.Login(user);
             return Ok();
         }
-        
+
         [HttpPost("register")]
         public async Task<IActionResult> Register(GetUserDto user)
         {
             var output = await _userService.Register(user);
+
+
+            if (output)
+                return Ok();
+            else
+                return BadRequest();
+        }
+
             return Ok();
         } 
+
     }    
 }
