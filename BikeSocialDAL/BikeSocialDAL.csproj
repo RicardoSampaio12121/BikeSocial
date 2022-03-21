@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BikeSocialDTOs\BikeSocialDTOs.csproj" />
       <ProjectReference Include="..\BikeSocialEntities\BikeSocialEntities.csproj" />
     </ItemGroup>
 

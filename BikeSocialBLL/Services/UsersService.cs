@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BikeSocialBLL.Extensions;
 using BikeSocialDAL.Repositories;
 using BikeSocialEntities;
 using BikeSocialDAL.DataContext;
@@ -21,6 +22,11 @@ namespace BikeSocialBLL.Services
             _userRepository = userRepository;
         }
 
+        public Task<bool> Login(GetUserDto userDto)
+        {
+            throw new NotImplementedException();
+        }
+
         /* Comentado para conseguir correr progama enquanto não for feito
         public Task<ReturnUserDto> Login(GetUserDto user)
         {
@@ -29,12 +35,31 @@ namespace BikeSocialBLL.Services
         */
 
         // REGISTAR NOVO USER
-        public async Task<ReturnUserDto> Register(GetUserDto user)
+
+        public Task<ReturnUserDto> Login(GetUserDto userDto)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public async Task<bool> Register(GetUserDto user)
         {
             // Estrutura:
             // -Guardar user
-            await _userRepository.Add(user);
+
+
+            User u = new();
+
+            u.username = user.username;
+            u.password = user.password;
+
+            await _userRepository.Add(u);
             
+        
+
+
+
+
             // Validações:
             // -Já existe algum utilizador com o nome escolhido? Procurar e comparar. Se houver, informar e pedir um diferente
             // -nome de utilizador e pass estão dentro dos limites do tamanho (min >= username/pass <= max)?
@@ -43,8 +68,13 @@ namespace BikeSocialBLL.Services
             // Na pass:
             // -Obrigatório não ser uma sequência? abcdef ou 123456?
             // -Obrigatório usar letras maiúsculas e/ou números?
-            
+
             // TODO:
             // -Hash password?
+            
+            return true;
         }
+
+
+    }
 }

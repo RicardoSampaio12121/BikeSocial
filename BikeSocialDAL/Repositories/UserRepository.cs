@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialEntities;
+using BikeSocialDTOs;
 
 namespace BikeSocialDAL.Repositories
 {

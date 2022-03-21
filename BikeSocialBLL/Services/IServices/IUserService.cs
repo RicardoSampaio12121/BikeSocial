@@ -9,10 +9,11 @@ using BikeSocialDTOs;
 namespace BikeSocialBLL.Services.IServices
 {
     public interface IUserService
+
     {
-        Task<ReturnUserDto> Login(GetUserDto userDto);
+        Task<bool> Login(GetUserDto userDto);
         
         // devia estar aqui algo deste género para o register?
-        Task<ReturnUserDto> Register(GetUserDto userDto);
+        Task<bool> Register(GetUserDto userDto);
     }
 }
