@@ -34,9 +34,5 @@ namespace BikeSocialAPI.Controllers
             else
                 return BadRequest();
         }
-
-            return Ok();
-        } 
-
-    }    
-}
+    } 
+}    

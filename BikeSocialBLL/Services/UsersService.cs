@@ -36,12 +36,6 @@ namespace BikeSocialBLL.Services
 
         // REGISTAR NOVO USER
 
-        public Task<ReturnUserDto> Login(GetUserDto userDto)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public async Task<bool> Register(GetUserDto user)
         {
             // Estrutura:
