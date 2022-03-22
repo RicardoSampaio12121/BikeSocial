@@ -22,20 +22,26 @@ namespace BikeSocialBLL.Services
             _userRepository = userRepository;
         }
 
-        public Task<bool> Login(GetUserDto userDto)
+        public Task<bool> Login(GetUserDto user)
         {
-            throw new NotImplementedException();
-        }
+            // throw new NotImplemented
 
-        /* Comentado para conseguir correr progama enquanto não for feito
-        public Task<ReturnUserDto> Login(GetUserDto user)
-        {
-            //Exemplo: _userRepository.Get(user);
+            _userRepository.Get();
+            
+            // Tentar encontrar utilizador com o mesmo nome
+            // se encontrar, comparar passwords
+            // se forem iguais OK
+            // Se não, Failed
+            
+            // Validar:
+            // -se não escreveu nada em algum campo
+            // -feedback se o nome de utilizador não existe
+            // -feedback se a pass está errada
+
+            return true;
         }
-        */
 
         // REGISTAR NOVO USER
-
         public async Task<bool> Register(GetUserDto user)
         {
             // Estrutura:

@@ -20,7 +20,9 @@ namespace BikeSocialAPI.Controllers
         public async Task<IActionResult> Login(GetUserDto user)
         {
             var output = await _userService.Login(user);
-            return Ok();
+            
+            if (output) return Ok();
+            else return BadRequest();
         }
 
         [HttpPost("register")]
@@ -28,11 +30,8 @@ namespace BikeSocialAPI.Controllers
         {
             var output = await _userService.Register(user);
 
-
-            if (output)
-                return Ok();
-            else
-                return BadRequest();
+            if (output) return Ok();
+            else return BadRequest();
         }
     } 
 }    
