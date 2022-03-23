@@ -21,14 +21,10 @@ namespace BikeSocialDAL.DataContext
 
 
         public DbSet<User> Users { get; set; }
-<<<<<<< HEAD
         public DbSet<Place> Places { get; set; }
         public DbSet<TrainingType> TrainingTypes{ get; set; }
         public DbSet<Plan> TrainingPlans { get; set; }
         public DbSet<Trainings> Trainings { get; set; }
-=======
-
         public DbSet<Equipa> Equipa { get; set; }
->>>>>>> 2d67ca2d623fafb7141890589669ed820423fd2c
     }
 }
