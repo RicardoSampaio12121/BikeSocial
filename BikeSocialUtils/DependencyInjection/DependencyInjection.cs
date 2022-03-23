@@ -29,6 +29,8 @@ namespace BikeSocialUtils.DependencyInjection
         /// <param name="services"></param>
         public void InjectDependencies(IServiceCollection services)
         {
+           
+
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer("Server = localhost; Database = BikeSocialDB; Trusted_Connection = True;");
@@ -38,6 +40,11 @@ namespace BikeSocialUtils.DependencyInjection
             //IE: services.AddScoped<ITeste, testeAddUser>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UsersService>();
+
+
+
+            services.AddScoped<IEquipaRepository, EquipaRepository>();
+            services.AddScoped<IEquipaService, EquipaService>();
         }
     }
 }

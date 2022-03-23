@@ -20,6 +20,8 @@ namespace BikeSocialDAL.DataContext
 
         public DbSet<User> Users { get; set; }
 
+        
+
         public DbSet<Equipa> Equipa { get; set; }
     }
 }
