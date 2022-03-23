@@ -10,6 +10,6 @@ namespace BikeSocialBLL.Services.IServices
     public interface IEquipaService
     {
        
-        Task<bool> Equipa(GetEquipaDto equipaDto);
+        Task<bool> Criar(GetEquipaDto equipaDto);
     }
 }

@@ -19,7 +19,7 @@ namespace BikeSocialBLL.Services
             _equipaRepository = equipaRepository;
         }
 
-        public async Task<bool> Equipa(GetEquipaDto equipa)
+        public async Task<bool> Criar(GetEquipaDto equipa)
         {
             //throw new NotImplementedException();
 

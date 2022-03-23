@@ -18,10 +18,10 @@ namespace BikeSocialAPI.Controllers
             _equipaService = equipaService;
         }
 
-        [HttpPost("equipa")]
+        [HttpPost("criar")]
         public async Task<IActionResult> Equipa(GetEquipaDto equipa)
         {
-            var res = await _equipaService.Equipa(equipa);
+            var res = await _equipaService.Criar(equipa);
 
             if (res) return Ok();
             else return BadRequest();
