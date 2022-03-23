@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BikeSocialDTOs;
+using System.Linq.Expressions;
 
 namespace BikeSocialDAL.Repositories.Interfaces
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IEquipaRepository : IGenericRepositoryEquipa<Equipa>
     {
+        
     }
-
-
 }

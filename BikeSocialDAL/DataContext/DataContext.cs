@@ -19,5 +19,7 @@ namespace BikeSocialDAL.DataContext
     => options.UseSqlServer("Server = localhost; Database = BikeSocialDB; Trusted_Connection = True;");
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Equipa> Equipa { get; set; }
     }
 }
