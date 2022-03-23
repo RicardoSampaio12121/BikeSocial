@@ -50,8 +50,13 @@ namespace BikeSocialBLL.Services
             u.password = user.password;
             
             // Verificar se existe algum utilizador com o nome escolhido (devolver false se existir)
-
-            await _userRepository.Add(u);
+            User getResult = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString());
+            if (getResult != null) return false;
+            else
+            {
+                await _userRepository.Add(u);
+                return true;
+            }
             
             // Validações:
             // -Já existe algum utilizador com o nome escolhido? Procurar e comparar. Se houver, informar e pedir um diferente
@@ -64,8 +69,6 @@ namespace BikeSocialBLL.Services
 
             // TODO:
             // -Hash password?
-            
-            return true;
         }
 
 
