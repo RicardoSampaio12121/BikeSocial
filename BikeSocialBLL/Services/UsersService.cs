@@ -22,11 +22,11 @@ namespace BikeSocialBLL.Services
             _userRepository = userRepository;
         }
 
-        public Task<bool> Login(GetUserDto user)
+        public async Task<bool> Login(GetUserDto user)
         {
             // throw new NotImplemented
 
-            _userRepository.Get();
+            await _userRepository.Get();
             
             // Tentar encontrar utilizador com o mesmo nome
             // se encontrar, comparar passwords

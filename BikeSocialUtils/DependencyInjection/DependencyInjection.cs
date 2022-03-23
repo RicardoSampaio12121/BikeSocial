@@ -38,6 +38,9 @@ namespace BikeSocialUtils.DependencyInjection
             //IE: services.AddScoped<ITeste, testeAddUser>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UsersService>();
+
+            services.AddScoped<ITrainingsService, TrainingsService>();
+            services.AddScoped<ITrainingsRepository, TrainingsRepository>();
         }
     }
 }
