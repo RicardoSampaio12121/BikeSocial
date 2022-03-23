@@ -16,9 +16,12 @@ namespace BikeSocialAPI.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<bool>> Create(CreateTrainingDto training)
+        public async Task<IActionResult> Create(CreateTrainingDto training)
         {
-            return true;
+            if (await _trainingsService.Create(training) == false)
+                return BadRequest();
+
+            return Ok();
         }
     }
 }

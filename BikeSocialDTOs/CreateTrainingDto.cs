@@ -6,6 +6,5 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record CreateTrainingDto(string name, string place, float distance, DateTime dateTime, float estimatedTime, string description, List<int> invitedPeopleId);
-    
+    public record CreateTrainingDto(string name, DateTime dateTime, float estimatedTime, float distance, int placeId, int trainingTypeId, int planId);
 }

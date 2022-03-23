@@ -5,14 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using BikeSocialBLL.Services.IServices;
 using BikeSocialDTOs;
+using BikeSocialDAL.Repositories.Interfaces;
+using BikeSocialEntities;
+using BikeSocialBLL.Extensions;
+
 
 namespace BikeSocialBLL.Services
 {
     public class TrainingsService : ITrainingsService
     {
-        public Task<bool> Create(CreateTrainingDto training)
+        private readonly ITrainingsRepository _repository;
+
+        public TrainingsService(ITrainingsRepository repository)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+        }
+
+        public async Task<bool> Create(CreateTrainingDto training)
+        {
+            if (await _repository.Add(training.AsTraining()) != null)
+                return true;
+
+            return false;
         }
     }
 }
