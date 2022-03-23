@@ -2,6 +2,7 @@
 using BikeSocialDTOs;
 using BikeSocialBLL.Services;
 using BikeSocialBLL.Services.IServices;
+using BikeSocialEntities;
 
 namespace BikeSocialAPI.Controllers
 {
@@ -16,13 +17,15 @@ namespace BikeSocialAPI.Controllers
             _userService = userService;
         }
 
-        [HttpGet("login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(GetUserDto user)
+        //public async Task<ActionResult<User>> Login(GetUserDto user) // para testar
         {
             var output = await _userService.Login(user);
             
             if (output) return Ok();
             else return BadRequest();
+            //return output; // para testar
         }
 
         [HttpPost("register")]
