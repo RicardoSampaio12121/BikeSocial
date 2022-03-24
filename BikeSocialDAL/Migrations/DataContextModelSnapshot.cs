@@ -24,6 +24,7 @@ namespace BikeSocialDAL.Migrations
 
 
             modelBuilder.Entity("BikeSocialEntities.Equipa", b =>
+            { });
 
             modelBuilder.Entity("BikeSocialEntities.Place", b =>
 

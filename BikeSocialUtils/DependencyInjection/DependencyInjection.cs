@@ -41,23 +41,16 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UsersService>();
 
-<<<<<<< HEAD
 
-
-
-=======
->>>>>>> c914f2da573cc108a9d9612d0c890766a943a93d
             services.AddScoped<IEquipaRepository, EquipaRepository>();
             services.AddScoped<IEquipaService, EquipaService>();
 
             services.AddScoped<ITrainingsService, TrainingsService>();
             services.AddScoped<ITrainingsRepository, TrainingsRepository>();
 
-<<<<<<< HEAD
-=======
             services.AddScoped<IRoutesService, RoutesService>();
             services.AddScoped<IRouteRepository, RouteRepository>();
->>>>>>> c914f2da573cc108a9d9612d0c890766a943a93d
+
         }
     }
 }
