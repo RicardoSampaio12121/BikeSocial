@@ -26,5 +26,7 @@ namespace BikeSocialDAL.DataContext
         public DbSet<Plan> TrainingPlans { get; set; }
         public DbSet<Trainings> Trainings { get; set; }
         public DbSet<Equipa> Equipa { get; set; }
+        public DbSet<Route> Route { get; set; }
+        public DbSet<RouteType> RouteTypes{ get; set; }
     }
 }

@@ -46,6 +46,9 @@ namespace BikeSocialUtils.DependencyInjection
 
             services.AddScoped<ITrainingsService, TrainingsService>();
             services.AddScoped<ITrainingsRepository, TrainingsRepository>();
+
+            services.AddScoped<IRoutesService, RoutesService>();
+            services.AddScoped<IRouteRepository, RouteRepository>();
         }
     }
 }
