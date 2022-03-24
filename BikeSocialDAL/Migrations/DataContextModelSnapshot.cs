@@ -22,11 +22,11 @@ namespace BikeSocialDAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-<<<<<<< HEAD
+
             modelBuilder.Entity("BikeSocialEntities.Equipa", b =>
-=======
+
             modelBuilder.Entity("BikeSocialEntities.Place", b =>
->>>>>>> 43a243d1dfcfb90f6c8c84586cb93082fbab584d
+
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -34,13 +34,13 @@ namespace BikeSocialDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-<<<<<<< HEAD
+
                     b.Property<string>("local")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("name")
-=======
+                    b.Property<string>("name");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -50,15 +50,15 @@ namespace BikeSocialDAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Town")
->>>>>>> 43a243d1dfcfb90f6c8c84586cb93082fbab584d
+
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
-<<<<<<< HEAD
+
                     b.ToTable("Equipa");
-=======
+
                     b.ToTable("Places");
                 });
 
@@ -144,7 +144,7 @@ namespace BikeSocialDAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TrainingTypes");
->>>>>>> 43a243d1dfcfb90f6c8c84586cb93082fbab584d
+
                 });
 
             modelBuilder.Entity("BikeSocialEntities.User", b =>
