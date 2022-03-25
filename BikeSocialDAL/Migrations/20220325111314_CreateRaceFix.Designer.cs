@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeSocialDAL.Migrations
 {
     [DbContext(typeof(DataContext.DataContext))]
-    [Migration("20220323170036_UpdateTrainingsTableCreatedTimeStamp")]
-    partial class UpdateTrainingsTableCreatedTimeStamp
+    [Migration("20220325111314_CreateRaceFix")]
+    partial class CreateRaceFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,27 @@ namespace BikeSocialDAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("BikeSocialEntities.Equipa", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("local")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Equipa");
+                });
 
             modelBuilder.Entity("BikeSocialEntities.Place", b =>
                 {
@@ -73,6 +94,43 @@ namespace BikeSocialDAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TrainingPlans");
+                });
+
+            modelBuilder.Entity("BikeSocialEntities.Race", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Distance")
+                        .HasColumnType("real");
+
+                    b.Property<float>("EstimatedTime")
+                        .HasColumnType("real");
+
+                    b.Property<int>("FederationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RaceTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("dateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlaceId");
+
+                    b.ToTable("Race");
                 });
 
             modelBuilder.Entity("BikeSocialEntities.Trainings", b =>
@@ -154,6 +212,15 @@ namespace BikeSocialDAL.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BikeSocialEntities.Race", b =>
+                {
+                    b.HasOne("BikeSocialEntities.Place", null)
+                        .WithMany("Races")
+                        .HasForeignKey("PlaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BikeSocialEntities.Trainings", b =>
                 {
                     b.HasOne("BikeSocialEntities.Place", null)
@@ -177,6 +244,8 @@ namespace BikeSocialDAL.Migrations
 
             modelBuilder.Entity("BikeSocialEntities.Place", b =>
                 {
+                    b.Navigation("Races");
+
                     b.Navigation("Trainings");
                 });
 

@@ -1,6 +1,5 @@
 ﻿//This file contains the database sets to be created by the entity framework
 
-//using BikeSocialEntities;
 using Microsoft.EntityFrameworkCore;
 using BikeSocialDTOs;
 using BikeSocialEntities;
