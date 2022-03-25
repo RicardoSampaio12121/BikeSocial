@@ -1,6 +1,5 @@
 ﻿//This file contains the database sets to be created by the entity framework
 
-//using BikeSocialEntities;
 using Microsoft.EntityFrameworkCore;
 using BikeSocialDTOs;
 using BikeSocialEntities;
@@ -18,8 +17,6 @@ namespace BikeSocialDAL.DataContext
         protected override void OnConfiguring(DbContextOptionsBuilder options)
     => options.UseSqlServer("Server = localhost; Database = BikeSocialDB; Trusted_Connection = True;");
 
-
-
         public DbSet<User> Users { get; set; }
 
         public DbSet<Place> Places { get; set; }
@@ -31,6 +28,10 @@ namespace BikeSocialDAL.DataContext
         
 
         public DbSet<Equipa> Equipa { get; set; }
+
+        public DbSet<Race> Race { get; set; }
+
+
 
     }
 }
