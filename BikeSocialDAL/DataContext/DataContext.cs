@@ -28,5 +28,8 @@ namespace BikeSocialDAL.DataContext
         public DbSet<Equipa> Equipa { get; set; }
         public DbSet<Route> Route { get; set; }
         public DbSet<RouteType> RouteTypes{ get; set; }
+        //public DbSet<TeamDirector> Directors { get; set; }
+        public DbSet<Club> Clubs { get; set; }
+        public DbSet<Coach> Coaches { get; set; }
     }
 }

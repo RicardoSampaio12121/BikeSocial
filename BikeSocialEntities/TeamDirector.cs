@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BikeSocialEntities
 {
-    public class Equipa
+    public class TeamDirector
     {
         public int id { get; set; }
-        public int coachId { get; set; }
-        public int clubId { get; set; }
         public string name { get; set; }
-        public string local { get; set; }
+        public DateTime birthDate { get; set; }
+        public int ClubId { get; set; }
+        public int PlaceId { get; set; }
     }
 }
