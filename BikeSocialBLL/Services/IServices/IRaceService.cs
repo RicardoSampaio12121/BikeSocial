@@ -4,6 +4,6 @@ namespace BikeSocialBLL.Services.IServices
 {
     public interface IRaceService
     {
-        Task<bool> Criar(GetRaceDto raceDto);
+        Task<bool> Create(CreateRaceDto raceDto);
     }
 }

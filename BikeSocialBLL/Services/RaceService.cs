@@ -2,6 +2,7 @@ using BikeSocialEntities;
 using BikeSocialBLL.Services.IServices;
 using BikeSocialDTOs;
 using BikeSocialDAL.Repositories.Interfaces;
+using BikeSocialBLL.Extensions;
 
 namespace BikeSocialBLL.Services
 {
@@ -14,15 +15,14 @@ namespace BikeSocialBLL.Services
             _raceRepository = raceRepository;
         }
         
-        public async Task<bool> Criar(GetRaceDto race)
+        public async Task<bool> Create(CreateRaceDto race)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
 
-            //Race rc = await _RaceRepository.Get(raceQuery => equipaQuery.name == equipa.name.ToString() &&
-              //                                                     equipaQuery.local == equipa.local.ToString());
+            Race rc = await _raceRepository.Get(raceQuery => raceQuery.Description == race.description.ToString());
 
-            //verifica se existe alguma race com os dados que recebe de cima
-            if (rc == null) return false;
+            // verifica se existe alguma race com os dados (Description) que recebe de cima
+            if (rc == null || (await _raceRepository.Add(race.AsRace()) != null)) return false;
             else return true;
         }
     }
