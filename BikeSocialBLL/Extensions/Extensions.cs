@@ -23,6 +23,7 @@ public static class Extensions
 
         return train;
     }
+
     
     public static Race AsRace(this CreateRaceDto raceDto)
     {
@@ -37,5 +38,21 @@ public static class Extensions
         race.PlaceId = raceDto.placeId;
 
         return race;
+    }
+
+    public static Route AsRoute(this CreateRouteDto createRouteDto)
+    {
+        Route route = new();
+
+        route.userId = createRouteDto.userId;
+        route.description = createRouteDto.Description;
+        route.placeId = createRouteDto.placeId;
+        route.routeTypeId = createRouteDto.routeTypeId;
+        route.dateTime = createRouteDto.dateTime;
+        route.estimatedTime = createRouteDto.estimatedTime;
+        route.distance = createRouteDto.distance;
+
+        return route;
+
     }
 }

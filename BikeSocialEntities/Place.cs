@@ -14,5 +14,6 @@ namespace BikeSocialEntities
         public string PlaceName { get; set; }
         public List<Trainings> Trainings { get; set; }
         public List<Race> Races { get; set; }
+        public List<Route> Routes { get; set; }
     }
 }

@@ -23,30 +23,35 @@ namespace BikeSocialBLL.Services
         }
 
         public async Task<bool> Login(GetUserDto user)
+
         {
             // throw new NotImplemented
 
+            await _userRepository.Get();
 
             // Tentar encontrar utilizador com o mesmo nome
             // se encontrar, comparar passwords
             // se forem iguais OK
             // Se não, Failed
-            //public async Task<User> Login(GetUserDto user) // para testar
-            
-            // throw new NotImplemented
 
-            User us = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString() &&
+            //public async Task<User> Login(GetUserDto user) // para testar
+            {
+                // throw new NotImplemented
+
+                User us = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString() &&
                                                                      userQuery.password == user.password.ToString());
 
-            if (us == null) return false;
-            else return true;
+                if (us == null) return false;
+                else return true;
 
-            // Validar:
-            // -se não escreveu nada em algum campo
-            // -feedback se o nome de utilizador não existe
-            // -feedback se a pass está errada
 
-            //return us; // para testar
+                // Validar:
+                // -se não escreveu nada em algum campo
+                // -feedback se o nome de utilizador não existe
+                // -feedback se a pass está errada
+
+                //return us; // para testar
+            }
         }
 
             // REGISTAR NOVO USER
@@ -78,7 +83,8 @@ namespace BikeSocialBLL.Services
                 // TODO:
                 // -Hash password?
             }
-        
 
-    }
+
+        }
+
 }

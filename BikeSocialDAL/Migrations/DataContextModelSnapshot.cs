@@ -22,13 +22,21 @@ namespace BikeSocialDAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+
             modelBuilder.Entity("BikeSocialEntities.Equipa", b =>
+
+            { });
+
+            modelBuilder.Entity("BikeSocialEntities.Place", b =>
+
+
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
 
                     b.Property<string>("local")
                         .IsRequired()
@@ -50,6 +58,7 @@ namespace BikeSocialDAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    b.Property<string>("name");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -60,10 +69,14 @@ namespace BikeSocialDAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Town")
+
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
+
+
+                    b.ToTable("Equipa");
 
                     b.ToTable("Places");
                 });
@@ -187,6 +200,7 @@ namespace BikeSocialDAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TrainingTypes");
+
                 });
 
             modelBuilder.Entity("BikeSocialEntities.User", b =>
