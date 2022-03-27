@@ -9,11 +9,11 @@ namespace BikeSocialAPI.Controllers
 
     [ApiController]
     [Route("equipa")]
-    public class equipaCon : Controller
+    public class EquipaController : Controller
     {
         private readonly IEquipaService _equipaService;
 
-        public equipaCon(IEquipaService equipaService)
+        public EquipaController(IEquipaService equipaService)
         {
             _equipaService = equipaService;
         }
