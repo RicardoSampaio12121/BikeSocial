@@ -61,12 +61,15 @@ public static class Extensions
         Athlete athlete = new();
 
         athlete.name = athleteDto.name;
-        athlete.Distance = athleteDto.distance;
-        athlete.EstimatedTime = athleteDto.estimatedTime;
-        athlete.dateTime = athleteDto.dateTime;
-        athlete.FederationId = athleteDto.FederationId;
-        athlete.RaceTypeId = athleteDto.RaceTypeId;
+        athlete.birthdate = athleteDto.birthdate;
+        athlete.contact = athleteDto.contact;
+        athlete.ParentId = athleteDto.parentId;
+        athlete.AthleteTypeId = athleteDto.athleteTypeId;
         athlete.PlaceId = athleteDto.placeId;
+        athlete.UserId = athleteDto.userId;
+        athlete.CoachId = athleteDto.coachId;
+        athlete.FederationId = athleteDto.federationId;
+        athlete.PlanId = athleteDto.planId;
 
         return athlete;
     }
