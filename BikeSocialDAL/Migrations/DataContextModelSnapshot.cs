@@ -27,6 +27,49 @@ namespace BikeSocialDAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+            modelBuilder.Entity("BikeSocialEntities.Club", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("placeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Clubs");
+                });
+
+            modelBuilder.Entity("BikeSocialEntities.Coach", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<DateTime>("birthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("contact")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Coaches");
+                });
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
@@ -78,6 +121,12 @@ namespace BikeSocialDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
+                    b.Property<int>("clubId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("coachId")
+                        .HasColumnType("int");
+
                     b.Property<string>("local")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -87,6 +136,11 @@ namespace BikeSocialDAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("clubId");
+
+                    b.HasIndex("coachId")
+                        .IsUnique();
 
                     b.ToTable("Equipa");
                 });
@@ -306,10 +360,22 @@ namespace BikeSocialDAL.Migrations
                     b.HasOne("BikeSocialEntities.User", null)
                         .WithMany("Athletes")
                         .HasForeignKey("UserId")
+            modelBuilder.Entity("BikeSocialEntities.Equipa", b =>
+                {
+                    b.HasOne("BikeSocialEntities.Club", null)
+                        .WithMany("Equipas")
+                        .HasForeignKey("clubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BikeSocialEntities.Coach", null)
+                        .WithOne("team")
+                        .HasForeignKey("BikeSocialEntities.Equipa", "coachId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BikeSocialEntities.Route", b =>
             modelBuilder.Entity("BikeSocialEntities.Race", b =>
                 {
                     b.HasOne("BikeSocialEntities.Place", null)
@@ -317,7 +383,7 @@ namespace BikeSocialDAL.Migrations
                         .HasForeignKey("PlaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
+                }));
 
             modelBuilder.Entity("BikeSocialEntities.Route", b =>
                 {
@@ -346,6 +412,17 @@ namespace BikeSocialDAL.Migrations
                         .WithMany("Trainings")
                         .HasForeignKey("TrainingTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BikeSocialEntities.Club", b =>
+                {
+                    b.Navigation("Equipas");
+                });
+
+            modelBuilder.Entity("BikeSocialEntities.Coach", b =>
+                {
+                    b.Navigation("team")
                         .IsRequired();
                 });
 
