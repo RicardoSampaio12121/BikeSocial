@@ -22,6 +22,52 @@ namespace BikeSocialDAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+<<<<<<< HEAD
+            modelBuilder.Entity("BikeSocialEntities.Club", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("placeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Clubs");
+                });
+
+            modelBuilder.Entity("BikeSocialEntities.Coach", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<DateTime>("birthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("contact")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Coaches");
+                });
+=======
+>>>>>>> e0b09ac078955d6ca0324775cc0001da68b64aed
 
             modelBuilder.Entity("BikeSocialEntities.Equipa", b =>
 
@@ -37,6 +83,14 @@ namespace BikeSocialDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
+<<<<<<< HEAD
+                    b.Property<int>("clubId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("coachId")
+                        .HasColumnType("int");
+=======
+>>>>>>> e0b09ac078955d6ca0324775cc0001da68b64aed
 
                     b.Property<string>("local")
                         .IsRequired()
@@ -47,6 +101,11 @@ namespace BikeSocialDAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("clubId");
+
+                    b.HasIndex("coachId")
+                        .IsUnique();
 
                     b.ToTable("Equipa");
                 });
@@ -224,7 +283,26 @@ namespace BikeSocialDAL.Migrations
                     b.ToTable("Users");
                 });
 
+<<<<<<< HEAD
+            modelBuilder.Entity("BikeSocialEntities.Equipa", b =>
+                {
+                    b.HasOne("BikeSocialEntities.Club", null)
+                        .WithMany("Equipas")
+                        .HasForeignKey("clubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BikeSocialEntities.Coach", null)
+                        .WithOne("team")
+                        .HasForeignKey("BikeSocialEntities.Equipa", "coachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BikeSocialEntities.Route", b =>
+=======
             modelBuilder.Entity("BikeSocialEntities.Race", b =>
+>>>>>>> e0b09ac078955d6ca0324775cc0001da68b64aed
                 {
                     b.HasOne("BikeSocialEntities.Place", null)
                         .WithMany("Races")
@@ -251,6 +329,17 @@ namespace BikeSocialDAL.Migrations
                         .WithMany("Trainings")
                         .HasForeignKey("TrainingTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BikeSocialEntities.Club", b =>
+                {
+                    b.Navigation("Equipas");
+                });
+
+            modelBuilder.Entity("BikeSocialEntities.Coach", b =>
+                {
+                    b.Navigation("team")
                         .IsRequired();
                 });
 
