@@ -55,4 +55,22 @@ public static class Extensions
         return route;
 
     }
+    
+    public static Athlete AsAthlete(this CreateAthleteDto athleteDto)
+    {
+        Athlete athlete = new();
+
+        athlete.name = athleteDto.name;
+        athlete.birthdate = athleteDto.birthdate;
+        athlete.contact = athleteDto.contact;
+        athlete.ParentId = athleteDto.parentId;
+        athlete.AthleteTypeId = athleteDto.athleteTypeId;
+        athlete.PlaceId = athleteDto.placeId;
+        athlete.UserId = athleteDto.userId;
+        athlete.CoachId = athleteDto.coachId;
+        athlete.FederationId = athleteDto.federationId;
+        athlete.PlanId = athleteDto.planId;
+
+        return athlete;
+    }
 }

@@ -15,6 +15,7 @@ namespace BikeSocialEntities
         public List<Trainings> Trainings { get; set; }
         public List<Race> Races { get; set; }
         public List<Route> Routes { get; set; }
+        public List<Athlete> Athletes { get; set; }
         //public List<Club> Clubs { get; set; }
         //public List<TeamDirector> Directors { get; set; }
     }
