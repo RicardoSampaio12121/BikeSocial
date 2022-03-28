@@ -73,4 +73,28 @@ public static class Extensions
 
         return athlete;
     }
+
+    public static Equipa CEquipa(this CreateEquipa equipaDto)
+    {
+        Equipa equipa = new();  
+
+        equipa.name = equipaDto.name; 
+        equipa.local = equipaDto.local;
+        equipa.coachId = equipaDto.coachId;
+        equipa.clubId = equipaDto.clubeId;
+
+
+        return equipa;
+    }
+
+    public static ConAtletaEqui ConAtEq(this CreateConvAtletaEquiDto conviteAE)
+    {
+        ConAtletaEqui conAtletaEqui = new();
+
+        conAtletaEqui.IdEquipa = conviteAE.id_equipa;
+        conAtletaEqui.IdAthlete = conviteAE.id_athelete;
+
+        return conAtletaEqui;
+
+    }
 }
