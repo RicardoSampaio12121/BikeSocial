@@ -97,4 +97,15 @@ public static class Extensions
         return conAtletaEqui;
 
     }
+
+    public static ConCoachEqui ConCoachEq(this CreateConvCoachEquiDto conviteTE)
+    {
+        ConCoachEqui conCoachEqui = new();
+
+        conCoachEqui.IdEquipa = conviteTE.idEquipa;
+        conCoachEqui.IdCoach = conviteTE.idCoach;
+
+        return conCoachEqui;
+
+    }
 }

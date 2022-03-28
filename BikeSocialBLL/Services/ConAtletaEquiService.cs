@@ -9,7 +9,7 @@ using BikeSocialDTOs;
 using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialBLL.Extensions;
 
-namespace BikeSocialBLL
+namespace BikeSocialBLL.Services
 {
     public class ConAtletaEquiService : IConAtletaEquiService
     {
@@ -31,9 +31,6 @@ namespace BikeSocialBLL
             else await _conAtletaEquiRepository.Add(convite.ConAtEq());
             return true;
         }
-
-       
-
 
     }
 }
