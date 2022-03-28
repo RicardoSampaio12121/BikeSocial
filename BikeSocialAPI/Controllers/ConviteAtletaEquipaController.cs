@@ -6,12 +6,11 @@ namespace BikeSocialAPI.Controllers
 {
     [ApiController]
     [Route("Convite de Atleta para Equipa")]
-    public class ConAtletaEquiController : Controller
+    public class ConviteAtletaEquipaController : Controller
     {
         private readonly IConAtletaEquiService _conAtletaEquiService;
-        private bool res;
-
-        public ConAtletaEquiController(IConAtletaEquiService conAtletaEquiService)
+        
+        public ConviteAtletaEquipaController(IConAtletaEquiService conAtletaEquiService)
         {
             _conAtletaEquiService = conAtletaEquiService;
         }

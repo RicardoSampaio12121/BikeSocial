@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialEntities;
+using BikeSocialDAL.Repositories.Interfaces;
 
 namespace BikeSocialDAL.Repositories
 {
-    public class ConAtletaEquiRepository : GenericRepository<ConAtletaEqui> , IConAtletaEquiRepository
+    public class ConCoachEquiRepository : GenericRepository<ConCoachEqui> , IConCoachEquiRepository
     {
         private readonly DataContext.DataContext _dbcontext;
 
-        public ConAtletaEquiRepository(DataContext.DataContext dataContext) : base(dataContext)
+        public ConCoachEquiRepository(DataContext.DataContext dataContext) : base(dataContext)
         {
             _dbcontext = dataContext;
         }
