@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using BikeSocialBLL.Extensions;
@@ -23,68 +24,75 @@ namespace BikeSocialBLL.Services
         }
 
         public async Task<bool> Login(GetUserDto user)
-
         {
-            // throw new NotImplemented
-
-            await _userRepository.Get();
-
-            // Tentar encontrar utilizador com o mesmo nome
-            // se encontrar, comparar passwords
-            // se forem iguais OK
-            // Se não, Failed
-
-            //public async Task<User> Login(GetUserDto user) // para testar
+            // Verificar se o utilizador existe
+            User us = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString());
+            // Se não existir, não pode fazer login
+            if (us == null) return false; 
+            else 
             {
-                // throw new NotImplemented
-
-                User us = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString() &&
-                                                                     userQuery.password == user.password.ToString());
-
-                if (us == null) return false;
-                else return true;
-
-
-                // Validar:
-                // -se não escreveu nada em algum campo
-                // -feedback se o nome de utilizador não existe
-                // -feedback se a pass está errada
-
-                //return us; // para testar
+                ///////////////////////////////////////////////////////////////
+                /* Comparar passwords (versão HASH) */
+                
+                // Pegar na hashed password guardada na BD
+                string savedPasswordHash = us.password;
+                
+                // Extrair os bytes
+                byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+                
+                // Obter o "salt"
+                byte[] salt = new byte[16];
+                Array.Copy(hashBytes, 0, salt, 0, 16);
+                
+                // Calcular a hash na pass que o user acabou de introduzir
+                var pbkdf2 = new Rfc2898DeriveBytes(user.password, salt, 100000);
+                byte[] hash = pbkdf2.GetBytes(20);
+                
+                // Comparar os resultados
+                for (int i=0; i < 20; i++)
+                    if (hashBytes[i+16] != hash[i])
+                        throw new UnauthorizedAccessException();
+                ///////////////////////////////////////////////////////////////
+                
+                return true;
             }
         }
 
-            // REGISTAR NOVO USER
-            public async Task<bool> Register(GetUserDto user)
+        // Registar um novo utilizador
+        public async Task<bool> Register(GetUserDto user)
+        {
+            // Verificar se já existe um utilizador com o mesmo nome
+            User getResult = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString());
+            if (getResult != null) return false; // Não podem existir 2 users com o mesmo nome
+            else
             {
-                User u = new();
-
-                u.username = user.username;
-                u.password = user.password;
-
-                // Verificar se existe algum utilizador com o nome escolhido (devolver false se existir)
-                User getResult = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString());
-                if (getResult != null) return false;
-                else
-                {
-                    await _userRepository.Add(u);
-                    return true;
-                }
-
-                // Validações:
-                // -Já existe algum utilizador com o nome escolhido? Procurar e comparar. Se houver, informar e pedir um diferente
-                // -nome de utilizador e pass estão dentro dos limites do tamanho (min >= username/pass <= max)?
-                // -username e pass não têm caracteres especiais que não deviam ter?
-                // -Confirmar palavra-passe? Comparar as 2 e se não estiverem iguais, guardar username já escrito e pedir pass de novo
-                // Na pass:
-                // -Obrigatório não ser uma sequência? abcdef ou 123456?
-                // -Obrigatório usar letras maiúsculas e/ou números?
-
-                // TODO:
-                // -Hash password?
+                ////////////////////////////////////////////////////////////////////////////////
+                /* Hash password */
+                
+                // Criar o valor do "salt" com um gerador de números pseudoaleatórios criptográfico (PRNG = PseudoRandom Number Generator)
+                byte[] salt;
+                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+                
+                // Criar o Rfc2898DeriveBytes e obter o valor da hash
+                // (Rfc2898DeriveBytes: classe que produz uma chave a partir de uma chave base e do outros parâmetros)
+                // (pbkdf2 = password-based key derivation function 2)
+                var pbkdf2 = new Rfc2898DeriveBytes(user.password, salt, 100000);
+                byte[] hash = pbkdf2.GetBytes(20);
+                
+                // Combinar o "salt" e os bytes da password
+                byte[] hashBytes = new byte[36];
+                Array.Copy(salt, 0, hashBytes, 0, 16);
+                Array.Copy(hash, 0, hashBytes, 16, 20);
+                
+                // Combinar o salt e a hash numa string para guardar pass de modo seguro
+                string savedPasswordHash = Convert.ToBase64String(hashBytes);
+                user.password = savedPasswordHash;
+                ////////////////////////////////////////////////////////////////////////////////
+                
+                await _userRepository.Add(user.AsUser());
+                return true;
             }
-
-
         }
-
+            
+    }
 }
