@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record CreateConvAtletaEquiDto(bool resposta, int id_athelete, int id_equipa);
+    public record CreateConvAtletaEquiDto(int id_athelete, int id_equipa);
     
 }
 

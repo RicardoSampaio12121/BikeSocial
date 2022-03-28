@@ -8,8 +8,8 @@ namespace BikeSocialDTOs
 {
     public class GetConAtletaEqui
     {
-        public bool resposta { get; set; }  
-        public string convite { get; set; }
+         
+        public int id_atleta { get; set; }
         public int id_equipa { get; set; }
     }
 }

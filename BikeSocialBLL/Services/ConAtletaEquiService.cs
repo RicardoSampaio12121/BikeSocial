@@ -20,12 +20,12 @@ namespace BikeSocialBLL
             _conAtletaEquiRepository = conAtletaEquiRepository;
         }
 
-        public async Task<bool> ConviteAE(CreateConvAtletaEquiDto convite, bool res)
+        public async Task<bool> ConviteAE(CreateConvAtletaEquiDto convite)
         {
             ConAtletaEqui con = await _conAtletaEquiRepository.Get(conviteQuery => conviteQuery.IdEquipa == convite.id_equipa &&
             conviteQuery.IdAthlete == convite.id_athelete);
 
-            if (res != true && con != null) return false;
+            if (con != null) return false;
             else await _conAtletaEquiRepository.Add(convite.ConAtEq());
             return true;
         }

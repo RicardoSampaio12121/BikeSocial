@@ -9,6 +9,6 @@ namespace BikeSocialBLL.Services.IServices
 {
     public interface IConAtletaEquiService
     {
-        Task<bool> ConviteAE(CreateConvAtletaEquiDto convAtletaEquiDto, bool res);
+        Task<bool> ConviteAE(CreateConvAtletaEquiDto convAtletaEquiDto);
     }
 }
