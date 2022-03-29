@@ -15,10 +15,13 @@ namespace BikeSocialBLL.Services
             _raceRepository = raceRepository;
         }
         
+        // Criar uma prova nova
         public async Task<bool> Create(CreateRaceDto race)
         {
-            Race rc = await _raceRepository.Get(raceQuery => raceQuery.Description == race.description.ToString());
-            
+            // Verificar se já existe uma prova com a mesma descrição e a mesma data ("iguais")
+            Race rc = await _raceRepository.Get(raceQuery => raceQuery.Description == race.description.ToString()&& 
+                                                    raceQuery.dateTime.ToString() == race.dateTime.ToString());
+            // Não podem existir 2 provas "iguais"
             if (rc != null) return false;
             else await _raceRepository.Add(race.AsRace());
             return true;

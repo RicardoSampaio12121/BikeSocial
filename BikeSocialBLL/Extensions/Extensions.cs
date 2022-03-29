@@ -4,10 +4,15 @@ namespace BikeSocialBLL.Extensions;
 
 public static class Extensions
 {
-    //public static User AsUserDto(this GetUserDto gud)
-    //{
-    //    return new User(gud.username, gud.password);
-    //}
+    public static User AsUser(this GetUserDto userDto)
+    {
+        User user = new();
+
+        user.username = userDto.username;
+        user.password = userDto.password;
+        
+        return user;
+    }
 
     public static Trainings AsTraining(this CreateTrainingDto trainingDto)
     {
@@ -72,5 +77,40 @@ public static class Extensions
         athlete.PlanId = athleteDto.planId;
 
         return athlete;
+    }
+
+    public static Equipa CEquipa(this CreateEquipa equipaDto)
+    {
+        Equipa equipa = new();  
+
+        equipa.name = equipaDto.name; 
+        equipa.local = equipaDto.local;
+        equipa.coachId = equipaDto.coachId;
+        equipa.clubId = equipaDto.clubeId;
+
+
+        return equipa;
+    }
+
+    public static ConAtletaEqui ConAtEq(this CreateConvAtletaEquiDto conviteAE)
+    {
+        ConAtletaEqui conAtletaEqui = new();
+
+        conAtletaEqui.IdEquipa = conviteAE.id_equipa;
+        conAtletaEqui.IdAthlete = conviteAE.id_athelete;
+
+        return conAtletaEqui;
+
+    }
+
+    public static ConCoachEqui ConCoachEq(this CreateConvCoachEquiDto conviteTE)
+    {
+        ConCoachEqui conCoachEqui = new();
+
+        conCoachEqui.IdEquipa = conviteTE.idEquipa;
+        conCoachEqui.IdCoach = conviteTE.idCoach;
+
+        return conCoachEqui;
+
     }
 }

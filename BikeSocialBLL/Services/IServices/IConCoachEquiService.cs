@@ -7,11 +7,11 @@ using BikeSocialDTOs;
 
 namespace BikeSocialBLL.Services.IServices
 {
-    public interface IEquipaService
+    /// <summary>
+    /// Covite C-> coach E -> equipa
+    /// </summary>
+    public interface IConCoachEquiService
     {
-       
-        Task<bool> Create(CreateEquipa equipaDto);
+        Task<bool> ConviteCE(CreateConvCoachEquiDto createConvCoachEquiDto);
     }
 }
-
-
