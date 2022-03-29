@@ -113,4 +113,47 @@ public static class Extensions
         return conCoachEqui;
 
     }
+
+    public static Route AsRoute(this CreateRoutePeopleDto dto)
+    {
+        Route output = new();
+
+        output.userId = dto.userId;
+        output.description = dto.Description;
+        output.placeId = dto.placeId;
+        output.routeTypeId = dto.routeTypeId;
+        output.dateTime = dto.dateTime;
+        output.estimatedTime = dto.estimatedTime;
+        output.distance = dto.distance;
+
+        return output;
+    }
+
+    public static List<RoutePeopleInvited> AsListRoutePeopleInvited(this CreateRoutePeopleDto dto, int routeId)
+    {
+        List<RoutePeopleInvited> output = new();
+        
+        var list = dto.people;
+
+        foreach(var person in list)
+        {
+            output.Add(new RoutePeopleInvited()
+            {
+                userId = person,
+                routeId = routeId
+            });
+        }
+
+        return output;
+    }
+
+    public static RoutePeopleInvited AsRoutePeopleInvite(this GetInviteToRouteDto dto)
+    {
+        RoutePeopleInvited output = new();
+
+        output.userId = dto.userId;
+        output.routeId = dto.routeId;
+
+        return output;
+    }
 }

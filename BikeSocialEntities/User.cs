@@ -12,5 +12,9 @@ namespace BikeSocialEntities
         public string username { get; set; }
         public string password { get; set; }
         public List<Athlete> Athletes { get; set; }
+        public List<Route> Routes { get; set; }
+        public List<RoutePeople> RoutePeople { get; set; }
+        public List<RoutePeopleInvited> PeopleInvited { get; set; }
+
     }
 }

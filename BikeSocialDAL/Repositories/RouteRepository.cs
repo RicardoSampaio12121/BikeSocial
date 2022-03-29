@@ -12,10 +12,13 @@ namespace BikeSocialDAL.Repositories
     public class RouteRepository : GenericRepository<Route>, IRouteRepository
     {
         private readonly DataContext.DataContext _context;
+        private readonly DataContext.DataContext _peopleInvitedContext;
 
-        public RouteRepository(DataContext.DataContext dataContext) : base(dataContext)
+
+        public RouteRepository(DataContext.DataContext dataContext, DataContext.DataContext peopleInvitedContext) : base(dataContext)
         {
             _context = dataContext;
+            _peopleInvitedContext = peopleInvitedContext;
         }
     }
 }

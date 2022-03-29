@@ -10,6 +10,7 @@ namespace BikeSocialBLL.Services.IServices
     public interface IRoutesService
     {
         Task<bool> Add(CreateRouteDto createRoutDto);
-
+        Task<bool> AddWithPeople(CreateRoutePeopleDto createRoutePeopleDto);
+        Task<bool> Invite(GetInviteToRouteDto dto);
     }
 }
