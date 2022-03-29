@@ -4,10 +4,15 @@ namespace BikeSocialBLL.Extensions;
 
 public static class Extensions
 {
-    //public static User AsUserDto(this GetUserDto gud)
-    //{
-    //    return new User(gud.username, gud.password);
-    //}
+    public static User AsUser(this GetUserDto userDto)
+    {
+        User user = new();
+
+        user.username = userDto.username;
+        user.password = userDto.password;
+        
+        return user;
+    }
 
     public static Trainings AsTraining(this CreateTrainingDto trainingDto)
     {
