@@ -9,10 +9,10 @@ namespace BikeSocialBLL.Services.IServices
 {
     public interface IFriendService
     {
-        Task<bool> AddFriend();
-        Task<bool> RemoveFriend();
-        Task<bool> ViewFriends();
-        Task<bool> AcceptFriend();
-        Task<bool> RejectFriend();
+        Task<bool> AddFriend(CreateFriendDto friend);
+        Task<bool> RemoveFriend(GetFriendDto friend);
+        Task<bool> ViewFriends(List<GetFriendDto> friends);
+        Task<bool> AcceptFriend(GetFriendDto friend);
+        Task<bool> RejectFriend(GetFriendDto friend);
     }
 }
