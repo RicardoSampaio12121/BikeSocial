@@ -35,7 +35,7 @@ namespace BikeSocialDAL.DataContext
         public DbSet<RoutePeople> RoutePeople { get; set; }
         public DbSet<RoutePeopleInvited> RoutePeopleInvited { get; set; }
 
-
+        public DbSet<Friend> Friend { get; set; }
 
     }
 }
