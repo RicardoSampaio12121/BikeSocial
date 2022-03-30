@@ -12,8 +12,8 @@ namespace BikeSocialEntities
         [ForeignKey("TeamDirector")]
         public int id { get; set; }
         public string name { get; set; }
-        public string placeId { get; set; }
+        public int? Placeid { get; set; } // Corrigir este erro 
         public List<Equipa> Equipas { get; set; }
-        //public TeamDirector director { get; set; }
+        public TeamDirector director { get; set; }
     }
 }
