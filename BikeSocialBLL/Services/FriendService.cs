@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BikeSocialBLL.Services.IServices;
 using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialDTOs;
+using BikeSocialEntities;
 
 namespace BikeSocialBLL.Services
 {
@@ -36,8 +37,7 @@ namespace BikeSocialBLL.Services
         {
             throw new NotImplementedException();
         }
-
-        public Task<bool> ViewFriends(List<GetFriendDto> friends)
+        Task<List<Friend>> IFriendService.ViewFriends(List<GetFriendDto> friends)
         {
             throw new NotImplementedException();
         }

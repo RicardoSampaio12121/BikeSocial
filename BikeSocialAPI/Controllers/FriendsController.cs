@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BikeSocialBLL.Services.IServices;
+using BikeSocialDTOs;
 
 namespace BikeSocialAPI.Controllers
 {
@@ -16,15 +17,49 @@ namespace BikeSocialAPI.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddFriend()
+        public async Task<IActionResult> AddFriend(CreateFriendDto newFriendRequest)
+        {
+            if(await _friendService.AddFriend(newFriendRequest) == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        [HttpDelete("remove")]
+        public async Task<IActionResult> RemoveFriend(GetFriendDto friendToRemove)
+        {
+            if (await _friendService.RemoveFriend(friendToRemove) == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        [HttpGet("view/{userId}")]
+        public async Task<IActionResult> ViewFriends(int userId)
         {
             throw new NotImplementedException();
         }
 
-        [HttpPost("remove")]
-        public async Task<IActionResult> RemoveFriend()
+        [HttpPost("reject")]
+        public async Task<IActionResult> RejectFriend(GetFriendDto friendToReject)
         {
-            throw new NotImplementedException();
+            if (await _friendService.RejectFriend(friendToReject) == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        [HttpPost("accept")]
+        public async Task<IActionResult> AcceptFriend(GetFriendDto friendToAccept)
+        {
+            if(await _friendService.AcceptFriend(friendToAccept) == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
     }
 }
