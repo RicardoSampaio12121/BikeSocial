@@ -43,6 +43,7 @@ public static class Extensions
         race.FederationId = raceDto.FederationId;
         race.RaceTypeId = raceDto.RaceTypeId;
         race.PlaceId = raceDto.placeId;
+        race.State = "Active";
 
         return race;
     }
@@ -68,6 +69,7 @@ public static class Extensions
         Athlete athlete = new();
 
         athlete.name = athleteDto.name;
+        athlete.Equipaid = athleteDto.teamId;
         athlete.birthdate = athleteDto.birthdate;
         athlete.contact = athleteDto.contact;
         athlete.ParentId = athleteDto.parentId;
@@ -98,8 +100,8 @@ public static class Extensions
     {
         ConAtletaEqui conAtletaEqui = new();
 
-        conAtletaEqui.IdEquipa = conviteAE.id_equipa;
-        conAtletaEqui.IdAthlete = conviteAE.id_athelete;
+        conAtletaEqui.Equipaid = conviteAE.id_equipa;
+        conAtletaEqui.AthleteId = conviteAE.id_athelete;
 
         return conAtletaEqui;
 
@@ -170,7 +172,6 @@ public static class Extensions
         return output;
     }
 
-<<<<<<< HEAD
     public static Trainings AsTraining(this CreateTrainingWithInvitesDto trainingDto)
     {
         Trainings train = new();
@@ -216,7 +217,25 @@ public static class Extensions
 
         return output;
     }
-=======
 
->>>>>>> master
+    public static List<RaceResults> AsListRaceResult(this GetPublishResultsDto dto)
+    {
+        List<RaceResults> results = new();
+
+        var dtoResults = dto.placements;
+
+        foreach (KeyValuePair<int, int> result in dtoResults)
+        {
+            results.Add(new RaceResults()
+            {
+                raceId = dto.raceId,
+                athleteId = result.Key,
+                standing = result.Value
+            });
+        }
+
+        return results;
+
+    }
+
 }

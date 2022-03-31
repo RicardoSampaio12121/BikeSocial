@@ -11,6 +11,7 @@ namespace BikeSocialBLL.Services.IServices
     {
        
         Task<bool> Create(CreateEquipa equipaDto);
+        Task<bool> ConviteAE(CreateConvAtletaEquiDto convite);
     }
 }
 

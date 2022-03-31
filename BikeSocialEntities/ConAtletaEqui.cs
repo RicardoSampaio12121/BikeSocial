@@ -9,8 +9,8 @@ namespace BikeSocialEntities
     public class ConAtletaEqui
     {
         public int Id { get; set; }
-        public int IdEquipa { get; set; }
-        public int IdAthlete { get; set; }
+        public int? Equipaid { get; set; }
+        public int? AthleteId { get; set; }
 
     }
 }

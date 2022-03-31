@@ -10,11 +10,13 @@ namespace BikeSocialBLL.Services
     {
         private readonly IRaceRepository _raceRepository;
         private readonly IAddAtletaRaceRepository _addAtletaRaceRepository;
+        private readonly IRaceResultsRepository _raceResultsRepository;
         
-        public RaceService(IRaceRepository raceRepository, IAddAtletaRaceRepository atheleteInviteRepo)
+        public RaceService(IRaceRepository raceRepository, IAddAtletaRaceRepository atheleteInviteRepo, IRaceResultsRepository raceResultsRepository)
         {
             _raceRepository = raceRepository;
             _addAtletaRaceRepository = atheleteInviteRepo;
+            _raceResultsRepository = raceResultsRepository;
         }
         
         // Criar uma prova nova
@@ -38,6 +40,11 @@ namespace BikeSocialBLL.Services
             return true;
         }
 
-
+        public async Task<bool> SaveResults(GetPublishResultsDto dto)
+        {
+            // Adicionar os resultados
+            if (await _raceResultsRepository.SaveResults(dto.AsListRaceResult()) == false) return false;
+            return true;
+        }
     }
 }

@@ -26,5 +26,15 @@ namespace BikeSocialAPI.Controllers
 
            return Ok();
         }
+
+        [HttpPost("conviteAtleta")]
+        public async Task<IActionResult> Convite(CreateConvAtletaEquiDto convite)
+        {
+            if (await _equipaService.ConviteAE(convite) == false)
+                return BadRequest();
+
+            return Ok();
+
+        }
     }
 }

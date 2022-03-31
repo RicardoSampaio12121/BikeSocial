@@ -14,6 +14,8 @@ namespace BikeSocialEntities
         public string name { get; set; }
         public string local { get; set; }
         public List<Trainings> trainings { get; set; }
+        public List<Athlete> athletes { get; set; }
+        public List<ConAtletaEqui> invites { get; set; }
 
     }
 }

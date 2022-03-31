@@ -31,7 +31,14 @@ namespace BikeSocialAPI.Controllers
                 return BadRequest();
 
             return Ok();
+        }
 
+        [HttpPost("publishResults")]
+        public async Task<ActionResult> PublishResults(GetPublishResultsDto dto)
+        {
+            if (await _raceService.SaveResults(dto) == false)
+                return BadRequest();
+            return Ok();
         }
     }
 }

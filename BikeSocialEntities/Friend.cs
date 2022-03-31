@@ -11,7 +11,6 @@ namespace BikeSocialEntities
     public class Friend
     {
         [Key]
-        
         public int Id { get; set; }
 
         [ForeignKey("Solicitor")]

@@ -34,12 +34,10 @@ namespace BikeSocialDAL.DataContext
         public DbSet<ConCoachEqui> ConCoachEqui { get; set; }
         public DbSet<RoutePeople> RoutePeople { get; set; }
         public DbSet<RoutePeopleInvited> RoutePeopleInvited { get; set; }
-<<<<<<< HEAD
         public DbSet<TrainingInvites> TrainingInvites { get; set; }
-=======
+        public DbSet<RaceResults> RaceResults { get; set; }
 
-        public DbSet<Friend> Friend { get; set; }
+        //public DbSet<Friend> Friend { get; set; }
 
->>>>>>> master
     }
 }

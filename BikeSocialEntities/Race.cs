@@ -11,5 +11,7 @@ namespace BikeSocialEntities
         public int RaceTypeId { get; set; }
         public int PlaceId { get; set; }
         public List<AddAtletaRace> Athletes { get; set; }
+        public string State { get; set; }
+        public List<RaceResults> raceResults { get; set; }
     }
 }

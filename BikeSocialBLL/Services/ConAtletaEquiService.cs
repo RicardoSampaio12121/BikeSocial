@@ -24,8 +24,8 @@ namespace BikeSocialBLL.Services
 
         public async Task<bool> ConviteAE(CreateConvAtletaEquiDto convite)
         {
-            ConAtletaEqui con = await _conAtletaEquiRepository.Get(conviteQuery => conviteQuery.IdEquipa == convite.id_equipa &&
-            conviteQuery.IdAthlete == convite.id_athelete);
+            ConAtletaEqui con = await _conAtletaEquiRepository.Get(conviteQuery => conviteQuery.Equipaid == convite.id_equipa &&
+            conviteQuery.AthleteId == convite.id_athelete);
 
             if (con != null) return false;
             else await _conAtletaEquiRepository.Add(convite.ConAtEq());

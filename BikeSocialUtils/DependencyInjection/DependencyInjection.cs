@@ -61,13 +61,10 @@ namespace BikeSocialUtils.DependencyInjection
 
             services.AddScoped<IRoutePeopleInvitedRepository, RoutePeopleInvitedRepository>();
 
-<<<<<<< HEAD
             services.AddScoped<ITrainingInvitesRepository, TrainingInvitesRepository>();
-=======
-            services.AddScoped<IAddAtletaRaceRepository, AddAtletaRaceRepository>();    
->>>>>>> master
-            
+            services.AddScoped<IAddAtletaRaceRepository, AddAtletaRaceRepository>();
 
+            services.AddScoped<IRaceResultsRepository, ReceResultsRepository>();
         }
     }
 }
