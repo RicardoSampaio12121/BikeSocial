@@ -184,6 +184,35 @@ namespace BikeSocialDAL.Migrations
                     b.ToTable("Equipa");
                 });
 
+            modelBuilder.Entity("BikeSocialEntities.Friend", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("recieptientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("solicitorId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("status")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("timeSent")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("recieptientId");
+
+                    b.HasIndex("solicitorId");
+
+                    b.ToTable("Friend");
+                });
+
             modelBuilder.Entity("BikeSocialEntities.Place", b =>
                 {
                     b.Property<int>("id")
@@ -485,6 +514,25 @@ namespace BikeSocialDAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BikeSocialEntities.Friend", b =>
+                {
+                    b.HasOne("BikeSocialEntities.User", "recieptient")
+                        .WithMany("recieptient")
+                        .HasForeignKey("recieptientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BikeSocialEntities.User", "solicitor")
+                        .WithMany("solicitor")
+                        .HasForeignKey("solicitorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("recieptient");
+
+                    b.Navigation("solicitor");
+                });
+
             modelBuilder.Entity("BikeSocialEntities.Race", b =>
                 {
                     b.HasOne("BikeSocialEntities.Place", null)
@@ -615,6 +663,10 @@ namespace BikeSocialDAL.Migrations
                     b.Navigation("RoutePeople");
 
                     b.Navigation("Routes");
+
+                    b.Navigation("recieptient");
+
+                    b.Navigation("solicitor");
                 });
 #pragma warning restore 612, 618
         }
