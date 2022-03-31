@@ -60,11 +60,28 @@ namespace BikeSocialBLL.Services
             else await _friendRepository.Delete(friendCheck);
             return true;
         }
-        public async Task<List<Friend>> ViewFriends(int userId)
+        public async Task<List<ReturnFriendDto>> ViewFriends(int userId)
         {
             User user = await _userRepository.Get(userQuery => userQuery.id == userId);
-            Friend friendList = await _friendRepository.Get(friendQuery => friendQuery.solicitorId == userId || friendQuery.recieptientId == userId);
-            throw new NotImplementedException();
+            if (user == null) return null;
+            List<Friend> friendList = await _friendRepository.GetList(friendQuery => friendQuery.solicitorId == userId || friendQuery.recieptientId == userId);
+            if(friendList == null)
+            {
+                return null;
+            }
+
+            List<ReturnFriendDto> friendListDto = new List<ReturnFriendDto>();
+
+            foreach(Friend f in friendList)
+            {
+                ReturnFriendDto dtoFriend = new ReturnFriendDto();
+                dtoFriend.solicitorId = (int)f.solicitorId;
+                dtoFriend.receiptientId = (int)f.recieptientId;
+                dtoFriend.status = f.status;
+                dtoFriend.timeSent = f.timeSent;
+                friendListDto.Add(dtoFriend);
+            }
+            return friendListDto;
         }
     }
 }

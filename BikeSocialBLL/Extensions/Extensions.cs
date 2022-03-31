@@ -193,7 +193,6 @@ public static class Extensions
         return output;
     }
 
-<<<<<<< HEAD
     public static Trainings AsTraining(this CreateTrainingWithInvitesDto trainingDto)
     {
         Trainings train = new();
@@ -239,7 +238,5 @@ public static class Extensions
 
         return output;
     }
-=======
 
->>>>>>> master
 }

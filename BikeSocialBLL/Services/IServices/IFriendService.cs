@@ -12,7 +12,7 @@ namespace BikeSocialBLL.Services.IServices
     {
         Task<bool> AddFriend(CreateFriendDto friend);
         Task<bool> RemoveFriend(GetFriendDto friend);
-        Task<List<Friend>> ViewFriends(int userId);
+        Task<List<ReturnFriendDto>> ViewFriends(int userId);
         Task<bool> AcceptFriend(GetFriendDto friend);
     }
 }

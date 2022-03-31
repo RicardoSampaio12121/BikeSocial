@@ -15,10 +15,5 @@ namespace BikeSocialDAL.Repositories
         {
             _dbContext = dataContext;
         }
-
-        public Task<List<Friend>> GetFriendsList()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
