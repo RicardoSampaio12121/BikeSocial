@@ -10,5 +10,7 @@ namespace BikeSocialBLL.Services.IServices
     public interface ITrainingsService
     {
         Task<bool> Create(CreateTrainingDto training);
+        Task<bool> CreateWithInvites(CreateTrainingWithInvitesDto dto);
+        Task<bool> SendInvite(GetInviteToTrainingDto dto);
     }
 }

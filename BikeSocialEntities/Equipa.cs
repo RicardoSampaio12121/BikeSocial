@@ -13,5 +13,7 @@ namespace BikeSocialEntities
         public int clubId { get; set; }
         public string name { get; set; }
         public string local { get; set; }
+        public List<Trainings> trainings { get; set; }
+
     }
 }
