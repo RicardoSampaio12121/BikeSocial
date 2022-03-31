@@ -14,6 +14,37 @@ public static class Extensions
         return user;
     }
 
+    public static ReturnProfileDto AsReturnProfile(this Profile profile)
+    {
+        ReturnProfileDto profileDto = new();
+        profileDto.userId = profile.userId;
+        profileDto.description = profile.description;
+
+        return profileDto;
+    }
+    public static Friend AsNewFriend(this CreateFriendDto friendDto)
+    {
+        Friend friend = new();
+
+        friend.solicitorId = friendDto.solicitorId;
+        friend.recieptientId = friendDto.recieptientId;
+        friend.status = false;
+        friend.timeSent = friendDto.timeSent;
+
+        return friend;
+    }
+
+    public static Friend AsFriend(this GetFriendDto friendDto)
+    {
+        Friend friend = new();
+
+        friend.solicitorId = friendDto.solicitorId;
+        friend.recieptientId = friendDto.recieptientId;
+        friend.status = friendDto.status;
+        friend.timeSent = friendDto.timeSent;
+
+        return friend;
+    }
     public static Trainings AsTraining(this CreateTrainingDto trainingDto)
     {
         Trainings train = new();
@@ -218,6 +249,7 @@ public static class Extensions
         return output;
     }
 
+<<<<<<< HEAD
     public static List<RaceResults> AsListRaceResult(this GetPublishResultsDto dto)
     {
         List<RaceResults> results = new();
@@ -238,4 +270,6 @@ public static class Extensions
 
     }
 
+=======
+>>>>>>> 37d0c5178827276dd25d0e94d5f2d051967405d2
 }

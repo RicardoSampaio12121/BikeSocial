@@ -8,7 +8,7 @@ using BikeSocialEntities;
 
 namespace BikeSocialDAL.Repositories
 {
-    internal class FriendRepository : GenericRepository<Friend>, IFriendRepository
+    public class FriendRepository : GenericRepository<Friend>, IFriendRepository
     {
         private readonly DataContext.DataContext _dbContext;
         public FriendRepository(DataContext.DataContext dataContext) : base(dataContext)
