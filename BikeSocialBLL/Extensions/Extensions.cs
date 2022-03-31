@@ -14,6 +14,14 @@ public static class Extensions
         return user;
     }
 
+    public static ReturnProfileDto AsReturnProfile(this Profile profile)
+    {
+        ReturnProfileDto profileDto = new();
+        profileDto.userId = profile.userId;
+        profileDto.description = profile.description;
+
+        return profileDto;
+    }
     public static Friend AsNewFriend(this CreateFriendDto friendDto)
     {
         Friend friend = new();

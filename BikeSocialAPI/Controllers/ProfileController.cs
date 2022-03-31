@@ -15,5 +15,13 @@ namespace BikeSocialAPI.Controllers
             _profileService = profileService;
         }
 
+        [HttpGet("view")]
+        public async Task<IActionResult> ViewProfile(int userId)
+        {
+            if(await _profileService.ViewProfile(userId) == null)
+                return BadRequest();
+
+            return Ok();
+        }
     }
 }

@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BikeSocialDAL.Repositories.Interfaces;
+using BikeSocialDTOs;
+using BikeSocialEntities;
+using BikeSocialBLL.Extensions;
 
 
 namespace BikeSocialBLL.Services
@@ -18,5 +21,13 @@ namespace BikeSocialBLL.Services
             _profileRepository = profileRepository;
         }
 
+        public async Task<ReturnProfileDto> ViewProfile(int userId)
+        {
+            Profile profileToRetrieve = await _profileRepository.Get(profileQuery => profileQuery.userId == userId);
+
+            if(profileToRetrieve == null) return null;
+
+            return profileToRetrieve.AsReturnProfile();
+        }
     }
 }
