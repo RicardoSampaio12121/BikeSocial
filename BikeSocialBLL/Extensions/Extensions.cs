@@ -41,6 +41,8 @@ public static class Extensions
     {
         Trainings train = new();
 
+        train.Equipaid = trainingDto.teamId;
+        train.Coachid = trainingDto.trainerId;
         train.name = trainingDto.name;
         train.dateTime = trainingDto.dateTime;
         train.EstimatedTime = trainingDto.estimatedTime;
@@ -137,6 +139,17 @@ public static class Extensions
 
     }
 
+    public static AddAtletaRace AddAtR(this CreateAddAtletaRaceDto adicionarAR)
+    {
+        AddAtletaRace addAtletaRace = new();
+
+        addAtletaRace.IdAtleta = adicionarAR.id_atleta;
+        addAtletaRace.RaceId = adicionarAR.raceId;
+
+        return addAtletaRace;
+
+    }
+
     public static Route AsRoute(this CreateRoutePeopleDto dto)
     {
         Route output = new();
@@ -179,4 +192,54 @@ public static class Extensions
 
         return output;
     }
+
+<<<<<<< HEAD
+    public static Trainings AsTraining(this CreateTrainingWithInvitesDto trainingDto)
+    {
+        Trainings train = new();
+
+        train.Equipaid = trainingDto.teamId;
+        train.Coachid = trainingDto.trainerId;
+        train.name = trainingDto.name;
+        train.dateTime = trainingDto.dateTime;
+        train.EstimatedTime = trainingDto.estimatedTime;
+        train.Distance = trainingDto.distance;
+        train.PlaceId = trainingDto.placeId;
+        train.TrainingTypeId = trainingDto.trainingTypeId;
+        train.PlanId = trainingDto.planId;
+
+        return train;
+    }
+
+    public static List<TrainingInvites> AsListTrainingInvites(this CreateTrainingWithInvitesDto dto , int trainingId)
+    {
+        List<TrainingInvites> output = new();
+
+        var list = dto.athleteId;
+
+        foreach (var athleteId in list)
+        {
+            output.Add(new TrainingInvites()
+            {
+                TrainingsId = trainingId,
+                athleteId = athleteId,
+                confirmation = false
+            });
+        }
+
+        return output;
+    }
+
+    public static TrainingInvites AsTrainingAthletesInvite(this GetInviteToTrainingDto dto)
+    {
+        TrainingInvites output = new();
+
+        output.TrainingsId = dto.trainingId;
+        output.athleteId = dto.athleteId;
+
+        return output;
+    }
+=======
+
+>>>>>>> master
 }

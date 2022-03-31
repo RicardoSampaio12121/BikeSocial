@@ -13,5 +13,6 @@ namespace BikeSocialEntities
         public DateTime birthDate { get; set; }
         public int contact { get; set; }
         public Equipa team { get; set; }
+        public List<Trainings> trainings { get; set; }
     }
 }

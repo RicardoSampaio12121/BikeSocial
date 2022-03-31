@@ -9,6 +9,8 @@ namespace BikeSocialEntities
     public class Trainings
     {
         public int Id { get; set; }
+        public int Coachid { get; set; }
+        public int? Equipaid { get; set; }
         public string name { get; set; }
         public DateTime dateTime{ get; set; }
         public float EstimatedTime{ get; set; }
@@ -16,5 +18,6 @@ namespace BikeSocialEntities
         public int PlaceId { get; set; }
         public int TrainingTypeId { get; set; }
         public int PlanId { get; set; }
+        public List<TrainingInvites> TrainingInvites { get; set; }
     }
 }

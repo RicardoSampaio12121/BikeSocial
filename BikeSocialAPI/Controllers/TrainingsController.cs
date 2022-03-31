@@ -23,5 +23,19 @@ namespace BikeSocialAPI.Controllers
 
             return Ok();
         }
+
+        [HttpPost("createWithInvites")]
+        public async Task<ActionResult> CreateWithInvites(CreateTrainingWithInvitesDto dto)
+        {
+            if (await _trainingsService.CreateWithInvites(dto) == false) return BadRequest();
+            return Ok();
+        }
+
+        [HttpPost("sendInite")]
+        public async Task<ActionResult> SendInvite(GetInviteToTrainingDto dto)
+        {
+            if (await _trainingsService.SendInvite(dto) == false) return BadRequest();
+            return Ok();
+        }
     }
 }

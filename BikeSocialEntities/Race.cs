@@ -10,5 +10,6 @@ namespace BikeSocialEntities
         public int FederationId { get; set; }
         public int RaceTypeId { get; set; }
         public int PlaceId { get; set; }
+        public List<AddAtletaRace> Athletes { get; set; }
     }
 }

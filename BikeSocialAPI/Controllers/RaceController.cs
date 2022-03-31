@@ -23,5 +23,15 @@ namespace BikeSocialAPI.Controllers
 
             return Ok();
         }
+       
+        [HttpPost("inscrição")]
+        public async Task<IActionResult> Adicionar(CreateAddAtletaRaceDto adcionar)
+        {
+            if (await _raceService.AdicionarAP(adcionar) == false)
+                return BadRequest();
+
+            return Ok();
+
+        }
     }
 }
