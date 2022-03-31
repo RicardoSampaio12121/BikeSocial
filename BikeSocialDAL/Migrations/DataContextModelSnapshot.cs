@@ -22,6 +22,30 @@ namespace BikeSocialDAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("BikeSocialEntities.AddAtletaRace", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Confirmation")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("IdAtleta")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RaceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RaceId");
+
+                    b.ToTable("AddAtletaRace");
+                });
+
             modelBuilder.Entity("BikeSocialEntities.Athlete", b =>
                 {
                     b.Property<int>("Id")
@@ -523,6 +547,15 @@ namespace BikeSocialDAL.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BikeSocialEntities.AddAtletaRace", b =>
+                {
+                    b.HasOne("BikeSocialEntities.Race", null)
+                        .WithMany("Athletes")
+                        .HasForeignKey("RaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BikeSocialEntities.Athlete", b =>
                 {
                     b.HasOne("BikeSocialEntities.Place", null)
@@ -719,6 +752,11 @@ namespace BikeSocialDAL.Migrations
             modelBuilder.Entity("BikeSocialEntities.Plan", b =>
                 {
                     b.Navigation("Trainings");
+                });
+
+            modelBuilder.Entity("BikeSocialEntities.Race", b =>
+                {
+                    b.Navigation("Athletes");
                 });
 
             modelBuilder.Entity("BikeSocialEntities.Route", b =>

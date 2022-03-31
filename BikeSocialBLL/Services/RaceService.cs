@@ -9,10 +9,12 @@ namespace BikeSocialBLL.Services
     public class RaceService : IRaceService
     {
         private readonly IRaceRepository _raceRepository;
+        private readonly IAddAtletaRaceRepository _addAtletaRaceRepository;
         
-        public RaceService(IRaceRepository raceRepository)
+        public RaceService(IRaceRepository raceRepository, IAddAtletaRaceRepository atheleteInviteRepo)
         {
             _raceRepository = raceRepository;
+            _addAtletaRaceRepository = atheleteInviteRepo;
         }
         
         // Criar uma prova nova
@@ -26,5 +28,16 @@ namespace BikeSocialBLL.Services
             else await _raceRepository.Add(race.AsRace());
             return true;
         }
+
+        public async Task<bool> AdicionarAP(CreateAddAtletaRaceDto adicionar)
+        {
+            AddAtletaRace add = await _addAtletaRaceRepository.Get(adicionarQuery => adicionarQuery.IdAtleta == adicionar.id_atleta && adicionarQuery.RaceId == adicionar.raceId);
+
+            if (add != null) return false;
+            else await _addAtletaRaceRepository.Add(adicionar.AddAtR());
+            return true;
+        }
+
+
     }
 }

@@ -116,6 +116,17 @@ public static class Extensions
 
     }
 
+    public static AddAtletaRace AddAtR(this CreateAddAtletaRaceDto adicionarAR)
+    {
+        AddAtletaRace addAtletaRace = new();
+
+        addAtletaRace.IdAtleta = adicionarAR.id_atleta;
+        addAtletaRace.RaceId = adicionarAR.raceId;
+
+        return addAtletaRace;
+
+    }
+
     public static Route AsRoute(this CreateRoutePeopleDto dto)
     {
         Route output = new();
@@ -159,6 +170,7 @@ public static class Extensions
         return output;
     }
 
+<<<<<<< HEAD
     public static Trainings AsTraining(this CreateTrainingWithInvitesDto trainingDto)
     {
         Trainings train = new();
@@ -204,4 +216,7 @@ public static class Extensions
 
         return output;
     }
+=======
+
+>>>>>>> master
 }
