@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Adicionar os atletas da equipa numa prova
+/// </summary>
+
 namespace BikeSocialDTOs
 {
-    public record CreateFriendDto(int solicitorId, int recieptientId, bool status, DateTime timeSent);
+    public record CreateAddAtletaRaceDto(int id_atleta, int raceId);
 }
