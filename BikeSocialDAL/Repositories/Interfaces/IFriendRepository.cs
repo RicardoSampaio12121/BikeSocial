@@ -9,6 +9,5 @@ namespace BikeSocialDAL.Repositories.Interfaces
 {
     public interface IFriendRepository : IGenericRepository<Friend>
     {
-        Task<List<Friend>> GetFriendsList();
     }
 }
