@@ -13,11 +13,11 @@ namespace BikeSocialEntities
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        
         [ForeignKey("Solicitor")]
         public int? solicitorId { get; set; }
         public virtual User solicitor {get; set;}
-        [Required]
+        
         [ForeignKey("Recieptient")]
         public int? recieptientId { get; set; }
         public virtual User recieptient { get; set;}

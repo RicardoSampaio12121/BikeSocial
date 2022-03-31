@@ -56,22 +56,22 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<IAthleteRepository, AthleteRepository>();
             services.AddScoped<IAthleteService, AthleteService>();
 
+            services.AddScoped<IConCoachEquiService, ConCoachEquiService>();
+            services.AddScoped<IConCoachEquiRepository, ConCoachEquiRepository>();
+
             services.AddScoped<IConAtletaEquiRepository, ConAtletaEquiRepository>();
             services.AddScoped<IConAtletaEquiService, ConAtletaEquiService>();
 
             services.AddScoped<IRoutePeopleInvitedRepository, RoutePeopleInvitedRepository>();
-<<<<<<< HEAD
 
             services.AddScoped<ITrainingInvitesRepository, TrainingInvitesRepository>();
             services.AddScoped<IAddAtletaRaceRepository, AddAtletaRaceRepository>();
-=======
             services.AddScoped<ITrainingInvitesRepository, TrainingInvitesRepository>();
             services.AddScoped<IAddAtletaRaceRepository, AddAtletaRaceRepository>();
             services.AddScoped<IFriendRepository, FriendRepository>();
             services.AddScoped<IFriendService, FriendService>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IProfileService, ProfileService>();
->>>>>>> 37d0c5178827276dd25d0e94d5f2d051967405d2
 
             services.AddScoped<IRaceResultsRepository, ReceResultsRepository>();
         }

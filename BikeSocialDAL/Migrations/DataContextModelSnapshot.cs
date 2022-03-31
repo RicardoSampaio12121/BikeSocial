@@ -226,10 +226,10 @@ namespace BikeSocialDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("recieptientId")
+                    b.Property<int?>("recieptientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("solicitorId")
+                    b.Property<int?>("solicitorId")
                         .HasColumnType("int");
 
                     b.Property<bool>("status")
@@ -680,15 +680,11 @@ namespace BikeSocialDAL.Migrations
                 {
                     b.HasOne("BikeSocialEntities.User", "recieptient")
                         .WithMany("recieptient")
-                        .HasForeignKey("recieptientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("recieptientId");
 
                     b.HasOne("BikeSocialEntities.User", "solicitor")
                         .WithMany("solicitor")
-                        .HasForeignKey("solicitorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("solicitorId");
 
                     b.Navigation("recieptient");
 

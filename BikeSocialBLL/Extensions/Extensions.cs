@@ -249,7 +249,6 @@ public static class Extensions
         return output;
     }
 
-<<<<<<< HEAD
     public static List<RaceResults> AsListRaceResult(this GetPublishResultsDto dto)
     {
         List<RaceResults> results = new();
@@ -267,9 +266,5 @@ public static class Extensions
         }
 
         return results;
-
     }
-
-=======
->>>>>>> 37d0c5178827276dd25d0e94d5f2d051967405d2
 }
