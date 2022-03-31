@@ -24,10 +24,10 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
-        [HttpPut("ConfirmRaceInvite")]
-        public async Task<ActionResult> ConfirmRaceInvite()
-        {
+        //[HttpPut("ConfirmRaceInvite")]
+        //public async Task<ActionResult> ConfirmRaceInvite()
+        //{
 
-        }
+        //}
     }
 }
