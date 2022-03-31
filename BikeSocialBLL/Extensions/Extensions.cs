@@ -14,6 +14,29 @@ public static class Extensions
         return user;
     }
 
+    public static Friend AsNewFriend(this CreateFriendDto friendDto)
+    {
+        Friend friend = new();
+
+        friend.solicitorId = friendDto.solicitorId;
+        friend.recieptientId = friendDto.recieptientId;
+        friend.status = false;
+        friend.timeSent = friendDto.timeSent;
+
+        return friend;
+    }
+
+    public static Friend AsFriend(this GetFriendDto friendDto)
+    {
+        Friend friend = new();
+
+        friend.solicitorId = friendDto.solicitorId;
+        friend.recieptientId = friendDto.recieptientId;
+        friend.status = friendDto.status;
+        friend.timeSent = friendDto.timeSent;
+
+        return friend;
+    }
     public static Trainings AsTraining(this CreateTrainingDto trainingDto)
     {
         Trainings train = new();

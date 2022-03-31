@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,5 +17,9 @@ namespace BikeSocialEntities
         public List<RoutePeople> RoutePeople { get; set; }
         public List<RoutePeopleInvited> PeopleInvited { get; set; }
 
+        [InverseProperty("Solicitor")]
+        public ICollection<Friend> solicitor {get; set;}
+        [InverseProperty("Recieptient")]
+        public ICollection<Friend> recieptient {get; set;}
     }
 }

@@ -8,9 +8,8 @@ namespace BikeSocialDTOs
 {
     public record ReturnFriendDto
     {
-        int Id { get; set; }
-        int solicitor { get; set; }
-        int receiptient { get; set; }
+        int solicitorId { get; set; }
+        int receiptientId { get; set; }
         bool status { get; set; }
         DateTime timeSent { get; set; }
     }

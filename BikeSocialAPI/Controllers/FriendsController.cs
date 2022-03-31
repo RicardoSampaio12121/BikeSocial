@@ -42,16 +42,6 @@ namespace BikeSocialAPI.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpPost("reject")]
-        public async Task<IActionResult> RejectFriend(GetFriendDto friendToReject)
-        {
-            if (await _friendService.RejectFriend(friendToReject) == false)
-            {
-                return BadRequest();
-            }
-            return Ok();
-        }
-
         [HttpPost("accept")]
         public async Task<IActionResult> AcceptFriend(GetFriendDto friendToAccept)
         {
