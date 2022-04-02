@@ -9,21 +9,21 @@ namespace BikeSocialBLL.Services
     public class RaceService : IRaceService
     {
         private readonly IRaceRepository _raceRepository;
-        private readonly IAddAtletaRaceRepository _addAtletaRaceRepository;
+        private readonly IRaceInvitesRepository _raceInvitesRepository;
         private readonly IRaceResultsRepository _raceResultsRepository;
-        
-        public RaceService(IRaceRepository raceRepository, IAddAtletaRaceRepository atheleteInviteRepo, IRaceResultsRepository raceResultsRepository)
+
+        public RaceService(IRaceRepository raceRepository, IRaceInvitesRepository raceInvitesRepository, IRaceResultsRepository raceResultsRepository)
         {
             _raceRepository = raceRepository;
-            _addAtletaRaceRepository = atheleteInviteRepo;
+            _raceInvitesRepository = raceInvitesRepository;
             _raceResultsRepository = raceResultsRepository;
         }
-        
+
         // Criar uma prova nova
         public async Task<bool> Create(CreateRaceDto race)
         {
             // Verificar se já existe uma prova com a mesma descrição e a mesma data ("iguais")
-            Race rc = await _raceRepository.Get(raceQuery => raceQuery.Description == race.description.ToString()&& 
+            Races rc = await _raceRepository.Get(raceQuery => raceQuery.description == race.description.ToString() &&
                                                     raceQuery.dateTime.ToString() == race.dateTime.ToString());
             // Não podem existir 2 provas "iguais"
             if (rc != null) return false;
@@ -31,12 +31,12 @@ namespace BikeSocialBLL.Services
             return true;
         }
 
-        public async Task<bool> AdicionarAP(CreateAddAtletaRaceDto adicionar)
+        public async Task<bool> AdicionarAP(GetRaceInviteDto adicionar)
         {
-            AddAtletaRace add = await _addAtletaRaceRepository.Get(adicionarQuery => adicionarQuery.IdAtleta == adicionar.id_atleta && adicionarQuery.RaceId == adicionar.raceId);
+            RaceInvites add = await _raceInvitesRepository.Get(adicionarQuery => adicionarQuery.AthletesId == adicionar.id_atleta && adicionarQuery.RacesId == adicionar.raceId);
 
             if (add != null) return false;
-            else await _addAtletaRaceRepository.Add(adicionar.AddAtR());
+            else await _raceInvitesRepository.Add(adicionar.AsRaceInvite());
             return true;
         }
 

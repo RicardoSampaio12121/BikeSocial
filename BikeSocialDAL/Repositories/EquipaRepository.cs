@@ -9,7 +9,7 @@ using BikeSocialDTOs;
 
 namespace BikeSocialDAL.Repositories
 {
-    public class EquipaRepository : GenericRepository<Equipa>, IEquipaRepository
+    public class EquipaRepository : GenericRepository<Teams>, IEquipaRepository
     {
         private readonly DataContext.DataContext _dbContext;
         public EquipaRepository(DataContext.DataContext dataContext) : base(dataContext)

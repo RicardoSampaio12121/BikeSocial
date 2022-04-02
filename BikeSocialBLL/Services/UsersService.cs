@@ -23,10 +23,10 @@ namespace BikeSocialBLL.Services
             _userRepository = userRepository;
         }
 
-        public async Task<bool> Login(GetUserDto user)
+        public async Task<bool> Login(GetUserLoginDto user)
         {
             // Verificar se o utilizador existe
-            User us = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString());
+            Users us = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString());
             // Se não existir, não pode fazer login
             if (us == null) return false; 
             else 
@@ -36,10 +36,10 @@ namespace BikeSocialBLL.Services
                 
                 // Pegar na hashed password guardada na BD
                 string savedPasswordHash = us.password;
-                
+              
                 // Extrair os bytes
                 byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
-                
+              
                 // Obter o "salt"
                 byte[] salt = new byte[16];
                 Array.Copy(hashBytes, 0, salt, 0, 16);
@@ -47,7 +47,7 @@ namespace BikeSocialBLL.Services
                 // Calcular a hash na pass que o user acabou de introduzir
                 var pbkdf2 = new Rfc2898DeriveBytes(user.password, salt, 100000);
                 byte[] hash = pbkdf2.GetBytes(20);
-                
+              
                 // Comparar os resultados
                 for (int i=0; i < 20; i++)
                     if (hashBytes[i+16] != hash[i])
@@ -59,10 +59,10 @@ namespace BikeSocialBLL.Services
         }
 
         // Registar um novo utilizador
-        public async Task<bool> Register(GetUserDto user)
+        public async Task<bool> Register(GetUserRegisterDto user)
         {
             // Verificar se já existe um utilizador com o mesmo nome
-            User getResult = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString());
+            Users getResult = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString());
             if (getResult != null) return false; // Não podem existir 2 users com o mesmo nome
             else
             {
@@ -88,7 +88,7 @@ namespace BikeSocialBLL.Services
                 string savedPasswordHash = Convert.ToBase64String(hashBytes);
                 user.password = savedPasswordHash;
                 ////////////////////////////////////////////////////////////////////////////////
-                
+               
                 await _userRepository.Add(user.AsUser());
                 return true;
             }

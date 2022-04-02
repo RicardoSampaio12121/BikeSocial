@@ -9,7 +9,7 @@ using BikeSocialDAL.DataContext;
 
 namespace BikeSocialDAL.Repositories
 {
-    public class RouteRepository : GenericRepository<Route>, IRouteRepository
+    public class RouteRepository : GenericRepository<Routes>, IRouteRepository
     {
         private readonly DataContext.DataContext _context;
         private readonly DataContext.DataContext _peopleInvitedContext;

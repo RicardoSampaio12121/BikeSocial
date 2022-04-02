@@ -10,9 +10,9 @@ namespace BikeSocialBLL.Services.IServices
 {
     public interface IUserService
     {
-        Task<bool> Login(GetUserDto userDto);
+        Task<bool> Login(GetUserLoginDto dto);
         //Task<User> Login(GetUserDto userDto); // para testar
         
-        Task<bool> Register(GetUserDto userDto);
+        Task<bool> Register(GetUserRegisterDto dto);
     }
 }

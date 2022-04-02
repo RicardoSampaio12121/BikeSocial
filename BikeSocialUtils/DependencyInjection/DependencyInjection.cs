@@ -37,43 +37,37 @@ namespace BikeSocialUtils.DependencyInjection
             });
 
             //-------------------------------------------------Add scopes here---------------------------------------------------------------------------------------------//
-            //IE: services.AddScoped<ITeste, testeAddUser>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UsersService>();
-            
-            services.AddScoped<IEquipaRepository, EquipaRepository>();
-            services.AddScoped<IEquipaService, EquipaService>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddScoped<ITrainingsRepository, TrainingsRepository>();
             services.AddScoped<ITrainingsService, TrainingsService>();
-            
-            services.AddScoped<IRaceRepository, RaceRepository>();
-            services.AddScoped<IRaceService, RaceService>();
+            services.AddScoped<ITrainingsRepository, TrainingsRepository>();
+            services.AddScoped<ITrainingInvitesRepository, TrainingInvitesRepository>();
 
             services.AddScoped<IRoutesService, RoutesService>();
             services.AddScoped<IRouteRepository, RouteRepository>();
-
-            services.AddScoped<IAthleteRepository, AthleteRepository>();
-            services.AddScoped<IAthleteService, AthleteService>();
-
-            services.AddScoped<IConCoachEquiService, ConCoachEquiService>();
-            services.AddScoped<IConCoachEquiRepository, ConCoachEquiRepository>();
-
-            services.AddScoped<IConAtletaEquiRepository, ConAtletaEquiRepository>();
-            services.AddScoped<IConAtletaEquiService, ConAtletaEquiService>();
-
             services.AddScoped<IRoutePeopleInvitedRepository, RoutePeopleInvitedRepository>();
 
-            services.AddScoped<ITrainingInvitesRepository, TrainingInvitesRepository>();
-            services.AddScoped<IAddAtletaRaceRepository, AddAtletaRaceRepository>();
-            services.AddScoped<ITrainingInvitesRepository, TrainingInvitesRepository>();
-            services.AddScoped<IAddAtletaRaceRepository, AddAtletaRaceRepository>();
-            services.AddScoped<IFriendRepository, FriendRepository>();
-            services.AddScoped<IFriendService, FriendService>();
-            services.AddScoped<IProfileRepository, ProfileRepository>();
-            services.AddScoped<IProfileService, ProfileService>();
-
+            services.AddScoped<IRaceService, RaceService>();
+            services.AddScoped<IRaceRepository, RaceRepository>();
+            services.AddScoped<IRaceInvitesRepository, RaceInvitesRepository>();
             services.AddScoped<IRaceResultsRepository, ReceResultsRepository>();
+
+            services.AddScoped<IEquipaService, EquipaService>();
+            services.AddScoped<IEquipaRepository, EquipaRepository>();
+            services.AddScoped<ITeamAthletesInviteRepository, TeamAthletesInviteRepository>();
+            services.AddScoped<ITeamCoachesInviteRepository, TeamCoachesInviteRepository>();
+
+            services.AddScoped<IAthleteService, AthleteService>();
+            services.AddScoped<IAthleteRepository, AthleteRepository>();
+
+            services.AddScoped<IFriendService, FriendService>();
+            services.AddScoped<IFriendRepository, FriendRepository>();
+
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IProfileRepository, ProfileRepository>();
+
+
         }
     }
 }

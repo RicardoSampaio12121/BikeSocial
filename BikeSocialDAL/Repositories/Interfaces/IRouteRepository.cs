@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDAL.Repositories.Interfaces
 {
-    public interface IRouteRepository : IGenericRepository<Route>
+    public interface IRouteRepository : IGenericRepository<Routes>
     {
     }
 }

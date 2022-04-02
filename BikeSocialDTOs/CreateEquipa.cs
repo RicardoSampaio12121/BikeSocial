@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record CreateEquipa(int coachId, int clubeId, 
-        string name, string local);
+    public record CreateEquipaDto(int clubI, 
+        string name, int placeId, int federationId);
   
 }

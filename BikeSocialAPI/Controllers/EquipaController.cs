@@ -19,7 +19,7 @@ namespace BikeSocialAPI.Controllers
         }
 
         [HttpPost("criar")]
-        public async Task<IActionResult> Equipa(CreateEquipa equipa)
+        public async Task<IActionResult> Equipa(CreateEquipaDto equipa)
         {
             if( await _equipaService.Create(equipa) ==false)
                 return BadRequest();
@@ -35,6 +35,15 @@ namespace BikeSocialAPI.Controllers
 
             return Ok();
 
+        }
+
+        [HttpPost("conviteTreinador")]
+        public async Task<IActionResult> Convite(CreateConvCoachEquiDto convite)
+        {
+            if (await _equipaService.ConviteCE(convite) == false)
+                return BadRequest();
+
+            return Ok();
         }
     }
 }

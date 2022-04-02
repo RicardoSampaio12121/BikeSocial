@@ -3,7 +3,7 @@ using BikeSocialEntities;
 
 namespace BikeSocialDAL.Repositories
 {
-    public class AthleteRepository : GenericRepository<Athlete>, IAthleteRepository
+    public class AthleteRepository : GenericRepository<Athletes>, IAthleteRepository
     {
         private readonly DataContext.DataContext _dbContext;
         public AthleteRepository(DataContext.DataContext dataContext) : base(dataContext)

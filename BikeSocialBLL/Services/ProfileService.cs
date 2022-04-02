@@ -23,9 +23,9 @@ namespace BikeSocialBLL.Services
 
         public async Task<ReturnProfileDto> ViewProfile(int userId)
         {
-            Profile profileToRetrieve = await _profileRepository.Get(profileQuery => profileQuery.userId == userId);
+            Profile profileToRetrieve = await _profileRepository.Get(profileQuery => profileQuery.UsersId == userId);
 
-            if(profileToRetrieve == null) return null;
+            if (profileToRetrieve == null) return null;
 
             return profileToRetrieve.AsReturnProfile();
         }

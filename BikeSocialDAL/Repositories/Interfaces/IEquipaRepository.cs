@@ -9,8 +9,8 @@ using System.Linq.Expressions;
 
 namespace BikeSocialDAL.Repositories.Interfaces
 {
-    public interface IEquipaRepository : IGenericRepositoryEquipa<Equipa>
+    public interface IEquipaRepository : IGenericRepositoryEquipa<Teams>
     {
-        
+
     }
 }

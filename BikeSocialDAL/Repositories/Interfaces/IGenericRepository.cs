@@ -49,7 +49,7 @@ namespace BikeSocialDAL.Repositories.Interfaces
         /// Inserts a single entity/row in the database
         /// </summary>
         /// <param name="entity"></param>
-        Task<T> Add(T entity);
+       Task<T> Add(T entity);
         /// <summary>
         /// Updates an entity/row in the database
         /// </summary>

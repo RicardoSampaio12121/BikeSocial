@@ -39,15 +39,15 @@ namespace BikeSocialBLL.Services
         public async Task<bool> AddFriend(CreateFriendDto friend)
         {
             //Buscar os 2 users
-            User solicitor = await _userRepository.Get(userQuery => userQuery.id == friend.solicitorId);
-            User receiptient = await _userRepository.Get(userQuery => userQuery.id == friend.recieptientId);
-            
-            if(solicitor == null || receiptient == null) return false;
+            Users solicitor = await _userRepository.Get(userQuery => userQuery.Id == friend.solicitorId);
+            Users receiptient = await _userRepository.Get(userQuery => userQuery.Id == friend.recieptientId);
+
+            if (solicitor == null || receiptient == null) return false;
 
             //Query para buscar se já existe a relação.
             Friend friendCheck = await _friendRepository.Get(friendQuery => ((friendQuery.solicitorId == friend.solicitorId) && (friendQuery.recieptientId == friend.recieptientId) || (friendQuery.recieptientId == friend.solicitorId) && (friendQuery.solicitorId == friend.recieptientId)));
 
-            if(friendCheck != null) return false;
+            if (friendCheck != null) return false;
             else await _friendRepository.Add(friend.AsNewFriend());
 
             return true;
@@ -62,17 +62,17 @@ namespace BikeSocialBLL.Services
         }
         public async Task<List<ReturnFriendDto>> ViewFriends(int userId)
         {
-            User user = await _userRepository.Get(userQuery => userQuery.id == userId);
+            Users user = await _userRepository.Get(userQuery => userQuery.Id == userId);
             if (user == null) return null;
             List<Friend> friendList = await _friendRepository.GetList(friendQuery => friendQuery.solicitorId == userId || friendQuery.recieptientId == userId);
-            if(friendList == null)
+            if (friendList == null)
             {
                 return null;
             }
 
             List<ReturnFriendDto> friendListDto = new List<ReturnFriendDto>();
 
-            foreach(Friend f in friendList)
+            foreach (Friend f in friendList)
             {
                 ReturnFriendDto dtoFriend = new ReturnFriendDto();
                 dtoFriend.solicitorId = (int)f.solicitorId;

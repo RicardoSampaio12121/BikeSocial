@@ -29,27 +29,29 @@ namespace BikeSocialBLL.Services
 
         public async Task<bool> AddWithPeople(CreateRoutePeopleDto createRoutePeopleDto)
         {
+            // TODO: Verificar se rota já existe
+
             // Adicionar rota
             await _routeRepository.Add(createRoutePeopleDto.AsRoute()); //TODO: Verificar se retornou com sucesso
 
             // Buscar id da rota
-            var createdRoute = await _routeRepository.Get(routeQuery => routeQuery.userId == createRoutePeopleDto.userId && routeQuery.dateTime == createRoutePeopleDto.dateTime);
+            var createdRoute = await _routeRepository.Get(routeQuery => routeQuery.UsersId == createRoutePeopleDto.userId && routeQuery.dateTime == createRoutePeopleDto.dateTime && routeQuery.PlacesId == createRoutePeopleDto.placeId);
 
             // Adicionar convites
-            await _routePeopleInviredRepository.InvitePeopleToRoute(createRoutePeopleDto.AsListRoutePeopleInvited(createdRoute.id));
-            
+            await _routePeopleInviredRepository.InvitePeopleToRoute(createRoutePeopleDto.AsListRoutePeopleInvited(createdRoute.Id));
+
             return true;
         }
 
         public async Task<bool> Invite(GetInviteToRouteDto dto)
         {
             // Verifica se user já está convidado
-            var _ = await _routePeopleInviredRepository.Get(query => query.userId == dto.userId && query.routeId == dto.routeId);
-            
+            var _ = await _routePeopleInviredRepository.Get(query => query.UsersId == dto.userId && query.RoutesId == dto.routeId);
+
             if (_ != null) return false;
 
             // Adiciona invite
-            await _routePeopleInviredRepository.Add(dto.AsRoutePeopleInvite());
+            await _routePeopleInviredRepository.Add(dto.AsRouteInvite());
             return true;
 
         }

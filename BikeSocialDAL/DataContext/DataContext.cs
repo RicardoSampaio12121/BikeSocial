@@ -16,25 +16,46 @@ namespace BikeSocialDAL.DataContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
     => options.UseSqlServer("Server = localhost; Database = BikeSocialDB; Trusted_Connection = True;");
+        
+        //-----------------------Definição das tabelas--------------------------------------------//
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Place> Places { get; set; }
-        public DbSet<TrainingType> TrainingTypes{ get; set; }
-        public DbSet<Plan> TrainingPlans { get; set; }
-        public DbSet<Trainings> Trainings { get; set; }
-        public DbSet<Equipa> Equipa { get; set; }
-        public DbSet<Race> Race { get; set; }
-        public DbSet<Athlete> Athlete { get; set; }
-        public DbSet<Route> Route { get; set; }
-        public DbSet<RouteType> RouteTypes{ get; set; }
-        public DbSet<TeamDirector> Directors { get; set; }
-        public DbSet<Club> Clubs { get; set; }
-        public DbSet<Coach> Coaches { get; set; }
-        public DbSet<ConAtletaEqui> ConAtletaEqui { get; set; }
-        public DbSet<ConCoachEqui> ConCoachEqui { get; set; }
-        public DbSet<RoutePeople> RoutePeople { get; set; }
-        public DbSet<RoutePeopleInvited> RoutePeopleInvited { get; set; }
-        public DbSet<TrainingInvites> TrainingInvites { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<UserTypes> UserTypes { get; set; }
+
+        public DbSet<Places> Places { get; set; }
+        
+        public DbSet<Athletes> Athletes { get; set; }
+        public DbSet<AthleteTypes> AthleteTypes { get; set; }
+        public DbSet<AthleteParents> AthleteParents { get; set; }
+
+        public DbSet<Teams> Teams { get; set; }
+        public DbSet<TeamInviteAthletes> TeamInviteAthletes { get; set; }
+        public DbSet<TeamInviteCoaches> TeamInviteCoaches { get; set; }
+
+        public DbSet<Races> Races { get; set; }
+        public DbSet<RaceTypes> RaceTypes { get; set; }
+        public DbSet<RaceInvites> RaceInvites { get; set; }
         public DbSet<RaceResults> RaceResults { get; set; }
+
+        public DbSet<Trainings> Trainings { get; set; }
+        public DbSet<TrainingInvites> TrainingInvites { get; set; }
+        public DbSet<TrainingTypes> TrainingTypes { get; set; }
+
+        public DbSet<Routes> Routes { get; set; }
+        public DbSet<RouteTypes> RouteTypes { get; set; }
+        public DbSet<RouteInvites> RouteInvites { get; set; }
+
+        public DbSet<Coaches> Coaches { get; set; }
+
+        public DbSet<Clubs> Clubs { get; set; }
+
+        public DbSet<Directors> Directors { get; set; }
+        public DbSet<DirectorTypes> DirectorTypes { get; set; }
+
+        public DbSet<Federations> Federations { get; set; }
+
+        public DbSet<Friend> Friend { get; set; }
+
+        public DbSet<Profile> Profiles { get; set; }
     }
 }

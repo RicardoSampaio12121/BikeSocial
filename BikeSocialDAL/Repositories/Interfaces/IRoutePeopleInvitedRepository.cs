@@ -7,8 +7,8 @@ using BikeSocialEntities;
 
 namespace BikeSocialDAL.Repositories.Interfaces
 {
-    public interface IRoutePeopleInvitedRepository : IGenericRepository<RoutePeopleInvited>
+    public interface IRoutePeopleInvitedRepository : IGenericRepository<RouteInvites>
     {
-        Task<bool> InvitePeopleToRoute(List<RoutePeopleInvited> people);
+        Task<bool> InvitePeopleToRoute(List<RouteInvites> people);
     }
 }

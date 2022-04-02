@@ -14,35 +14,47 @@ namespace BikeSocialBLL.Services
     public class EquipaService : IEquipaService
     {
         private readonly IEquipaRepository _equipaRepository;
-        private readonly IConAtletaEquiRepository _inviteAthleteTeamRepo;
+        private readonly ITeamAthletesInviteRepository _inviteAthleteTeamRepo;
+        private readonly ITeamCoachesInviteRepository _inviteCoachesTeamRepo;
 
-        public EquipaService(IEquipaRepository equipaRepository, IConAtletaEquiRepository inviteAthleteTeamRepo)
+        public EquipaService(IEquipaRepository equipaRepository, ITeamAthletesInviteRepository inviteAthleteTeamRepo, ITeamCoachesInviteRepository inviteCoachesTeamRepo)
         {
             _equipaRepository = equipaRepository;
             _inviteAthleteTeamRepo = inviteAthleteTeamRepo;
+            _inviteCoachesTeamRepo = inviteCoachesTeamRepo;
         }
 
-        
-        public async Task<bool> Create(CreateEquipa equipa)
+
+        public async Task<bool> Create(CreateEquipaDto equipa)
         {
-            Equipa eq = await _equipaRepository.Get(equipaQuery => equipaQuery.name == equipa.name.ToString() &&
-            equipaQuery.local == equipa.local.ToString() && equipaQuery.clubId == equipa.clubeId
-            && equipaQuery.coachId == equipa.coachId);
+            Teams eq = await _equipaRepository.Get(equipaQuery => equipaQuery.Name == equipa.name.ToString() &&
+            equipaQuery.PlacesId == equipa.placeId && equipaQuery.ClubsId == equipa.clubI);
 
             //verifica se existe alguma equipa com os dados que recebe de cima
             if (eq != null) return false;
-            else await _equipaRepository.Add(equipa.CEquipa());
-                return true;
+            else await _equipaRepository.Add(equipa.AsTeam());
+            return true;
         }
 
         public async Task<bool> ConviteAE(CreateConvAtletaEquiDto convite)
         {
-            ConAtletaEqui con = await _inviteAthleteTeamRepo.Get(conviteQuery => conviteQuery.Equipaid == convite.id_equipa &&
-            conviteQuery.AthleteId == convite.id_athelete);
+            TeamInviteAthletes con = await _inviteAthleteTeamRepo.Get(conviteQuery => conviteQuery.TeamsId == convite.id_equipa &&
+            conviteQuery.AthletesId == convite.id_athelete);
 
             if (con != null) return false;
-            else await _inviteAthleteTeamRepo.Add(convite.ConAtEq());
+            else await _inviteAthleteTeamRepo.Add(convite.AsTeamAthleteInvite());
             return true;
         }
+
+        public async Task<bool> ConviteCE(CreateConvCoachEquiDto convite)
+        {
+            TeamInviteCoaches con = await _inviteCoachesTeamRepo.Get(conviteQuery => conviteQuery.TeamsId == convite.idEquipa &&
+            conviteQuery.CoachesId == convite.idCoach);
+
+            if (con != null) return false;
+            else await _inviteCoachesTeamRepo.Add(convite.AsTeamInviteCoaches());
+            return true;
+        }
+
     }
 }

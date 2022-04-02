@@ -8,7 +8,7 @@ using BikeSocialDAL.Repositories.Interfaces;
 
 namespace BikeSocialDAL.Repositories
 {
-    public class RoutePeopleInvitedRepository : GenericRepository<RoutePeopleInvited>, IRoutePeopleInvitedRepository
+    public class RoutePeopleInvitedRepository : GenericRepository<RouteInvites>, IRoutePeopleInvitedRepository
     {
         private readonly DataContext.DataContext _dataContext;
 
@@ -17,7 +17,7 @@ namespace BikeSocialDAL.Repositories
             _dataContext = dataContext;
         }
 
-        public async Task<bool> InvitePeopleToRoute(List<RoutePeopleInvited> people)
+        public async Task<bool> InvitePeopleToRoute(List<RouteInvites> people)
         {
             await _dataContext.AddRangeAsync(people);
             await _dataContext.SaveChangesAsync();

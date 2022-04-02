@@ -33,11 +33,13 @@ namespace BikeSocialBLL.Services
 
         public async Task<bool> CreateWithInvites(CreateTrainingWithInvitesDto dto)
         {
+            //TODO: Verificar se já não existe um treino igual
+
             // Criar treino
             await _repository.Add(dto.AsTraining());
 
             // Recolher id do treino
-            var createdTraining = await _repository.Get(query => query.Coachid == dto.trainerId && query.name == dto.name && query.dateTime == dto.dateTime);
+            var createdTraining = await _repository.Get(query => query.TeamsId == dto.teamId && query.Name == dto.name && query.dateTime == dto.dateTime);
             int trainingId = createdTraining.Id;
 
             // Adicionar atletas
@@ -50,7 +52,7 @@ namespace BikeSocialBLL.Services
         {
             //Verificar se ainda não está convidado
 
-            var training = await _invitesRepository.Get(query => query.TrainingsId == dto.trainingId && query.athleteId == dto.athleteId);
+            var training = await _invitesRepository.Get(query => query.TrainingsId == dto.trainingId && query.AthletesId == dto.athleteId);
             if (training != null) return false;
 
             await _invitesRepository.Add(dto.AsTrainingAthletesInvite());

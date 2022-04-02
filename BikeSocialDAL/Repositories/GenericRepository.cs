@@ -37,7 +37,7 @@ namespace BikeSocialDAL.Repositories
 
         public async Task<List<TEntity>> GetList(Expression<Func<TEntity, bool>> filter = null)
         {
-            if (filter == null)
+           if (filter == null)
             {
                 return await _dbContext.Set<TEntity>().ToListAsync();
             }

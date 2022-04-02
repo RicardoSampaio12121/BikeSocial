@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record CreateRouteDto(int userId, string Description, DateTime dateTime, int placeId, int routeTypeId, float estimatedTime, float distance);
+    public record CreateRouteDto(int userId, bool Public, string Description, DateTime dateTime, float estimatedTime, float distance, int placeId, int routeTypeId);
 }

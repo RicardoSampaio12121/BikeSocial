@@ -18,10 +18,9 @@ namespace BikeSocialAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(GetUserDto user)
-        //public async Task<ActionResult<User>> Login(GetUserDto user) // para testar
+        public async Task<IActionResult> Login(GetUserLoginDto dto)
         {
-            var output = await _userService.Login(user);
+            var output = await _userService.Login(dto);
             
             if (output) return Ok();
             else return BadRequest();
@@ -29,7 +28,7 @@ namespace BikeSocialAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(GetUserDto user)
+        public async Task<IActionResult> Register(GetUserRegisterDto user)
         {
             var output = await _userService.Register(user);
 
