@@ -8,3 +8,4 @@ riderModule.iml
 /BikeSocialDAL/Migrations
 .vs/BikeSocial
 .vscode/
+.idea/
