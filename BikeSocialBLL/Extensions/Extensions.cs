@@ -267,4 +267,16 @@ public static class Extensions
 
         return results;
     }
+    
+    public static Plans AsPlan(this CreatePlanDto planDto)
+    {
+        Plans plan = new();
+
+        plan.description = planDto.description;
+        plan.startTime = planDto.startTime;
+        plan.finishTime = planDto.finishTime;
+        plan.EstimatedTime = planDto.estimatedTime;
+        
+        return plan;
+    }
 }
