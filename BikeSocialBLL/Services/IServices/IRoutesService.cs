@@ -12,5 +12,6 @@ namespace BikeSocialBLL.Services.IServices
         Task<bool> Add(CreateRouteDto createRoutDto);
         Task<bool> AddWithPeople(CreateRoutePeopleDto createRoutePeopleDto);
         Task<bool> Invite(GetInviteToRouteDto dto);
+        Task<bool> ChangeRouteVisibility(int routeId);
     }
 }

@@ -36,6 +36,13 @@ namespace BikeSocialAPI.Controllers
             return BadRequest();
         }
 
+        [HttpPut("changeRouteVisibility/{routeId}")]
+        public async Task<ActionResult> ChangeRouteVisibility(int routeId)
+        {
+            if (await _routesService.ChangeRouteVisibility(routeId) == false)
+                return BadRequest();
+            return Ok();
+        }
 
     }
 }
