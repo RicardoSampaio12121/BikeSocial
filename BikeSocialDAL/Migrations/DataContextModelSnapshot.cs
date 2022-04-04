@@ -406,7 +406,7 @@ namespace BikeSocialDAL.Migrations
                     b.Property<int>("RoutesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsersId")
+                    b.Property<int?>("UsersId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -445,7 +445,7 @@ namespace BikeSocialDAL.Migrations
                     b.Property<int>("RouteTypesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsersId")
+                    b.Property<int?>("UsersId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("dateTime")
@@ -571,7 +571,7 @@ namespace BikeSocialDAL.Migrations
                     b.Property<bool>("Confirmation")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TrainingsId")
+                    b.Property<int?>("TrainingsId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -604,7 +604,7 @@ namespace BikeSocialDAL.Migrations
                     b.Property<int>("PlacesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamsId")
+                    b.Property<int?>("TeamsId")
                         .HasColumnType("int");
 
                     b.Property<int>("TrainingTypesId")
@@ -855,9 +855,7 @@ namespace BikeSocialDAL.Migrations
 
                     b.HasOne("BikeSocialEntities.Users", null)
                         .WithMany("RouteInvites")
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsersId");
                 });
 
             modelBuilder.Entity("BikeSocialEntities.Routes", b =>
@@ -876,9 +874,7 @@ namespace BikeSocialDAL.Migrations
 
                     b.HasOne("BikeSocialEntities.Users", null)
                         .WithMany("Routes")
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsersId");
                 });
 
             modelBuilder.Entity("BikeSocialEntities.TeamInviteAthletes", b =>
@@ -934,9 +930,7 @@ namespace BikeSocialDAL.Migrations
 
                     b.HasOne("BikeSocialEntities.Trainings", null)
                         .WithMany("TrainingInvites")
-                        .HasForeignKey("TrainingsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TrainingsId");
                 });
 
             modelBuilder.Entity("BikeSocialEntities.Trainings", b =>
@@ -949,9 +943,7 @@ namespace BikeSocialDAL.Migrations
 
                     b.HasOne("BikeSocialEntities.Teams", null)
                         .WithMany("Trainings")
-                        .HasForeignKey("TeamsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeamsId");
 
                     b.HasOne("BikeSocialEntities.TrainingTypes", null)
                         .WithMany("Trainings")
