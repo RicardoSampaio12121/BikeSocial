@@ -27,6 +27,7 @@ namespace BikeSocialDAL.DataContext
         public DbSet<Athletes> Athletes { get; set; }
         public DbSet<AthleteTypes> AthleteTypes { get; set; }
         public DbSet<AthleteParents> AthleteParents { get; set; }
+        public DbSet<AthleteFederationRequests> AthleteFederationRequests { get; set; }
 
         public DbSet<Teams> Teams { get; set; }
         public DbSet<TeamInviteAthletes> TeamInviteAthletes { get; set; }
