@@ -40,5 +40,13 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
+        [HttpPost("federationRequest")]
+        public async Task<ActionResult> FederationRequest(GetAthleteFederationRequestDto dto)
+        {
+            if (await _athleteService.MakeFederationRequest(dto) == false)
+                return BadRequest();
+            return Ok();
+        }
+
     }
 }

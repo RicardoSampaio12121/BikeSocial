@@ -291,4 +291,14 @@ public static class Extensions
 
         return output;
     }
+
+    public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto)
+    {
+        AthleteFederationRequests output = new();
+
+        output.AthletesId = dto.athleteId;
+        output.FederationsId = dto.federationId;
+
+        return output;
+    }
 }
