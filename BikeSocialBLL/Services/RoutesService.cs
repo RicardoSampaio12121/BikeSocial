@@ -55,5 +55,22 @@ namespace BikeSocialBLL.Services
             return true;
 
         }
+        
+        public async Task<bool> ChangeRouteVisibility(int routeId)
+        {
+            // Verificar se o percurso existe
+            var searchResult = await _routeRepository.Get(query => query.Id == routeId);
+            if (searchResult == null) return false;
+            
+            // Procurar informações do percurso
+            var route = await _routeRepository.Get(query => query.Id == searchResult.Id);
+            
+            // Atualizar a tabela dos percursos
+            route.Public = !route.Public; // trocar valor (público->privado OU privado->público)
+            await _routeRepository.Update(route);
+
+            return true;
+        }
+        
     }
 }
