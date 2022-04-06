@@ -57,5 +57,10 @@ namespace BikeSocialDAL.DataContext
         public DbSet<Friend> Friend { get; set; }
 
         public DbSet<Profile> Profiles { get; set; }
+        
+        public DbSet<Achievements> Achievements { get; set; }
+        public DbSet<AchievementTypes> AchievementTypes { get; set; }
+        
+        public DbSet<Prizes> Prizes { get; set; }
     }
 }

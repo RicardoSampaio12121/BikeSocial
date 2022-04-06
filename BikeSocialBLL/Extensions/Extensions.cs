@@ -191,10 +191,6 @@ public static class Extensions
 
     }
 
-
-
-
-
     public static RouteInvites AsRouteInvite(this GetInviteToRouteDto dto)
     {
         RouteInvites output = new();
@@ -267,4 +263,14 @@ public static class Extensions
 
         return results;
     }
+    
+    public static Prizes AsPrize(this CreatePrizeDto prizeDto)
+    {
+        Prizes prize = new();
+
+        prize.Name = prizeDto.name;
+
+        return prize;
+    }
+    
 }
