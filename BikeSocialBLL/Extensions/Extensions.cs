@@ -155,6 +155,8 @@ public static class Extensions
         equipa.ClubsId = equipaDto.clubI;
         equipa.FederationsId = equipaDto.federationId;
 
+
+
         return equipa;
     }
 
@@ -278,5 +280,15 @@ public static class Extensions
         plan.EstimatedTime = planDto.estimatedTime;
         
         return plan;
+    }
+
+    public static TeamFederationRequests AsTeamFederationRequest(this GetTeamFederationRequestDto dto)
+    {
+        TeamFederationRequests output = new();
+
+        output.TeamsId = dto.teamId;
+        output.FederationsId = dto.federationId;
+
+        return output;
     }
 }
