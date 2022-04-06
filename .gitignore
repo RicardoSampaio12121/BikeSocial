@@ -5,6 +5,7 @@ riderModule.iml
 /_ReSharper.Caches/
 /.vs/BikeSocial/v16
 /.vs
+.vs/
 /BikeSocialDAL/Migrations
 .vs/BikeSocial
 .vscode/
