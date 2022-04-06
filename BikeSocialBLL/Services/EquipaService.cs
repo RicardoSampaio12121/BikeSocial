@@ -16,12 +16,14 @@ namespace BikeSocialBLL.Services
         private readonly IEquipaRepository _equipaRepository;
         private readonly ITeamAthletesInviteRepository _inviteAthleteTeamRepo;
         private readonly ITeamCoachesInviteRepository _inviteCoachesTeamRepo;
+        private readonly ITeamFederationRequestRepository _teamFederationRequestRepo;
 
-        public EquipaService(IEquipaRepository equipaRepository, ITeamAthletesInviteRepository inviteAthleteTeamRepo, ITeamCoachesInviteRepository inviteCoachesTeamRepo)
+        public EquipaService(IEquipaRepository equipaRepository, ITeamAthletesInviteRepository inviteAthleteTeamRepo, ITeamCoachesInviteRepository inviteCoachesTeamRepo, ITeamFederationRequestRepository teamFederationRequestRepo)
         {
             _equipaRepository = equipaRepository;
             _inviteAthleteTeamRepo = inviteAthleteTeamRepo;
             _inviteCoachesTeamRepo = inviteCoachesTeamRepo;
+            _teamFederationRequestRepo = teamFederationRequestRepo;
         }
 
 
@@ -56,5 +58,19 @@ namespace BikeSocialBLL.Services
             return true;
         }
 
+        public async Task<bool> FederationRequest(GetTeamFederationRequestDto dto)
+        {
+            // Verificar se request já existe
+            var exists = await _teamFederationRequestRepo.Get(query => query.TeamsId == dto.teamId && query.FederationsId == dto.federationId);
+
+            // Retorna false se já existe
+            if (exists != null)
+                return false;
+
+            // Adicionar request à tabela
+            await _teamFederationRequestRepo.Add(dto.AsTeamFederationRequest());
+
+            return true;
+        }   
     }
 }
