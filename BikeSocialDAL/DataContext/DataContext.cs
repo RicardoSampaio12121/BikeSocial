@@ -57,5 +57,7 @@ namespace BikeSocialDAL.DataContext
         public DbSet<Friend> Friend { get; set; }
 
         public DbSet<Profile> Profiles { get; set; }
+        
+        public DbSet<Plans> Plans { get; set; }
     }
 }
