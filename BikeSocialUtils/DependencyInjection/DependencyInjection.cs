@@ -71,6 +71,8 @@ namespace BikeSocialUtils.DependencyInjection
 
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<IPlanRepository, PlanRepository>();
+
+            services.AddScoped<IFederationService, FederationService>();
         }
     }
 }
