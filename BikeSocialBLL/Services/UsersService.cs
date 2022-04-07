@@ -19,11 +19,13 @@ namespace BikeSocialBLL.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IRecoveryPasswordCodesRepository _recoveryPasswordRepo;
+        private readonly IProfileRepository _profileRepository;
 
-        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo)
+        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo, IProfileRepository profileRepository)
         {
             _userRepository = userRepository;
             _recoveryPasswordRepo = recoveryPasswordRepo;
+            _profileRepository = profileRepository;
         }
 
         
@@ -139,6 +141,29 @@ namespace BikeSocialBLL.Services
 
             // Apagar registo da tabela de códigos
             await _recoveryPasswordRepo.Delete(checker);
+
+            return true;
+        }
+
+        public async Task<bool> EditInformation(GetUpdatedInformationDto dto)
+        {
+            var user = await _userRepository.Get(query => query.Id == dto.userId);
+            var newPw = PasswordsUtils.Encrypt(dto.newPassword);
+            
+            user.email = dto.newEmail;
+            user.password = dto.newPassword;
+            user.birthDate = dto.newBirthDate;
+
+            await _userRepository.Update(user);
+            return true;
+        }
+
+        public async Task<bool> UpdatePrivacySettings(GetUpdatedPrivacySettingsDto dto)
+        {
+            var userProfile = await _profileRepository.Get(query => query.UsersId == dto.userId);
+            userProfile.profileVisibility = dto.profileVisibility;
+
+            await _profileRepository.Update(userProfile);
 
             return true;
         }
