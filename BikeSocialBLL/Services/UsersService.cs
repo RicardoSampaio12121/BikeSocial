@@ -19,11 +19,13 @@ namespace BikeSocialBLL.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IRecoveryPasswordCodesRepository _recoveryPasswordRepo;
+        private readonly IProfileRepository _profileRepository;
 
-        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo)
+        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo, IProfileRepository profileRepository)
         {
             _userRepository = userRepository;
             _recoveryPasswordRepo = recoveryPasswordRepo;
+            _profileRepository = profileRepository;
         }
 
         
@@ -153,6 +155,16 @@ namespace BikeSocialBLL.Services
             user.birthDate = dto.newBirthDate;
 
             await _userRepository.Update(user);
+            return true;
+        }
+
+        public async Task<bool> UpdatePrivacySettings(GetUpdatedPrivacySettingsDto dto)
+        {
+            var userProfile = await _profileRepository.Get(query => query.UsersId == dto.userId);
+            userProfile.profileVisibility = dto.profileVisibility;
+
+            await _profileRepository.Update(userProfile);
+
             return true;
         }
     }
