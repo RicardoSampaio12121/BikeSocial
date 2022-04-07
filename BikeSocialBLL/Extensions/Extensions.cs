@@ -9,6 +9,7 @@ public static class Extensions
         Users user = new();
 
         user.username = dto.username;
+        user.email = dto.email;
         user.password = dto.password;
         user.birthDate = dto.birthdate;
         user.contact = dto.contact;

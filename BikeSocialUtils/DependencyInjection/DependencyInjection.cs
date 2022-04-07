@@ -39,6 +39,7 @@ namespace BikeSocialUtils.DependencyInjection
             //-------------------------------------------------Add scopes here---------------------------------------------------------------------------------------------//
             services.AddScoped<IUserService, UsersService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRecoveryPasswordCodesRepository, RecoveryPasswordCodesRepository>();
 
             services.AddScoped<ITrainingsService, TrainingsService>();
             services.AddScoped<ITrainingsRepository, TrainingsRepository>();
