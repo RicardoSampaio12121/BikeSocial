@@ -142,5 +142,18 @@ namespace BikeSocialBLL.Services
 
             return true;
         }
+
+        public async Task<bool> EditInformation(GetUpdatedInformationDto dto)
+        {
+            var user = await _userRepository.Get(query => query.Id == dto.userId);
+            var newPw = PasswordsUtils.Encrypt(dto.newPassword);
+            
+            user.email = dto.newEmail;
+            user.password = dto.newPassword;
+            user.birthDate = dto.newBirthDate;
+
+            await _userRepository.Update(user);
+            return true;
+        }
     }
 }

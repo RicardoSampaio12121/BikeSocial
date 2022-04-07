@@ -50,5 +50,13 @@ namespace BikeSocialAPI.Controllers
                 return BadRequest();
             return Ok();
         }
+
+        [HttpPost("updateInformation")]
+        public async Task<ActionResult> UpdateInformation(GetUpdatedInformationDto dto)
+        {
+            if (await _userService.EditInformation(dto) == false)
+                return BadRequest();
+            return Ok();
+        }
     } 
 }    
