@@ -11,6 +11,7 @@ namespace BikeSocialEntities
     {
         public int Id { get; set; }
         public string username { get; set; }
+        public string email { get; set; }
         public string password { get; set; }
         public DateTime birthDate { get; set; }
         public int contact { get; set; }
@@ -24,6 +25,7 @@ namespace BikeSocialEntities
         public List<Routes> Routes { get; set; }
         public List<RouteInvites> RouteInvites { get; set; }
         public List<Profile> Profiles { get; set; }
+        public List<PasswordRecoveryCodes> PasswordRecoveryCodes { get; set; }
 
         [InverseProperty("Solicitor")]
         public ICollection<Friend> solicitor { get; set; }

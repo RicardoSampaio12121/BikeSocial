@@ -21,6 +21,7 @@ namespace BikeSocialDAL.DataContext
 
         public DbSet<Users> Users { get; set; }
         public DbSet<UserTypes> UserTypes { get; set; }
+        public DbSet<PasswordRecoveryCodes> PasswordRecoveryCodes { get; set; }
 
         public DbSet<Places> Places { get; set; }
         
