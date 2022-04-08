@@ -11,12 +11,14 @@ namespace BikeSocialBLL.Services
         private readonly IAthleteRepository _athleteRepository;
         private readonly ITeamAthletesInviteRepository _teamAthletesInvite;
         private readonly IAthleteFederationRequestsRepository _athleteFederationRequestsRepo;
+        private readonly ITeamAthletesInviteRepository _trainingAthletesInvite;
 
         public AthleteService(IAthleteRepository athleteRepository, ITeamAthletesInviteRepository conAtletaEquiRepository, IAthleteFederationRequestsRepository athleteFederationRequestsRepo)
         {
             _athleteRepository = athleteRepository;
             _teamAthletesInvite = conAtletaEquiRepository;
             _athleteFederationRequestsRepo = athleteFederationRequestsRepo;
+            _trainingAthletesInvite = conAtletaEquiRepository;
         }
 
 
@@ -74,6 +76,37 @@ namespace BikeSocialBLL.Services
 
             // Fazer a request
             await _athleteFederationRequestsRepo.Add(dto.AsAthleteFederationRequest());
+
+            return true;
+        }
+
+        public async Task<bool> AcceptTrainingInvite(int inviteId)
+        {
+            // Verificar se o invite existe
+            var invite = await _trainingAthletesInvite.Get(query => query.Id == inviteId);
+            if (invite == null) return false;
+
+            // Eliminar da tabela de invites
+            await _trainingAthletesInvite.Delete(invite);
+
+            // Buscar informações do atleta
+            var athlete = await _athleteRepository.Get(query => query.Id == invite.AthletesId);
+
+            // Update à tabela de atletas
+            athlete.TrainingsId = invite.TrainingsId;
+            await _athleteRepository.Update(athlete);
+
+            return true;
+        }
+
+        public async Task<bool> RejectTrainingInvite(int inviteId)
+        {
+            // Verificar se o invite existe
+            var invite = await _trainingAthletesInvite.Get(query => query.Id == inviteId);
+            if (invite == null) return false;
+
+            // Remover invite
+            await _trainingAthletesInvite.Delete(invite);
 
             return true;
         }

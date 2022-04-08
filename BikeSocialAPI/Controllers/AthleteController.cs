@@ -48,5 +48,21 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
+        [HttpPut("acceptTrainingInvite/{inviteId}")]
+        public async Task<ActionResult> AcceptTrainingInvite(int inviteId)
+        {
+            if (await _athleteService.AcceptTrainingInvite(inviteId) == false)
+                return BadRequest();
+            return Ok();
+        }
+
+        [HttpPut("rejectTrainingInvite/{inviteId}")]
+        public async Task<ActionResult> RejectTrainingInvite(int inviteId)
+        {
+            if (await _athleteService.RejectTrainingInvite(inviteId) == false)
+                return BadRequest();
+            return Ok();
+        }
+
     }
 }
