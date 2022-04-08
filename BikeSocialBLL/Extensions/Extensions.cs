@@ -27,6 +27,15 @@ public static class Extensions
 
         return profileDto;
     }
+
+    public static ReturnResultsDto AsReturnResults(this RaceResults results)
+    {
+        ReturnResultsDto resultsDto = new();
+        resultsDto.atheleteId = results.AthletesId;
+        resultsDto.result = results.Position;
+
+        return resultsDto;
+    }
     public static Friend AsNewFriend(this CreateFriendDto friendDto)
     {
         Friend friend = new();
