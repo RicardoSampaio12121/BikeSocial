@@ -41,6 +41,7 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
+        [HttpGet("getResults")]
         public async Task<ActionResult> GetResults(int raceId)
         {
             if (await _raceService.GetResults(raceId) == null)
