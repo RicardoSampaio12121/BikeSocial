@@ -46,5 +46,21 @@ namespace BikeSocialBLL.Services
             if (await _raceResultsRepository.SaveResults(dto.AsListRaceResult()) == false) return false;
             return true;
         }
+
+        public async Task<List<ReturnResultsDto>> GetResults(int raceId)
+        {
+            List<RaceResults> raceResults = await _raceResultsRepository.GetList(query => query.RacesId == raceId);
+            List<ReturnResultsDto> resultsDto = new List<ReturnResultsDto>();
+
+            if (raceResults == null)
+                return null;
+
+            foreach(RaceResults i in raceResults)
+            {
+                resultsDto.Add(i.AsReturnResults());
+            }
+
+            return resultsDto;
+        }
     }
 }
