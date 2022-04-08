@@ -23,7 +23,7 @@ namespace BikeSocialBLL.Services
             _athleteRepo = athleteRepo;
             _teamRepo = teamRepo;
         }
-
+        
         public async Task<bool> ValidateAthlete(GetValidateAthleteFedDto dto)
         {
             // Verificar se pedido existe
