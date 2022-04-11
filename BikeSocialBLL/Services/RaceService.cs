@@ -11,12 +11,16 @@ namespace BikeSocialBLL.Services
         private readonly IRaceRepository _raceRepository;
         private readonly IRaceInvitesRepository _raceInvitesRepository;
         private readonly IRaceResultsRepository _raceResultsRepository;
+        private readonly ICoachesRepository _coachesRepo;
+        private readonly IAthleteRepository _athleteRepo;
 
-        public RaceService(IRaceRepository raceRepository, IRaceInvitesRepository raceInvitesRepository, IRaceResultsRepository raceResultsRepository)
+        public RaceService(IRaceRepository raceRepository, IRaceInvitesRepository raceInvitesRepository, IRaceResultsRepository raceResultsRepository, ICoachesRepository coachesRepo, IAthleteRepository athleteRepo)
         {
             _raceRepository = raceRepository;
             _raceInvitesRepository = raceInvitesRepository;
             _raceResultsRepository = raceResultsRepository;
+            _coachesRepo = coachesRepo;
+            _athleteRepo = athleteRepo;
         }
 
         // Criar uma prova nova
@@ -26,24 +30,46 @@ namespace BikeSocialBLL.Services
             Races rc = await _raceRepository.Get(raceQuery => raceQuery.description == race.description.ToString() &&
                                                     raceQuery.dateTime.ToString() == race.dateTime.ToString());
             // Não podem existir 2 provas "iguais"
-            if (rc != null) return false;
-            else await _raceRepository.Add(race.AsRace());
+            if (rc != null) throw new Exception("There is already a race with the same specifications.");
+            
+            // Adicionar race
+            await _raceRepository.Add(race.AsRace());
             return true;
         }
 
-        public async Task<bool> AdicionarAP(GetRaceInviteDto adicionar)
+        public async Task<bool> AdicionarAP(int userId, GetRaceInviteDto adicionar)
         {
+            //Buscar info do coach
+            var coach = await _coachesRepo.Get(query => query.UsersId == userId);
+
+            //Buscar info do atleta
+            var athlete = await _athleteRepo.Get(query => query.Id == adicionar.id_atleta);
+
+            //Verificar se atleta existe
+            if (athlete == null) throw new Exception("There is no athlete assigned with the given id.");
+
+            //Verificar se coach e atleta pertencem à mesma equipa
+            if (coach.TeamsId != athlete.TeamsId) throw new Exception("This athlete is not part of your team, so you can't invite him.");
+
+            //Verificar se invite já existe
             RaceInvites add = await _raceInvitesRepository.Get(adicionarQuery => adicionarQuery.AthletesId == adicionar.id_atleta && adicionarQuery.RacesId == adicionar.raceId);
 
-            if (add != null) return false;
-            else await _raceInvitesRepository.Add(adicionar.AsRaceInvite());
+            if (add != null) throw new Exception("Athlete was already invited to the race");
+
+            // Adicionar invite
+            await _raceInvitesRepository.Add(adicionar.AsRaceInvite());
             return true;
         }
 
         public async Task<bool> SaveResults(GetPublishResultsDto dto)
         {
+            // Verificar se resultados já não foram publicados
+            var results = await _raceResultsRepository.Get(query => query.RacesId == dto.raceId);
+
+            if (results != null) throw new Exception("Results for this race are already published");
+
             // Adicionar os resultados
-            if (await _raceResultsRepository.SaveResults(dto.AsListRaceResult()) == false) return false;
+            await _raceResultsRepository.SaveResults(dto.AsListRaceResult());
             return true;
         }
 
@@ -52,8 +78,7 @@ namespace BikeSocialBLL.Services
             List<RaceResults> raceResults = await _raceResultsRepository.GetList(query => query.RacesId == raceId);
             List<ReturnResultsDto> resultsDto = new List<ReturnResultsDto>();
 
-            if (raceResults == null)
-                return null;
+            if (raceResults == null) throw new Exception("Results for this race weren't published yet.");
 
             foreach(RaceResults i in raceResults)
             {

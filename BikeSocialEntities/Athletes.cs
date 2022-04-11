@@ -11,7 +11,7 @@ namespace BikeSocialEntities
         public int Id { get; set; }
         public int? UsersId { get; set; }
         public int? TeamsId { get; set; }
-        public int AthleteParentsId { get; set; }
+        public int? AthleteParentsId { get; set; }
         public int AthleteTypesId { get; set; }
         public int? FederationsId { get; set; }
 

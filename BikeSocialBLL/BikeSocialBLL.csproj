@@ -7,6 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\BikeSocialDAL\BikeSocialDAL.csproj" />
       <ProjectReference Include="..\BikeSocialDTOs\BikeSocialDTOs.csproj" />
       <ProjectReference Include="..\BikeSocialEntities\BikeSocialEntities.csproj" />

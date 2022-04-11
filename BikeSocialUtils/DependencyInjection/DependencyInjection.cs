@@ -37,6 +37,7 @@ namespace BikeSocialUtils.DependencyInjection
             });
 
             //-------------------------------------------------Add scopes here---------------------------------------------------------------------------------------------//
+            
             services.AddScoped<IUserService, UsersService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRecoveryPasswordCodesRepository, RecoveryPasswordCodesRepository>();
@@ -59,6 +60,10 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<ITeamAthletesInviteRepository, TeamAthletesInviteRepository>();
             services.AddScoped<ITeamCoachesInviteRepository, TeamCoachesInviteRepository>();
             services.AddScoped<ITeamFederationRequestRepository, TeamFederationRequestRepository>();
+
+            services.AddScoped<ICoachesRepository, CoachesRepository>();
+
+            services.AddScoped<IDirectorRepository, DirectorRepository>();
 
             services.AddScoped<IAthleteService, AthleteService>();
             services.AddScoped<IAthleteRepository, AthleteRepository>();
