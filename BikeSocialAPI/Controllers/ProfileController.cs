@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BikeSocialBLL.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BikeSocialAPI.Controllers
 {
     [Route("profile")]
+    [Authorize]
     [ApiController]
     public class ProfileController : Controller
     {
@@ -18,9 +20,7 @@ namespace BikeSocialAPI.Controllers
         [HttpGet("view")]
         public async Task<IActionResult> ViewProfile(int userId)
         {
-            if(await _profileService.ViewProfile(userId) == null)
-                return BadRequest();
-
+            await _profileService.ViewProfile(userId);
             return Ok();
         }
     }

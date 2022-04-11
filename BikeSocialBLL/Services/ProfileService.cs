@@ -25,7 +25,7 @@ namespace BikeSocialBLL.Services
         {
             Profile profileToRetrieve = await _profileRepository.Get(profileQuery => profileQuery.UsersId == userId);
 
-            if (profileToRetrieve == null) return null;
+            if (profileToRetrieve == null) throw new Exception("Profile does not exist.");
 
             return profileToRetrieve.AsReturnProfile();
         }

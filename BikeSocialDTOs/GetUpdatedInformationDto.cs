@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record GetUpdatedInformationDto(int userId, string newPassword, string newEmail, DateTime newBirthDate);
+    public record GetUpdatedInformationDto(string newPassword, string newEmail, DateTime newBirthDate);
 }

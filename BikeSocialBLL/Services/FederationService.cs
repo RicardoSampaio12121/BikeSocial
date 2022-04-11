@@ -27,25 +27,26 @@ namespace BikeSocialBLL.Services
         public async Task<bool> ValidateAthlete(GetValidateAthleteFedDto dto)
         {
             // Verificar se pedido existe
-            var exists = await _athleteFederationRequestsRepo.Get(query => query.Id == dto.requestId);
-            if (exists == null) return false;
+            var request = await _athleteFederationRequestsRepo.Get(query => query.Id == dto.requestId);
+            if (request == null) throw new Exception("Request does not exist.");
 
             // Atualizar tabela to atleta se a confirmação for positiva
 
             if(dto.response == true)
             {
                 // Buscar informações do atleta
-                var athlete = await _athleteRepo.Get(query => query.Id == exists.AthletesId);
+                var athlete = await _athleteRepo.Get(query => query.Id == request.AthletesId);
 
                 // Atualizar informação
-                athlete.FederationsId = exists.FederationsId ?? default;
+                athlete.FederationsId = request.FederationsId ?? default;
 
                 // Enviar update
                 await _athleteRepo.Update(athlete);
             }
 
             // Eliminar registo na tabela de pedidos
-            await _athleteFederationRequestsRepo.Delete(exists);
+            await _athleteFederationRequestsRepo.Delete(request);
+
 
             return true;
         }
@@ -54,7 +55,7 @@ namespace BikeSocialBLL.Services
         {
             // Verificar se o pedido existe
             var exists = await _teamFederationRequestRepo.Get(query => query.Id == dto.requestId);
-            if (exists == null) return false;
+            if (exists == null) throw new Exception("Request does not exist");
 
             // Atualizar a tabela da equipa se a confirmação for positiva
 
@@ -72,7 +73,7 @@ namespace BikeSocialBLL.Services
 
             // Eliminar registo na tabela de pedidos
             await _teamFederationRequestRepo.Delete(exists);
-
+            
             return true;
         }
     }

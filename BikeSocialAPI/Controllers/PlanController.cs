@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BikeSocialDTOs;
 using BikeSocialBLL.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BikeSocialAPI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("plan")]
     public class PlanController : Controller
     {
@@ -15,12 +17,11 @@ namespace BikeSocialAPI.Controllers
             _planService = planService;
         }
         
+        // TODO: Retornar CreatedAtAction
         [HttpPost("create")]
         public async Task<IActionResult> Create(CreatePlanDto plan)
         {
-            if (await _planService.Create(plan) == false)
-                return BadRequest();
-
+            await _planService.Create(plan);
             return Ok();
         }
     }

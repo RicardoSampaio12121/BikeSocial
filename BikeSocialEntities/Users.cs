@@ -17,6 +17,7 @@ namespace BikeSocialEntities
         public int contact { get; set; }
         public int PlacesId { get; set; }
         public int UserTypesId { get; set; }
+        public string? ApiToken { get; set; }
 
         public List<Athletes> Athletes { get; set; }
         public List<AthleteParents> AthleteParents { get; set; }
