@@ -9,16 +9,17 @@ using BikeSocialDTOs;
 using BikeSocialEntities;
 using BikeSocialBLL.Extensions;
 
-
 namespace BikeSocialBLL.Services
 {
     public class ProfileService : IProfileService
     {
         private readonly IProfileRepository _profileRepository;
+        private readonly IAchievementService _achievementService;
 
-        public ProfileService(IProfileRepository profileRepository)
+        public ProfileService(IProfileRepository profileRepository, IAchievementService achievementService)
         {
             _profileRepository = profileRepository;
+            _achievementService = achievementService;
         }
 
         public async Task<ReturnProfileDto> ViewProfile(int userId)
@@ -31,16 +32,18 @@ namespace BikeSocialBLL.Services
         }
         
         // No futuro impôr número máximo de conquistas que se podem mostrar no perfil 
-        public async Task<bool> AddAchievementProfile(int profileId, int achievementId)
+        public async Task<bool> AddAchievementProfile(int profileId, int achievementId, int athleteId)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
             
             // Verificar se o perfil existe
             var profileSearchResult = await _profileRepository.Get(profileQuery => profileQuery.Id == profileId);
             if (profileSearchResult == null) return false;
             
             // Verificar se a conquista existe (na tabela das conquistas)
-            
+            var achievementSearchResult = await _achievementService.ViewAchievement(achievementId);
+            if (achievementSearchResult == null) return false;
+
             // Verificar se o utilizador/atleta tem a conquista
             
             // Verificar se a conquista ainda não está no perfil

@@ -273,4 +273,16 @@ public static class Extensions
         return prize;
     }
     
+    public static ReturnAchievementDto AsReturnAchievement(this Achievements achievement)
+    {
+        ReturnAchievementDto achievementDto = new();
+
+        achievementDto.AchievementTypeId = achievement.AchievementTypeId;
+        achievementDto.achievementTime = achievement.achievementTime;
+        achievementDto.date = achievement.date;
+        achievementDto.PlacesId = achievement.PlacesId;
+
+        return achievementDto;
+    }
+
 }
