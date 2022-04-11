@@ -14,12 +14,17 @@ namespace BikeSocialBLL.Services
     public class ProfileService : IProfileService
     {
         private readonly IProfileRepository _profileRepository;
+        private readonly IAthleteAchievementsRepository _athleteAchievementsRepository;
         private readonly IAchievementService _achievementService;
+        private readonly IUserService _userService;
 
-        public ProfileService(IProfileRepository profileRepository, IAchievementService achievementService)
+        public ProfileService(IProfileRepository profileRepository, IAchievementService achievementService, 
+            IUserService userService, IAthleteAchievementsRepository athleteAchievementsRepository)
         {
             _profileRepository = profileRepository;
             _achievementService = achievementService;
+            _userService = userService;
+            _athleteAchievementsRepository = athleteAchievementsRepository;
         }
 
         public async Task<ReturnProfileDto> ViewProfile(int userId)
@@ -32,7 +37,7 @@ namespace BikeSocialBLL.Services
         }
         
         // No futuro impôr número máximo de conquistas que se podem mostrar no perfil 
-        public async Task<bool> AddAchievementProfile(int profileId, int achievementId, int athleteId)
+        public async Task<bool> AddAchievementProfile(int profileId, int achievementId)
         {
             //throw new NotImplementedException();
             
@@ -44,13 +49,21 @@ namespace BikeSocialBLL.Services
             var achievementSearchResult = await _achievementService.ViewAchievement(achievementId);
             if (achievementSearchResult == null) return false;
 
-            // Verificar se o utilizador/atleta tem a conquista
+            // Verificar se o utilizador/atleta tem a conquista----------------------------------------------------
+            // Pegar no usersID do profileSearchResult
+            // Query no AthleteAchievement com userId e achievementId  
             
             // Verificar se a conquista ainda não está no perfil
-            
+            foreach (Achievements ach in profileSearchResult.Achievements)
+                if (ach.Id == achievementId) return false;
+
             // Adicionar nova conquista à lista de conquistas do perfil
+            profileSearchResult.Achievements.Add(achievementSearchResult.AsAchievement());
             
             // Atualizar tabela dos perfis
+            await _profileRepository.Update(profileSearchResult);
+
+            return true;
         }
         
         public async Task<bool> RemoveAchievementProfile(int profileId, int achievementId)

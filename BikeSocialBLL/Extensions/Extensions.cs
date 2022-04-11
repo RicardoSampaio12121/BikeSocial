@@ -21,6 +21,7 @@ public static class Extensions
     public static ReturnProfileDto AsReturnProfile(this Profile profile)
     {
         ReturnProfileDto profileDto = new();
+        
         profileDto.userId = profile.UsersId;
         profileDto.description = profile.description;
 
@@ -283,6 +284,19 @@ public static class Extensions
         achievementDto.PlacesId = achievement.PlacesId;
 
         return achievementDto;
+    }
+    
+    public static Achievements AsAchievement(this ReturnAchievementDto achievementDto)
+    {
+        Achievements achievement = new();
+
+        achievement.Name = achievementDto.Name;
+        achievement.AchievementTypeId = achievementDto.AchievementTypeId;
+        achievement.achievementTime = achievementDto.achievementTime;
+        achievement.date = achievementDto.date;
+        achievement.PlacesId = achievementDto.PlacesId;
+
+        return achievement;
     }
 
 }
