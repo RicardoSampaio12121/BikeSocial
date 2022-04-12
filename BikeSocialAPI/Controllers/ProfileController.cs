@@ -23,5 +23,19 @@ namespace BikeSocialAPI.Controllers
             await _profileService.ViewProfile(userId);
             return Ok();
         }
+
+        [HttpPost("addAchievement")]
+        public async Task<IActionResult> AddAchievementProfile(int profileId, int achievementId)
+        {
+            await _profileService.AddAchievementProfile(profileId, achievementId);
+            return Ok();
+        }
+
+        [HttpDelete("removeAchievement")]
+        public async Task<IActionResult> RemoveAchievementProfile(int profileId, int achievementId)
+        {
+            await _profileService.RemoveAchievementProfile(profileId, achievementId);
+            return Ok();
+        }
     }
 }
