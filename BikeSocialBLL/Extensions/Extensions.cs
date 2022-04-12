@@ -22,6 +22,7 @@ public static class Extensions
     public static ReturnProfileDto AsReturnProfile(this Profile profile)
     {
         ReturnProfileDto profileDto = new();
+        
         profileDto.userId = profile.UsersId;
         profileDto.description = profile.description;
 
@@ -200,10 +201,6 @@ public static class Extensions
 
     }
 
-
-
-
-
     public static RouteInvites AsRouteInvite(this GetInviteToRouteDto dto)
     {
         RouteInvites output = new();
@@ -277,36 +274,40 @@ public static class Extensions
         return results;
     }
     
-    public static Plans AsPlan(this CreatePlanDto planDto)
+    public static Prizes AsPrize(this CreatePrizeDto prizeDto)
     {
-        Plans plan = new();
+        Prizes prize = new();
 
-        plan.description = planDto.description;
-        plan.startTime = planDto.startTime;
-        plan.finishTime = planDto.finishTime;
-        plan.EstimatedTime = planDto.estimatedTime;
-        
-        return plan;
+        prize.Name = prizeDto.name;
+
+        return prize;
     }
-
-    public static TeamFederationRequests AsTeamFederationRequest(this GetTeamFederationRequestDto dto)
+    
+    public static ReturnAchievementDto AsReturnAchievement(this Achievements achievement)
     {
-        TeamFederationRequests output = new();
+        ReturnAchievementDto achievementDto = new();
 
-        output.TeamsId = dto.teamId;
-        output.FederationsId = dto.federationId;
+        achievementDto.AchievementTypeId = achievement.AchievementTypeId;
+        achievementDto.achievementTime = achievement.achievementTime;
+        achievementDto.date = achievement.date;
+        achievementDto.PlacesId = achievement.PlacesId;
 
-        return output;
+        return achievementDto;
     }
 
     public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
+    
+    public static Achievements AsAchievement(this ReturnAchievementDto achievementDto)
     {
-        AthleteFederationRequests output = new();
+        Achievements achievement = new();
 
-        output.AthletesId = athleteId;
-        output.FederationsId = dto.federationId;
+        achievement.Name = achievementDto.Name;
+        achievement.AchievementTypeId = achievementDto.AchievementTypeId;
+        achievement.achievementTime = achievementDto.achievementTime;
+        achievement.date = achievementDto.date;
+        achievement.PlacesId = achievementDto.PlacesId;
 
-        return output;
+        return achievement;
     }
 
     public static ReturnUserDto AsReturnUserDto(this Users user)

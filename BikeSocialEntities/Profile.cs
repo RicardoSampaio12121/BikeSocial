@@ -12,5 +12,6 @@ namespace BikeSocialEntities
         public int UsersId { get; set; }
         public string description { get; set; }
         public int profileVisibility { get; set; }
+        public List<Achievements> Achievements { get; set; }
     }
 }

@@ -18,9 +18,7 @@ namespace BikeSocialBLL.Services
             _teamAthletesInvite = conAtletaEquiRepository;
             _athleteFederationRequestsRepo = athleteFederationRequestsRepo;
         }
-
-
-
+        
         // Criar um atleta novo
         public async Task<bool> Create(CreateAthleteDto athlete)
         {

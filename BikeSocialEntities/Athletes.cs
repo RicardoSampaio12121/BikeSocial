@@ -20,5 +20,6 @@ namespace BikeSocialEntities
         public List<RaceResults> RaceResults { get; set; }
         public List<TrainingInvites> TrainingInvites { get; set; }
         public List<AthleteFederationRequests> AthleteFederationRequests { get; set; }
+        public List<AthleteAchievements> AthleteAchievements { get; set; }
     }
 }
