@@ -39,28 +39,26 @@ namespace BikeSocialBLL.Services
         // No futuro impôr número máximo de conquistas que se podem mostrar no perfil 
         public async Task<bool> AddAchievementProfile(int profileId, int achievementId)
         {
-            throw new NotImplementedException();
-            
             // Verificar se o perfil existe
             var profileSearchResult = await _profileRepository.Get(profileQuery => profileQuery.Id == profileId);
             if (profileSearchResult == null) return false;
-            
+
             // Verificar se a conquista existe (na tabela das conquistas)
             var achievementSearchResult = await _achievementService.ViewAchievement(achievementId);
             if (achievementSearchResult == null) return false;
 
             // Verificar se o utilizador tem a conquista que quer mostrar----------------------------------------------
             var athleteAchievementsSearchResult = await _athleteAchievementsRepository.Get(
-                query => query.userId == profileSearchResult.UsersId && 
+                query => query.userId == profileSearchResult.UsersId &&
                          query.AchievementId == achievementId);
             if (athleteAchievementsSearchResult == null) return false;
-            
+
             // Verificar se a conquista já está no perfil (para não mostrar conquistas duplicadas)
             if (profileSearchResult.Achievements.Any(ach => ach.Id == achievementId)) return false;
 
             // Adicionar nova conquista à lista de conquistas do perfil
             profileSearchResult.Achievements.Add(achievementSearchResult.AsAchievement());
-            
+
             // Atualizar tabela dos perfis
             await _profileRepository.Update(profileSearchResult);
 
@@ -69,7 +67,6 @@ namespace BikeSocialBLL.Services
         
         public async Task<bool> RemoveAchievementProfile(int profileId, int achievementId)
         {
-            throw new NotImplementedException();
             
             // Verificar se o perfil existe
             var profileSearchResult = await _profileRepository.Get(profileQuery => profileQuery.Id == profileId);

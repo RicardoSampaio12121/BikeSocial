@@ -295,7 +295,7 @@ public static class Extensions
         return achievementDto;
     }
 
-    public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
+    //public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
     
     public static Achievements AsAchievement(this ReturnAchievementDto achievementDto)
     {
@@ -309,6 +309,38 @@ public static class Extensions
 
         return achievement;
     }
+    public static Plans AsPlan(this CreatePlanDto planDto)
+    {
+        Plans plan = new();
+
+        plan.description = planDto.description;
+        plan.startTime = planDto.startTime;
+        plan.finishTime = planDto.finishTime;
+        plan.EstimatedTime = planDto.estimatedTime;
+
+        return plan;
+    }
+
+    public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
+    {
+        AthleteFederationRequests output = new();
+
+        output.AthletesId = athleteId;
+        output.FederationsId = dto.federationId;
+
+        return output;
+    }
+
+    public static TeamFederationRequests AsTeamFederationRequest(this GetTeamFederationRequestDto dto)
+    {
+        TeamFederationRequests output = new();
+
+        output.TeamsId = dto.teamId;
+        output.FederationsId = dto.federationId;
+
+        return output;
+    }
+
 
     public static ReturnUserDto AsReturnUserDto(this Users user)
     {
