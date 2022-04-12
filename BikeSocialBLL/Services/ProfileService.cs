@@ -14,17 +14,19 @@ namespace BikeSocialBLL.Services
     public class ProfileService : IProfileService
     {
         private readonly IProfileRepository _profileRepository;
+        private readonly IAthleteRepository _athleteRepository;
         private readonly IAthleteAchievementsRepository _athleteAchievementsRepository;
         private readonly IAchievementService _achievementService;
-        private readonly IUserService _userService;
 
-        public ProfileService(IProfileRepository profileRepository, IAchievementService achievementService, 
-            IUserService userService, IAthleteAchievementsRepository athleteAchievementsRepository)
+        public ProfileService(IProfileRepository profileRepository, 
+                              IAthleteRepository athleteRepository,
+                              IAthleteAchievementsRepository athleteAchievementsRepository,
+                              IAchievementService achievementService)
         {
             _profileRepository = profileRepository;
-            _achievementService = achievementService;
-            _userService = userService;
+            _athleteRepository = athleteRepository;
             _athleteAchievementsRepository = athleteAchievementsRepository;
+            _achievementService = achievementService;
         }
 
         public async Task<ReturnProfileDto> ViewProfile(int userId)
@@ -48,10 +50,16 @@ namespace BikeSocialBLL.Services
             if (achievementSearchResult == null) return false;
 
             // Verificar se o utilizador tem a conquista que quer mostrar----------------------------------------------
+            // Procurar atleta
+            var athleteSearchResult = await _athleteRepository.Get(
+                athleteQuery => athleteQuery.UsersId == profileSearchResult.UsersId);
+            if (athleteSearchResult == null) return false;
+            // Verificar se o atleta tem a conquista
             var athleteAchievementsSearchResult = await _athleteAchievementsRepository.Get(
-                query => query.userId == profileSearchResult.UsersId &&
-                         query.AchievementId == achievementId);
+                query => athleteSearchResult.Id == query.Id && 
+                                            query.AchievementId == achievementId);
             if (athleteAchievementsSearchResult == null) return false;
+            // --------------------------------------------------------------------------------------------------------
 
             // Verificar se a conquista já está no perfil (para não mostrar conquistas duplicadas)
             if (profileSearchResult.Achievements.Any(ach => ach.Id == achievementId)) return false;
@@ -67,7 +75,6 @@ namespace BikeSocialBLL.Services
         
         public async Task<bool> RemoveAchievementProfile(int profileId, int achievementId)
         {
-            
             // Verificar se o perfil existe
             var profileSearchResult = await _profileRepository.Get(profileQuery => profileQuery.Id == profileId);
             if (profileSearchResult == null) return false;
@@ -83,6 +90,7 @@ namespace BikeSocialBLL.Services
                 if (ach.Id == achievementId) achievementToBeRemoved = ach;
             // Remover do perfil
             profileSearchResult.Achievements.Remove(achievementToBeRemoved);
+            // --------------------------------------------------------------------------------------------------------
             
             // Atualizar tabela dos perfis
             await _profileRepository.Update(profileSearchResult);
