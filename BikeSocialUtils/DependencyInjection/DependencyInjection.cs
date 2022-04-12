@@ -86,6 +86,7 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<IAchievementService, AchievementService>();
             services.AddScoped<IAchievementRepository, AchievementRepository>();
             services.AddScoped<IAthleteAchievementsRepository, AthleteAchievementsRepository>();
+            services.AddScoped<IProfileAchievementsRepository, ProfileAchievementsRepository>();
         }
     }
 }

@@ -61,14 +61,19 @@ namespace BikeSocialBLL.Services
             if (athleteAchievementsSearchResult == null) return false;
             // --------------------------------------------------------------------------------------------------------
 
+            // TODO: mudar para versão tabela em vez de lista
             // Verificar se a conquista já está no perfil (para não mostrar conquistas duplicadas)
-            if (profileSearchResult.Achievements.Any(ach => ach.Id == achievementId)) return false;
+            // if (profileSearchResult.Achievements.Any(ach => ach.Id == achievementId)) return false;
+            
 
+            // TODO: mudar para versão tabela em vez de lista
             // Adicionar nova conquista à lista de conquistas do perfil
             profileSearchResult.Achievements.Add(achievementSearchResult.AsAchievement());
 
             // Atualizar tabela dos perfis
-            await _profileRepository.Update(profileSearchResult);
+            // await _profileRepository.Update(profileSearchResult);
+            
+            // TODO: atualizar tabela ProfileAchievements
 
             return true;
         }
@@ -83,6 +88,7 @@ namespace BikeSocialBLL.Services
             var achievementSearchResult = await _achievementService.ViewAchievement(achievementId);
             if (achievementSearchResult == null) return false;
 
+            // TODO: mudar para versão tabela em vez de lista
             // Remover conquista da lista de conquistas do perfil (se estiver no perfil)-------------------------------
             Achievements achievementToBeRemoved = null;
             // Procurar conquistas do perfil para encontrar a que se quer remover
@@ -93,7 +99,9 @@ namespace BikeSocialBLL.Services
             // --------------------------------------------------------------------------------------------------------
             
             // Atualizar tabela dos perfis
-            await _profileRepository.Update(profileSearchResult);
+            //await _profileRepository.Update(profileSearchResult);
+            
+            // TODO: atualizar tabela ProfileAchievements-
 
             return true;
         }
