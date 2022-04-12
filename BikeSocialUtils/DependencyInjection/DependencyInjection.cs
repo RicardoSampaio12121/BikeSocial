@@ -39,6 +39,7 @@ namespace BikeSocialUtils.DependencyInjection
             //-------------------------------------------------Add scopes here---------------------------------------------------------------------------------------------//
             services.AddScoped<IUserService, UsersService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRecoveryPasswordCodesRepository, RecoveryPasswordCodesRepository>();
 
             services.AddScoped<ITrainingsService, TrainingsService>();
             services.AddScoped<ITrainingsRepository, TrainingsRepository>();
@@ -57,9 +58,11 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<IEquipaRepository, EquipaRepository>();
             services.AddScoped<ITeamAthletesInviteRepository, TeamAthletesInviteRepository>();
             services.AddScoped<ITeamCoachesInviteRepository, TeamCoachesInviteRepository>();
+            services.AddScoped<ITeamFederationRequestRepository, TeamFederationRequestRepository>();
 
             services.AddScoped<IAthleteService, AthleteService>();
             services.AddScoped<IAthleteRepository, AthleteRepository>();
+            services.AddScoped<IAthleteFederationRequestsRepository, AthleteFederationRequestsRepository>();
 
             services.AddScoped<IFriendService, FriendService>();
             services.AddScoped<IFriendRepository, FriendRepository>();
@@ -67,6 +70,10 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
 
+            services.AddScoped<IPlanService, PlanService>();
+            services.AddScoped<IPlanRepository, PlanRepository>();
+
+            services.AddScoped<IFederationService, FederationService>();
             services.AddScoped<IPrizeService, PrizeService>();
             services.AddScoped<IPrizeRepository, PrizeRepository>();
         }

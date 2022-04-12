@@ -21,16 +21,19 @@ namespace BikeSocialDAL.DataContext
 
         public DbSet<Users> Users { get; set; }
         public DbSet<UserTypes> UserTypes { get; set; }
+        public DbSet<PasswordRecoveryCodes> PasswordRecoveryCodes { get; set; }
 
         public DbSet<Places> Places { get; set; }
         
         public DbSet<Athletes> Athletes { get; set; }
         public DbSet<AthleteTypes> AthleteTypes { get; set; }
         public DbSet<AthleteParents> AthleteParents { get; set; }
+        public DbSet<AthleteFederationRequests> AthleteFederationRequests { get; set; }
 
         public DbSet<Teams> Teams { get; set; }
         public DbSet<TeamInviteAthletes> TeamInviteAthletes { get; set; }
         public DbSet<TeamInviteCoaches> TeamInviteCoaches { get; set; }
+        public DbSet<TeamFederationRequests> TeamFederationRequests  { get; set; }
 
         public DbSet<Races> Races { get; set; }
         public DbSet<RaceTypes> RaceTypes { get; set; }
@@ -63,5 +66,7 @@ namespace BikeSocialDAL.DataContext
         public DbSet<AthleteAchievements> AthleteAchievements { get; set; }
         
         public DbSet<Prizes> Prizes { get; set; }
+        
+        public DbSet<Plans> Plans { get; set; }
     }
 }

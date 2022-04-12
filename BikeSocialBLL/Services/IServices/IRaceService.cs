@@ -7,5 +7,6 @@ namespace BikeSocialBLL.Services.IServices
         Task<bool> Create(CreateRaceDto raceDto);
         Task<bool> AdicionarAP(GetRaceInviteDto addAtletaRaceDto);
         Task<bool> SaveResults(GetPublishResultsDto dto);
+        Task<List<ReturnResultsDto>> GetResults(int raceId);
     }
 }

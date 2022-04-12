@@ -19,5 +19,6 @@ namespace BikeSocialEntities
         public List<Coaches> Coaches { get; set; }
         public List<TeamInviteCoaches> TeamInviteCoaches { get; set; }
         public List<Trainings> Trainings { get; set; }
+        public List<TeamFederationRequests> TeamFederationsRequests { get; set; }
     }
 }

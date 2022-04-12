@@ -40,5 +40,13 @@ namespace BikeSocialAPI.Controllers
                 return BadRequest();
             return Ok();
         }
+
+        [HttpGet("getResults")]
+        public async Task<ActionResult> GetResults(int raceId)
+        {
+            if (await _raceService.GetResults(raceId) == null)
+                return BadRequest();
+            return Ok();
+        }
     }
 }

@@ -35,5 +35,36 @@ namespace BikeSocialAPI.Controllers
             if (output) return Ok();
             else return BadRequest();
         }
+
+        [HttpGet("passwordRecoveryCode/{userId}")]
+        public async Task<ActionResult> GetPasswordRecoveryCode(int userId)
+        {
+            if (await _userService.GeneratePasswordRecoveryCode(userId) == false)
+                return BadRequest();
+            return Ok();
+        }
+        [HttpPut("updatePassword")]
+        public async Task<ActionResult> UpdatePassword(GetUpdatePasswordDto dto)
+        {
+            if (await _userService.UpdatePassword(dto) == false)
+                return BadRequest();
+            return Ok();
+        }
+
+        [HttpPost("updateInformation")]
+        public async Task<ActionResult> UpdateInformation(GetUpdatedInformationDto dto)
+        {
+            if (await _userService.EditInformation(dto) == false)
+                return BadRequest();
+            return Ok();
+        }
+
+        [HttpPost("updatePrivacySettings")]
+        public async Task<ActionResult> UpdatePrivacySettings(GetUpdatedPrivacySettingsDto dto)
+        {
+            if (await _userService.UpdatePrivacySettings(dto) == false)
+                return BadRequest();
+            return Ok();
+        }
     } 
 }    

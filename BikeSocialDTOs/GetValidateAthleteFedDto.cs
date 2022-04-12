@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record CreateEquipaDto(int clubI, string name, int placeId, int? federationId);
-  
+    public record GetValidateAthleteFedDto(int requestId, bool response);
+    
 }

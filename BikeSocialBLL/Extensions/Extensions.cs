@@ -9,6 +9,7 @@ public static class Extensions
         Users user = new();
 
         user.username = dto.username;
+        user.email = dto.email;
         user.password = dto.password;
         user.birthDate = dto.birthdate;
         user.contact = dto.contact;
@@ -26,6 +27,15 @@ public static class Extensions
         profileDto.description = profile.description;
 
         return profileDto;
+    }
+
+    public static ReturnResultsDto AsReturnResults(this RaceResults results)
+    {
+        ReturnResultsDto resultsDto = new();
+        resultsDto.atheleteId = results.AthletesId;
+        resultsDto.result = results.Position;
+
+        return resultsDto;
     }
     public static Friend AsNewFriend(this CreateFriendDto friendDto)
     {
@@ -155,6 +165,8 @@ public static class Extensions
         equipa.PlacesId = equipaDto.placeId;
         equipa.ClubsId = equipaDto.clubI;
         equipa.FederationsId = equipaDto.federationId;
+
+
 
         return equipa;
     }

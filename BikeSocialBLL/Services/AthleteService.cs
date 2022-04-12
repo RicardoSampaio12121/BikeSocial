@@ -10,11 +10,13 @@ namespace BikeSocialBLL.Services
     {
         private readonly IAthleteRepository _athleteRepository;
         private readonly ITeamAthletesInviteRepository _teamAthletesInvite;
+        private readonly IAthleteFederationRequestsRepository _athleteFederationRequestsRepo;
 
-        public AthleteService(IAthleteRepository athleteRepository, ITeamAthletesInviteRepository conAtletaEquiRepository)
+        public AthleteService(IAthleteRepository athleteRepository, ITeamAthletesInviteRepository conAtletaEquiRepository, IAthleteFederationRequestsRepository athleteFederationRequestsRepo)
         {
             _athleteRepository = athleteRepository;
             _teamAthletesInvite = conAtletaEquiRepository;
+            _athleteFederationRequestsRepo = athleteFederationRequestsRepo;
         }
         
         // Criar um atleta novo
@@ -56,6 +58,20 @@ namespace BikeSocialBLL.Services
 
             // Remover invite
             await _teamAthletesInvite.Delete(invite);
+
+            return true;
+        }
+
+        public async Task<bool> MakeFederationRequest(GetAthleteFederationRequestDto dto)
+        {
+            //Verificar se a request já existe
+            var exists = await _athleteFederationRequestsRepo.Get(query => query.AthletesId == dto.athleteId && query.FederationsId == dto.federationId);
+
+            if (exists != null)
+                return false;
+
+            // Fazer a request
+            await _athleteFederationRequestsRepo.Add(dto.AsAthleteFederationRequest());
 
             return true;
         }

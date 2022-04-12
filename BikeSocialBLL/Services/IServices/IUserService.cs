@@ -14,5 +14,9 @@ namespace BikeSocialBLL.Services.IServices
         //Task<User> Login(GetUserDto userDto); // para testar
         
         Task<bool> Register(GetUserRegisterDto dto);
+        Task<bool> GeneratePasswordRecoveryCode(int userId);
+        Task<bool> UpdatePassword(GetUpdatePasswordDto dto);
+        Task<bool> EditInformation(GetUpdatedInformationDto dto);
+        Task<bool> UpdatePrivacySettings(GetUpdatedPrivacySettingsDto dto);
     }
 }

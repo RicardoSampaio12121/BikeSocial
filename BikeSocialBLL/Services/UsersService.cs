@@ -11,17 +11,24 @@ using BikeSocialDAL.DataContext;
 using BikeSocialBLL.Services.IServices;
 using BikeSocialDTOs;
 using BikeSocialDAL.Repositories.Interfaces;
+using BikeSocialBLL.Utils;
 
 namespace BikeSocialBLL.Services
 {
     public class UsersService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IRecoveryPasswordCodesRepository _recoveryPasswordRepo;
+        private readonly IProfileRepository _profileRepository;
 
-        public UsersService(IUserRepository userRepository)
+        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo, IProfileRepository profileRepository)
         {
             _userRepository = userRepository;
+            _recoveryPasswordRepo = recoveryPasswordRepo;
+            _profileRepository = profileRepository;
         }
+
+        
 
         public async Task<bool> Login(GetUserLoginDto user)
         {
@@ -64,35 +71,101 @@ namespace BikeSocialBLL.Services
             // Verificar se já existe um utilizador com o mesmo nome
             Users getResult = await _userRepository.Get(userQuery => userQuery.username == user.username.ToString());
             if (getResult != null) return false; // Não podem existir 2 users com o mesmo nome
-            else
-            {
-                ////////////////////////////////////////////////////////////////////////////////
-                /* Hash password */
-                
-                // Criar o valor do "salt" com um gerador de números pseudoaleatórios criptográfico (PRNG = PseudoRandom Number Generator)
-                byte[] salt;
-                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-                
-                // Criar o Rfc2898DeriveBytes e obter o valor da hash
-                // (Rfc2898DeriveBytes: classe que produz uma chave a partir de uma chave base e do outros parâmetros)
-                // (pbkdf2 = password-based key derivation function 2)
-                var pbkdf2 = new Rfc2898DeriveBytes(user.password, salt, 100000);
-                byte[] hash = pbkdf2.GetBytes(20);
-                
-                // Combinar o "salt" e os bytes da password
-                byte[] hashBytes = new byte[36];
-                Array.Copy(salt, 0, hashBytes, 0, 16);
-                Array.Copy(hash, 0, hashBytes, 16, 20);
-                
-                // Combinar o salt e a hash numa string para guardar pass de modo seguro
-                string savedPasswordHash = Convert.ToBase64String(hashBytes);
-                user.password = savedPasswordHash;
-                ////////////////////////////////////////////////////////////////////////////////
-               
-                await _userRepository.Add(user.AsUser());
-                return true;
-            }
-        }
             
+            // Encriptar password
+            user.password = PasswordsUtils.Encrypt(user.password);
+
+            await _userRepository.Add(user.AsUser());
+            return true;
+            
+        }
+
+        public async Task<bool> GeneratePasswordRecoveryCode(int userId)
+        {
+            // Buscar utilizador
+            var user = await _userRepository.Get(query => query.Id == userId);
+
+            // Gerar código de 6 dígitos
+            int code = PasswordsUtils.GenerateRecoveryPasswordCode();
+
+            // Guardar código na base de dados
+
+            // Verificar se existe algum código guardado da mesma conta
+            var exists = await _recoveryPasswordRepo.Get(query => query.UsersId == userId);
+
+            // Se existir, apagar código
+            if (exists != null)
+            {
+                await _recoveryPasswordRepo.Delete(exists);
+            }
+
+            // Criar instancia do objeto
+            PasswordRecoveryCodes newCode = new();
+            newCode.UsersId = userId;
+            newCode.code = code;
+            newCode.requestDate = 1;
+            //newCode.requestDate = int.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
+
+
+            // Adicionar código novo
+            await _recoveryPasswordRepo.Add(newCode);
+
+            // Enviar email com o código
+            SendEmail.sendEmail(user.email, code);
+
+            return true;
+        }
+
+        public async Task<bool> UpdatePassword(GetUpdatePasswordDto dto)
+        {
+            // Verificar se código é o correto
+            var checker = await _recoveryPasswordRepo.Get(query => query.UsersId == dto.userId && query.code == dto.code);
+
+            // Se código for errado, retornar
+            if (checker == null)
+                return false;
+
+            // Fazer update da password
+
+            // Buscar user
+            var user = await _userRepository.Get(query => query.Id == dto.userId);
+
+            // Encriptar password nova
+            var newPassword = PasswordsUtils.Encrypt(dto.newPassword);
+
+            // Atualizar dados
+            user.password = newPassword;
+
+            // Enviar para a base de dados
+            await _userRepository.Update(user);
+
+            // Apagar registo da tabela de códigos
+            await _recoveryPasswordRepo.Delete(checker);
+
+            return true;
+        }
+
+        public async Task<bool> EditInformation(GetUpdatedInformationDto dto)
+        {
+            var user = await _userRepository.Get(query => query.Id == dto.userId);
+            var newPw = PasswordsUtils.Encrypt(dto.newPassword);
+            
+            user.email = dto.newEmail;
+            user.password = dto.newPassword;
+            user.birthDate = dto.newBirthDate;
+
+            await _userRepository.Update(user);
+            return true;
+        }
+
+        public async Task<bool> UpdatePrivacySettings(GetUpdatedPrivacySettingsDto dto)
+        {
+            var userProfile = await _profileRepository.Get(query => query.UsersId == dto.userId);
+            userProfile.profileVisibility = dto.profileVisibility;
+
+            await _profileRepository.Update(userProfile);
+
+            return true;
+        }
     }
 }
