@@ -93,15 +93,6 @@ namespace BikeSocialBLL.Services
                 return true;
             }
         }
-        
-        public async Task<ReturnUserDto> ViewUser(int userId)
-        {
-            Users userToRetrieve = await _userRepository.Get(userQuery => userQuery.Id == userId);
-
-            if (userToRetrieve == null) return null;
-
-            return userToRetrieve.AsReturnUser();
-        }
             
     }
 }
