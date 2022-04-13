@@ -99,7 +99,7 @@ namespace BikeSocialBLL.Services
             // TODO: mudar para versão tabela em vez de lista
             // Adicionar nova conquista ao perfil (= inserir na tabela ProfileAchievements)
             // CRIAR NOVO OBJETO DO TIPO PROFILEACHIEVEMENTS AQUI--------<<<<<<<<<<<<<<<<<
-            await _profileAchievementsRepository.Add()
+            await _profileAchievementsRepository.Add(o objeto novo.AsTipoQueQueremos());
                 
             return true;
         }
