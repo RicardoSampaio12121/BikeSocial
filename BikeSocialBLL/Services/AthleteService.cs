@@ -11,13 +11,15 @@ namespace BikeSocialBLL.Services
         private readonly IAthleteRepository _athleteRepository;
         private readonly ITeamAthletesInviteRepository _teamAthletesInvite;
         private readonly IAthleteFederationRequestsRepository _athleteFederationRequestsRepo;
+        private readonly ITrainingInvitesRepository _trainingInvRepo;
         private readonly ITeamAthletesInviteRepository _trainingAthletesInvite;
 
-        public AthleteService(IAthleteRepository athleteRepository, ITeamAthletesInviteRepository conAtletaEquiRepository, IAthleteFederationRequestsRepository athleteFederationRequestsRepo)
+        public AthleteService(IAthleteRepository athleteRepository, ITeamAthletesInviteRepository conAtletaEquiRepository, IAthleteFederationRequestsRepository athleteFederationRequestsRepo, ITrainingInvitesRepository trainingInvRepo)
         {
             _athleteRepository = athleteRepository;
             _teamAthletesInvite = conAtletaEquiRepository;
             _athleteFederationRequestsRepo = athleteFederationRequestsRepo;
+            _trainingInvRepo = trainingInvRepo;
             _trainingAthletesInvite = conAtletaEquiRepository;
         }
 
@@ -83,18 +85,13 @@ namespace BikeSocialBLL.Services
         public async Task<bool> AcceptTrainingInvite(int inviteId)
         {
             // Verificar se o invite existe
-            var invite = await _trainingAthletesInvite.Get(query => query.Id == inviteId);
-            if (invite == null) return false;
+            var invite = await _trainingInvRepo.Get(query => query.Id == inviteId);
+            if (invite == null) throw new Exception("Invite does not exists.");
 
-            // Eliminar da tabela de invites
-            await _trainingAthletesInvite.Delete(invite);
-
-            // Buscar informações do atleta
-            var athlete = await _athleteRepository.Get(query => query.Id == invite.AthletesId);
 
             // Update à tabela de atletas
-            athlete.TrainingsId = invite.TrainingsId;
-            await _athleteRepository.Update(athlete);
+            invite.Confirmation = true;
+            await _trainingInvRepo.Update(invite);
 
             return true;
         }
@@ -102,11 +99,13 @@ namespace BikeSocialBLL.Services
         public async Task<bool> RejectTrainingInvite(int inviteId)
         {
             // Verificar se o invite existe
-            var invite = await _trainingAthletesInvite.Get(query => query.Id == inviteId);
-            if (invite == null) return false;
+            var invite = await _trainingInvRepo.Get(query => query.Id == inviteId);
+            if (invite == null) throw new Exception("Invite does not exists.");
 
-            // Remover invite
-            await _trainingAthletesInvite.Delete(invite);
+
+            // Update à tabela de atletas
+            invite.Confirmation = false;
+            await _trainingInvRepo.Update(invite);
 
             return true;
         }

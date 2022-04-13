@@ -14,6 +14,8 @@ namespace BikeSocialEntities
         public int AthleteParentsId { get; set; }
         public int AthleteTypesId { get; set; }
         public int? FederationsId { get; set; }
+        public int? TrainingsId { get; set; }
+
 
         public List<TeamInviteAthletes> TeamInviteAthletes { get; set; }
         public List<RaceInvites> RaceInvites { get; set; }
