@@ -14,16 +14,19 @@ namespace BikeSocialBLL.Services
     public class ProfileService : IProfileService
     {
         private readonly IProfileRepository _profileRepository;
+        private readonly IProfileAchievementsRepository _profileAchievementsRepository;
         private readonly IAthleteRepository _athleteRepository;
         private readonly IAthleteAchievementsRepository _athleteAchievementsRepository;
         private readonly IAchievementService _achievementService;
 
         public ProfileService(IProfileRepository profileRepository, 
+                              IProfileAchievementsRepository profileAchievementsRepository, 
                               IAthleteRepository athleteRepository,
                               IAthleteAchievementsRepository athleteAchievementsRepository,
                               IAchievementService achievementService)
         {
             _profileRepository = profileRepository;
+            _profileAchievementsRepository = profileAchievementsRepository;
             _athleteRepository = athleteRepository;
             _athleteAchievementsRepository = athleteAchievementsRepository;
             _achievementService = achievementService;
@@ -36,6 +39,33 @@ namespace BikeSocialBLL.Services
             if (profileToRetrieve == null) throw new Exception("Profile does not exist.");
 
             return profileToRetrieve.AsReturnProfile();
+        }
+        
+        /*
+         * // Criar uma prova nova
+        public async Task<bool> Create(CreateRaceDto race)
+        {
+            // Verificar se já existe uma prova com a mesma descrição e a mesma data ("iguais")
+            Races rc = await _raceRepository.Get(raceQuery => raceQuery.description == race.description.ToString() &&
+                                                    raceQuery.dateTime.ToString() == race.dateTime.ToString());
+            // Não podem existir 2 provas "iguais"
+            if (rc != null) throw new Exception("There is already a race with the same specifications.");
+            
+            // Adicionar race
+            await _raceRepository.Add(race.AsRace());
+            return true;
+        }
+         */
+        
+        // Criar uma nova entrada na tabela ProfileAchievements
+        public async Task<bool> CreateProfileAchievement(CreateProfileAchievementDto profAch)
+        {
+            // Não é preciso verificar se já existe uma conquista igual no perfil, porque isso é feito 
+            // fora desta função, na função AddAchievementProfile
+            
+            // Criar nova entrada
+
+            await 
         }
         
         // No futuro impôr número máximo de conquistas que se podem mostrar no perfil 
@@ -61,23 +91,19 @@ namespace BikeSocialBLL.Services
             if (athleteAchievementsSearchResult == null) return false;
             // --------------------------------------------------------------------------------------------------------
 
-            // TODO: mudar para versão tabela em vez de lista
             // Verificar se a conquista já está no perfil (para não mostrar conquistas duplicadas)
-            // if (profileSearchResult.Achievements.Any(ach => ach.Id == achievementId)) return false;
-            
+            var profileAchievementsSearchResult = await _profileAchievementsRepository.Get(
+                query => query.AthleteAchievementId == athleteAchievementsSearchResult.Id);
+            if (profileAchievementsSearchResult != null) return false;
 
             // TODO: mudar para versão tabela em vez de lista
-            // Adicionar nova conquista à lista de conquistas do perfil
-            profileSearchResult.Achievements.Add(achievementSearchResult.AsAchievement());
-
-            // Atualizar tabela dos perfis
-            // await _profileRepository.Update(profileSearchResult);
-            
-            // TODO: atualizar tabela ProfileAchievements
-
+            // Adicionar nova conquista ao perfil (= inserir na tabela ProfileAchievements)
+            // CRIAR NOVO OBJETO DO TIPO PROFILEACHIEVEMENTS AQUI--------<<<<<<<<<<<<<<<<<
+            await _profileAchievementsRepository.Add()
+                
             return true;
         }
-        
+
         public async Task<bool> RemoveAchievementProfile(int profileId, int achievementId)
         {
             // Verificar se o perfil existe
