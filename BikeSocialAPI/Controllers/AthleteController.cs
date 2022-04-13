@@ -16,10 +16,12 @@ namespace BikeSocialAPI.Controllers
 
         private readonly IConsultResultRaceService _consultResultRaceService;
 
-        public AthleteController(IAthleteService athleteService, IUserService userService)
+       
+        public AthleteController(IAthleteService athleteService, IUserService userService, IConsultResultRaceService consultResultRaceService)
         {
             _athleteService = athleteService;
             _userService = userService;
+            _consultResultRaceService = consultResultRaceService;
         }
         
 
