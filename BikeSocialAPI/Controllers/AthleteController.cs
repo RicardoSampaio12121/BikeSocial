@@ -14,6 +14,8 @@ namespace BikeSocialAPI.Controllers
         private readonly IAthleteService _athleteService;
         private readonly IUserService _userService;
 
+        private readonly IConsultResultRaceService _consultResultRaceService;
+
         public AthleteController(IAthleteService athleteService, IUserService userService)
         {
             _athleteService = athleteService;
@@ -61,6 +63,14 @@ namespace BikeSocialAPI.Controllers
             var userId = _userService.GetUserIdFromToken();
 
             await _athleteService.MakeFederationRequest(dto);
+            return Ok();
+        }
+
+        //Consultar resultados de Provas
+        [HttpGet("consultResultRace")]
+        public async Task<IActionResult> ConsultResult(int athletesId)
+        {
+            await _consultResultRaceService.ConsultResult(athletesId);
             return Ok();
         }
 

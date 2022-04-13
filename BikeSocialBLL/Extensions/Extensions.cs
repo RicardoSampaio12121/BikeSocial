@@ -355,4 +355,16 @@ public static class Extensions
             email = user.email
         };
     }
+
+    public static ReturnConsultResultRaceDto AsReturnConsultResultRace(this RaceResults consultresultrace)
+    {
+        ReturnConsultResultRaceDto consultRRDto = new();
+
+        consultRRDto.athletesId = consultresultrace.AthletesId;
+        consultRRDto.racesId = (int)consultresultrace.RacesId;
+
+        return consultRRDto;
+    }
+   
+
 }
