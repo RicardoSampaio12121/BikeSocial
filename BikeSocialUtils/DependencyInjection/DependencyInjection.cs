@@ -90,6 +90,9 @@ namespace BikeSocialUtils.DependencyInjection
 
             services.AddScoped<IConsultResultRaceService, ConsultResultRaceService>();
             services.AddScoped<IConsultResultRaceRepository, ConsultResultRaceRepository>();
+
+            services.AddScoped<IConsultAchievementAthleteService, ConsultAchievementAthleteService>();
+            services.AddScoped<IConsultAchievementAthleteRepository, ConsultAchievementsAthleteRepository>();
         }
     }
 }

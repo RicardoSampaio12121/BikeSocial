@@ -365,6 +365,19 @@ public static class Extensions
 
         return consultRRDto;
     }
-   
+
+
+    public static ReturnConsltAchievementAthleteDto AsReturnConsultAchievementAthlete(this ConsultAchievementAthlete result)
+    {
+        ReturnConsltAchievementAthleteDto consultAA = new();
+
+        consultAA.date = result.date;
+        consultAA.name = result.name;
+        consultAA.athleteId = result.athleteId;
+        consultAA.achievementId = result.achievementId;
+
+        return consultAA;
+    }
+
 
 }
