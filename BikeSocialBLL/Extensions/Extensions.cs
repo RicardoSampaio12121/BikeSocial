@@ -287,7 +287,7 @@ public static class Extensions
     {
         ReturnAchievementDto achievementDto = new();
 
-        achievementDto.AchievementTypeId = achievement.AchievementTypeId;
+        achievementDto.AchievementTypeId = achievement.AchievementTypesId;
         achievementDto.achievementTime = achievement.achievementTime;
         achievementDto.date = achievement.date;
         achievementDto.PlacesId = achievement.PlacesId;
@@ -302,7 +302,7 @@ public static class Extensions
         Achievements achievement = new();
 
         achievement.Name = achievementDto.Name;
-        achievement.AchievementTypeId = achievementDto.AchievementTypeId;
+        achievement.AchievementTypesId = achievementDto.AchievementTypeId;
         achievement.achievementTime = achievementDto.achievementTime;
         achievement.date = achievementDto.date;
         achievement.PlacesId = achievementDto.PlacesId;
