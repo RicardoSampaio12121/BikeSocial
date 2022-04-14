@@ -81,7 +81,7 @@ namespace BikeSocialAPI.Controllers
         }
 
         //Consultar medalhas
-        [HttpGet("onsultAchievementtRace")]
+        [HttpGet("consultAchievementtAthlete")]
         public async Task<IActionResult> ConsultAchievement(int athletesId)
         {
             await _consultAchievementAthleteService.ConsultAchievementAthlete(athletesId);
