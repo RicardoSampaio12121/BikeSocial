@@ -8,17 +8,10 @@ namespace BikeSocialDTOs
 {
     public record ReturnConsltAchievementAthleteDto
     {
-        public int athleteId { get; set; }
-        public int achievementId { get; set; }  
-        public string name { get; set; }    
-        public DateTime date { get; set; }  
+        public int athleteId { get; init; }
+        public int achievementId { get; init; }  
+        public string name { get; init; }    
+        public DateTime date { get; init; }  
     }
 
-    public class ConsultAchievementAthlete
-    {
-        public int athleteId { get; set; }
-        public int achievementId { get; set; }
-        public string name { get; set; }
-        public DateTime date { get; set; }
-    }
 }

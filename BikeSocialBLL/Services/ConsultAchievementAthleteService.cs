@@ -33,11 +33,7 @@ namespace BikeSocialBLL.Services
 
         public async Task<ReturnConsltAchievementAthleteDto> ConsultAchievementAthlete(int athteleId)
         {
-            //AthleteAchievements athleteAchievements = await _consultAchievementAthleteRepository.Get(
-            //    athleteAchievementsQuery => athleteAchievementsQuery.AthletesId == athteleId);
-
-            ConsultAchievementAthlete consult = new();
-
+           
             //verificar se existe o atleta na tabela AthleteAchievements
             var athleteAchievements = await _athleteAchievementsRepository.Get(
                 athleteAchievementsQuery => athleteAchievementsQuery.AthletesId == athteleId);
@@ -52,14 +48,17 @@ namespace BikeSocialBLL.Services
                 achievementTypeQuery => achievementTypeQuery.Id == achievementId.AchievementTypesId);
 
 
-            consult.athleteId = athleteAchievements.AthletesId;
-            consult.date = athleteAchievements.AchievementDate;
-            consult.achievementId = achievementId.Id;
-            consult.name = achievementType.Name;
+            ReturnConsltAchievementAthleteDto output = new()
+            {
+                athleteId = athleteAchievements.AthletesId,
+                date = athleteAchievements.AchievementDate,
+                achievementId = achievementId.Id,
+                name = achievementType.Name
+            };
 
 
 
-            return consult.AsReturnConsultAchievementAthlete();
+            return output;
 
         }
     }
