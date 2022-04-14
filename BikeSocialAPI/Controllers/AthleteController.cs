@@ -15,13 +15,17 @@ namespace BikeSocialAPI.Controllers
         private readonly IUserService _userService;
 
         private readonly IConsultResultRaceService _consultResultRaceService;
+        private readonly IConsultAchievementAthleteService _consultAchievementAthleteService;
 
        
-        public AthleteController(IAthleteService athleteService, IUserService userService, IConsultResultRaceService consultResultRaceService)
+        public AthleteController(IAthleteService athleteService, IUserService userService, 
+            IConsultResultRaceService consultResultRaceService,
+            IConsultAchievementAthleteService consultAchievementAthleteService)
         {
             _athleteService = athleteService;
             _userService = userService;
             _consultResultRaceService = consultResultRaceService;
+            _consultAchievementAthleteService = consultAchievementAthleteService;
         }
         
 
@@ -73,6 +77,14 @@ namespace BikeSocialAPI.Controllers
         public async Task<IActionResult> ConsultResult(int athletesId)
         {
             await _consultResultRaceService.ConsultResult(athletesId);
+            return Ok();
+        }
+
+        //Consultar medalhas
+        [HttpGet("onsultAchievementtRace")]
+        public async Task<IActionResult> ConsultAchievement(int athletesId)
+        {
+            await _consultAchievementAthleteService.ConsultAchievementAthlete(athletesId);
             return Ok();
         }
 
