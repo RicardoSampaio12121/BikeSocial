@@ -11,12 +11,16 @@ namespace BikeSocialBLL.Services
         private readonly IAthleteRepository _athleteRepository;
         private readonly ITeamAthletesInviteRepository _teamAthletesInvite;
         private readonly IAthleteFederationRequestsRepository _athleteFederationRequestsRepo;
+        private readonly ITrainingInvitesRepository _trainingInvRepo;
+        private readonly ITeamAthletesInviteRepository _trainingAthletesInvite;
 
-        public AthleteService(IAthleteRepository athleteRepository, ITeamAthletesInviteRepository conAtletaEquiRepository, IAthleteFederationRequestsRepository athleteFederationRequestsRepo)
+        public AthleteService(IAthleteRepository athleteRepository, ITeamAthletesInviteRepository conAtletaEquiRepository, IAthleteFederationRequestsRepository athleteFederationRequestsRepo, ITrainingInvitesRepository trainingInvRepo)
         {
             _athleteRepository = athleteRepository;
             _teamAthletesInvite = conAtletaEquiRepository;
             _athleteFederationRequestsRepo = athleteFederationRequestsRepo;
+            _trainingInvRepo = trainingInvRepo;
+            _trainingAthletesInvite = conAtletaEquiRepository;
         }
         
         // Criar um atleta novo
@@ -89,6 +93,34 @@ namespace BikeSocialBLL.Services
 
             // Fazer a request
             await _athleteFederationRequestsRepo.Add(dto.AsAthleteFederationRequest(athlete.Id));
+
+            return true;
+        }
+
+        public async Task<bool> AcceptTrainingInvite(int inviteId)
+        {
+            // Verificar se o invite existe
+            var invite = await _trainingInvRepo.Get(query => query.Id == inviteId);
+            if (invite == null) throw new Exception("Invite does not exists.");
+
+
+            // Update à tabela de atletas
+            invite.Confirmation = true;
+            await _trainingInvRepo.Update(invite);
+
+            return true;
+        }
+
+        public async Task<bool> RejectTrainingInvite(int inviteId)
+        {
+            // Verificar se o invite existe
+            var invite = await _trainingInvRepo.Get(query => query.Id == inviteId);
+            if (invite == null) throw new Exception("Invite does not exists.");
+
+
+            // Update à tabela de atletas
+            invite.Confirmation = false;
+            await _trainingInvRepo.Update(invite);
 
             return true;
         }

@@ -8,5 +8,8 @@ namespace BikeSocialBLL.Services.IServices
         Task<bool> AcceptTeamInvite(int userId, int inviteId);
         Task<bool> RejectTeamInvite(int userId, int inviteId);
         Task<bool> MakeFederationRequest(GetAthleteFederationRequestDto dto);
+        Task<bool> AcceptTrainingInvite(int inviteId);
+        Task<bool> RejectTrainingInvite(int inviteId);
+
     }
 }
