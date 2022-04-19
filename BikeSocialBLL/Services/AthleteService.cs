@@ -11,16 +11,18 @@ namespace BikeSocialBLL.Services
         private readonly IAthleteRepository _athleteRepository;
         private readonly ITeamAthletesInviteRepository _teamAthletesInvite;
         private readonly IAthleteFederationRequestsRepository _athleteFederationRequestsRepo;
+        private readonly ITrainingInvitesRepository _trainingInvRepo;
+        private readonly ITeamAthletesInviteRepository _trainingAthletesInvite;
 
-        public AthleteService(IAthleteRepository athleteRepository, ITeamAthletesInviteRepository conAtletaEquiRepository, IAthleteFederationRequestsRepository athleteFederationRequestsRepo)
+        public AthleteService(IAthleteRepository athleteRepository, ITeamAthletesInviteRepository conAtletaEquiRepository, IAthleteFederationRequestsRepository athleteFederationRequestsRepo, ITrainingInvitesRepository trainingInvRepo)
         {
             _athleteRepository = athleteRepository;
             _teamAthletesInvite = conAtletaEquiRepository;
             _athleteFederationRequestsRepo = athleteFederationRequestsRepo;
+            _trainingInvRepo = trainingInvRepo;
+            _trainingAthletesInvite = conAtletaEquiRepository;
         }
-
-
-
+        
         // Criar um atleta novo
         public async Task<bool> Create(CreateAthleteDto athlete)
         {
@@ -33,17 +35,23 @@ namespace BikeSocialBLL.Services
             return true;
         }
 
-        public async Task<bool> AcceptTeamInvite(int inviteId)
+        public async Task<bool> AcceptTeamInvite(int userId, int inviteId)
         {
-            // Verificar se o invite existe
-            var invite = await _teamAthletesInvite.Get(query => query.Id == inviteId);
-            if (invite == null) return false;
 
-            // Eliminar da tabela de invites
-            await _teamAthletesInvite.Delete(invite);
+            // Receber info do invite
+            var invite = await _teamAthletesInvite.Get(query => query.Id == inviteId);
+
+            // Verificar se invite existe
+            if (invite == null) throw new Exception("There is no invite assigned to the given id.");
 
             // Buscar informações do atleta
             var athlete = await _athleteRepository.Get(query => query.Id == invite.AthletesId);
+
+            // Verificar se pertence ao utilizador
+            if (athlete.UsersId != userId) throw new Exception("Invited id is not assigned to the gived athlete.");
+
+            // Eliminar da tabela de invites
+            await _teamAthletesInvite.Delete(invite);
 
             // Update à tabela de atletas
             athlete.TeamsId = invite.TeamsId;
@@ -52,11 +60,19 @@ namespace BikeSocialBLL.Services
             return true;
         }
 
-        public async Task<bool> RejectTeamInvite(int inviteId)
+        public async Task<bool> RejectTeamInvite(int userId, int inviteId)
         {
-            // Verificar se o invite existe
+            // Receber info do invite
             var invite = await _teamAthletesInvite.Get(query => query.Id == inviteId);
-            if (invite == null) return false;
+            
+            // Verificar se o invite existe
+            if (invite == null) throw new Exception("There is no invite assigned to the given id");
+
+            // Buscar informações do atleta
+            var athlete = await _athleteRepository.Get(query => query.Id == invite.AthletesId);
+
+            // Verificar se pertence ao utilizador
+            if (athlete.UsersId != userId) throw new Exception("Invited id is not assigned to the gived athlete.");
 
             // Remover invite
             await _teamAthletesInvite.Delete(invite);
@@ -66,14 +82,45 @@ namespace BikeSocialBLL.Services
 
         public async Task<bool> MakeFederationRequest(GetAthleteFederationRequestDto dto)
         {
-            //Verificar se a request já existe
-            var exists = await _athleteFederationRequestsRepo.Get(query => query.AthletesId == dto.athleteId && query.FederationsId == dto.federationId);
+            // Buscar info do atleta
+            var athlete = await _athleteRepository.Get(query => query.UsersId == dto.athleteId);
 
-            if (exists != null)
-                return false;
+            // Buscar info da request
+            var exists = await _athleteFederationRequestsRepo.Get(query => query.AthletesId == athlete.Id && query.FederationsId == dto.federationId);
+
+            // Verificar se já existe
+            if (exists != null) throw new Exception("There is already a request in order.");
 
             // Fazer a request
-            await _athleteFederationRequestsRepo.Add(dto.AsAthleteFederationRequest());
+            await _athleteFederationRequestsRepo.Add(dto.AsAthleteFederationRequest(athlete.Id));
+
+            return true;
+        }
+
+        public async Task<bool> AcceptTrainingInvite(int inviteId)
+        {
+            // Verificar se o invite existe
+            var invite = await _trainingInvRepo.Get(query => query.Id == inviteId);
+            if (invite == null) throw new Exception("Invite does not exists.");
+
+
+            // Update à tabela de atletas
+            invite.Confirmation = true;
+            await _trainingInvRepo.Update(invite);
+
+            return true;
+        }
+
+        public async Task<bool> RejectTrainingInvite(int inviteId)
+        {
+            // Verificar se o invite existe
+            var invite = await _trainingInvRepo.Get(query => query.Id == inviteId);
+            if (invite == null) throw new Exception("Invite does not exists.");
+
+
+            // Update à tabela de atletas
+            invite.Confirmation = false;
+            await _trainingInvRepo.Update(invite);
 
             return true;
         }

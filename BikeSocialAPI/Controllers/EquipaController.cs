@@ -3,6 +3,8 @@ using BikeSocialDTOs;
 using BikeSocialBLL.Services;
 using BikeSocialBLL.Services.IServices;
 using BikeSocialEntities;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace BikeSocialAPI.Controllers
 {
@@ -12,47 +14,71 @@ namespace BikeSocialAPI.Controllers
     public class EquipaController : Controller
     {
         private readonly IEquipaService _equipaService;
+        private readonly IUserService _userService;
+        private readonly IAthleteService _athleteService;
 
-        public EquipaController(IEquipaService equipaService)
+        public EquipaController(IEquipaService equipaService, IUserService userService, IAthleteService athleteService)
         {
             _equipaService = equipaService;
+            _userService = userService;
+            _athleteService = athleteService;
         }
 
+        //TODO: Retornar createdAtAction
         [HttpPost("criar")]
+        [Authorize(Roles = "director")]
         public async Task<IActionResult> Equipa(CreateEquipaDto equipa)
         {
-            if( await _equipaService.Create(equipa) ==false)
-                return BadRequest();
+            // Buscar id do utilizador a partir do token
+            var userId = _userService.GetUserIdFromToken();
 
-           return Ok();
+            await _equipaService.Create(userId, equipa);
+            return Ok();
         }
 
+        //TODO: Retornar createdAtAction
         [HttpPost("conviteAtleta")]
+        [Authorize(Roles = "coach")]
         public async Task<IActionResult> Convite(CreateConvAtletaEquiDto convite)
         {
-            if (await _equipaService.ConviteAE(convite) == false)
-                return BadRequest();
+            // Buscar id do utilizador a partir do token
+            var userId = _userService.GetUserIdFromToken();
+
+            await _equipaService.ConviteAE(userId, convite);
 
             return Ok();
 
         }
 
+        //TODO: Retornar createdAtAction
         [HttpPost("conviteTreinador")]
+        [Authorize(Roles = "director")]
         public async Task<IActionResult> Convite(CreateConvCoachEquiDto convite)
         {
-            if (await _equipaService.ConviteCE(convite) == false)
-                return BadRequest();
+            // Buscar id do utilizador a partir do token
+            var userId = _userService.GetUserIdFromToken();
 
+            await _equipaService.ConviteCE(userId, convite);
             return Ok();
         }
 
+        //TODO: Retornar createdAtAction
         [HttpPost("federationRequest")]
+        [Authorize(Roles = "director")]
         public async Task<IActionResult> FederationRequest(GetTeamFederationRequestDto dto)
         {
-            if(await _equipaService.FederationRequest(dto) == false)
-            {
-                return BadRequest();
-            }
+            // Buscar id do utilizador a partir do token
+            var userId = _userService.GetUserIdFromToken();
+
+            await _equipaService.FederationRequest(userId, dto);
+            return Ok();
+        }
+
+        [HttpPost("requestValidation")]
+        [Authorize(Roles = "coach")]
+        public async Task<ActionResult> RequestValidation(GetAthleteFederationRequestDto dto)
+        {
+            await _athleteService.MakeFederationRequest(dto);
             return Ok();
         }
     }

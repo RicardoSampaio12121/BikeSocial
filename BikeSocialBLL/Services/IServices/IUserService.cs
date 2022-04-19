@@ -10,11 +10,14 @@ namespace BikeSocialBLL.Services.IServices
 {
     public interface IUserService
     {
-        Task<bool> Login(GetUserLoginDto dto);
-        //Task<User> Login(GetUserDto userDto); // para testar
-        
-        Task<bool> Register(GetUserRegisterDto dto);
-        Task<bool> GeneratePasswordRecoveryCode(int userId);
-        Task<bool> UpdatePassword(GetUpdatePasswordDto dto);
+        Task<ReturnLoginDto> Login(GetLoginDto dto);
+
+        int GetUserIdFromToken();
+        Task<ReturnUserDto> Register(GetUserRegisterDto dto);
+        Task GeneratePasswordRecoveryCode(int userId);
+        Task<bool> UpdatePassword(int userId, GetUpdatePasswordDto dto);
+        Task<bool> EditInformation(int userId, GetUpdatedInformationDto dto);
+        Task<bool> UpdatePrivacySettings(int userId, GetUpdatedPrivacySettingsDto dto);
+        Task<ReturnUserDto> GetUserInformationById(int userId);
     }
 }

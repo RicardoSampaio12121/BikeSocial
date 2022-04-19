@@ -37,6 +37,7 @@ namespace BikeSocialUtils.DependencyInjection
             });
 
             //-------------------------------------------------Add scopes here---------------------------------------------------------------------------------------------//
+            
             services.AddScoped<IUserService, UsersService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRecoveryPasswordCodesRepository, RecoveryPasswordCodesRepository>();
@@ -60,6 +61,10 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<ITeamCoachesInviteRepository, TeamCoachesInviteRepository>();
             services.AddScoped<ITeamFederationRequestRepository, TeamFederationRequestRepository>();
 
+            services.AddScoped<ICoachesRepository, CoachesRepository>();
+
+            services.AddScoped<IDirectorRepository, DirectorRepository>();
+
             services.AddScoped<IAthleteService, AthleteService>();
             services.AddScoped<IAthleteRepository, AthleteRepository>();
             services.AddScoped<IAthleteFederationRequestsRepository, AthleteFederationRequestsRepository>();
@@ -74,6 +79,20 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<IPlanRepository, PlanRepository>();
 
             services.AddScoped<IFederationService, FederationService>();
+            
+            services.AddScoped<IPrizeService, PrizeService>();
+            services.AddScoped<IPrizeRepository, PrizeRepository>();
+            
+            services.AddScoped<IAchievementService, AchievementService>();
+            services.AddScoped<IAchievementRepository, AchievementRepository>();
+            services.AddScoped<IAthleteAchievementsRepository, AthleteAchievementsRepository>();
+            services.AddScoped<IProfileAchievementsRepository, ProfileAchievementsRepository>();
+
+            services.AddScoped<IConsultResultRaceService, ConsultResultRaceService>();
+            services.AddScoped<IConsultResultRaceRepository, ConsultResultRaceRepository>();
+
+            services.AddScoped<IConsultAchievementAthleteService, ConsultAchievementAthleteService>();
+            services.AddScoped<IConsultAchievementAthleteRepository, ConsultAchievementsAthleteRepository>();
         }
     }
 }

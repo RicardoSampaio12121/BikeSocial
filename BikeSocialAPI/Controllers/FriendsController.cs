@@ -2,55 +2,63 @@
 using Microsoft.AspNetCore.Mvc;
 using BikeSocialBLL.Services.IServices;
 using BikeSocialDTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BikeSocialAPI.Controllers
 {
     [Route("friends")]
+    [Authorize]
     [ApiController]
     public class FriendsController : Controller
     {
-        //Acesso ao DAL friend service.
         private readonly IFriendService _friendService;
-        public FriendsController(IFriendService friendService)
+        private readonly IUserService _userService;
+
+        public FriendsController(IFriendService friendService, IUserService userService)
         {
             _friendService = friendService;
+            _userService = userService;
         }
 
+        // TODO: Retornar createdAtAction
         [HttpPost("add")]
         public async Task<IActionResult> AddFriend(CreateFriendDto newFriendRequest)
         {
-            if(await _friendService.AddFriend(newFriendRequest) == false)
-            {
-                return BadRequest();
-            }
+            // Buscar id do user pelo token
+            var userId = _userService.GetUserIdFromToken();
+
+            await _friendService.AddFriend(userId, newFriendRequest);
             return Ok();
         }
 
         [HttpDelete("remove")]
         public async Task<IActionResult> RemoveFriend(GetFriendDto friendToRemove)
         {
-            if (await _friendService.RemoveFriend(friendToRemove) == false)
-            {
-                return BadRequest();
-            }
-            return Ok();
+            // Buscar id do user pelo token
+            var userId = _userService.GetUserIdFromToken();
+
+            await _friendService.RemoveFriend(userId, friendToRemove);
+            return NoContent();
         }
 
         [HttpGet("view/{userId}")]
-        public async Task<IActionResult> ViewFriends(int userId)
+        public async Task<IActionResult> ViewFriends()
         {
-            if (await _friendService.ViewFriends(userId) == null)
-                return BadRequest();
-            return Ok();
+            // Buscar id do user pelo token
+            var userId = _userService.GetUserIdFromToken();
+
+            var friends = await _friendService.ViewFriends(userId);
+            return Ok(friends);
         }
 
+        // TODO: Retornar createdAtAction
         [HttpPost("accept")]
         public async Task<IActionResult> AcceptFriend(GetFriendDto friendToAccept)
         {
-            if(await _friendService.AcceptFriend(friendToAccept) == false)
-            {
-                return BadRequest();
-            }
+            // Buscar id do user pelo token
+            var userId = _userService.GetUserIdFromToken();
+
+            await _friendService.AcceptFriend(userId, friendToAccept);
             return Ok();
         }
     }

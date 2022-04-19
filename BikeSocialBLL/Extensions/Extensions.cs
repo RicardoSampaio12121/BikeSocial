@@ -22,16 +22,26 @@ public static class Extensions
     public static ReturnProfileDto AsReturnProfile(this Profile profile)
     {
         ReturnProfileDto profileDto = new();
+        
         profileDto.userId = profile.UsersId;
         profileDto.description = profile.description;
 
         return profileDto;
     }
-    public static Friend AsNewFriend(this CreateFriendDto friendDto)
+
+    public static ReturnResultsDto AsReturnResults(this RaceResults results)
+    {
+        ReturnResultsDto resultsDto = new();
+        resultsDto.atheleteId = results.AthletesId;
+        resultsDto.result = results.Position;
+
+        return resultsDto;
+    }
+    public static Friend AsNewFriend(this CreateFriendDto friendDto, int userId)
     {
         Friend friend = new();
 
-        friend.solicitorId = friendDto.solicitorId;
+        friend.solicitorId = userId;
         friend.recieptientId = friendDto.recieptientId;
         friend.status = false;
         friend.timeSent = friendDto.timeSent;
@@ -50,11 +60,11 @@ public static class Extensions
 
     //        return friend;
     //    }
-    public static Trainings AsTraining(this CreateTrainingDto trainingDto)
+    public static Trainings AsTraining(this CreateTrainingDto trainingDto, int teamId)
     {
         Trainings train = new();
 
-        train.TeamsId = trainingDto.teamId;
+        train.TeamsId = teamId;
         train.Name = trainingDto.name;
         train.dateTime = trainingDto.dateTime;
         train.EstimatedTime = trainingDto.estimatedTime;
@@ -82,11 +92,11 @@ public static class Extensions
         return race;
     }
 
-    public static Routes AsRoute(this CreateRouteDto createRouteDto)
+    public static Routes AsRoute(this CreateRouteDto createRouteDto, int userId)
     {
         Routes route = new();
 
-        route.UsersId = createRouteDto.userId;
+        route.UsersId = userId;
         route.Public = createRouteDto.Public;
         route.Description = createRouteDto.Description;
         route.dateTime = createRouteDto.dateTime;
@@ -99,11 +109,11 @@ public static class Extensions
 
     }
 
-    public static Routes AsRoute(this CreateRoutePeopleDto createRouteDto)
+    public static Routes AsRoute(this CreateRoutePeopleDto createRouteDto, int userId)
     {
         Routes route = new();
 
-        route.UsersId = createRouteDto.userId;
+        route.UsersId = userId;
         route.Public = createRouteDto.Public;
         route.Description = createRouteDto.Description;
         route.dateTime = createRouteDto.dateTime;
@@ -147,25 +157,22 @@ public static class Extensions
         return athlete;
     }
 
-    public static Teams AsTeam(this CreateEquipaDto equipaDto)
+    public static Teams AsTeam(this CreateEquipaDto equipaDto, int clubId)
     {
         Teams equipa = new();
 
         equipa.Name = equipaDto.name;
         equipa.PlacesId = equipaDto.placeId;
-        equipa.ClubsId = equipaDto.clubI;
-        equipa.FederationsId = equipaDto.federationId;
-
-
+        equipa.ClubsId = clubId;
 
         return equipa;
     }
 
-    public static TeamInviteAthletes AsTeamAthleteInvite(this CreateConvAtletaEquiDto conviteAE)
+    public static TeamInviteAthletes AsTeamAthleteInvite(this CreateConvAtletaEquiDto conviteAE, int teamId)
     {
         TeamInviteAthletes conAtletaEqui = new();
 
-        conAtletaEqui.TeamsId = conviteAE.id_equipa;
+        conAtletaEqui.TeamsId = teamId;
         conAtletaEqui.AthletesId = conviteAE.id_athelete;
 
         return conAtletaEqui;
@@ -194,10 +201,6 @@ public static class Extensions
 
     }
 
-
-
-
-
     public static RouteInvites AsRouteInvite(this GetInviteToRouteDto dto)
     {
         RouteInvites output = new();
@@ -208,11 +211,11 @@ public static class Extensions
         return output;
     }
 
-    public static Trainings AsTraining(this CreateTrainingWithInvitesDto trainingDto)
+    public static Trainings AsTrainingD(this CreateTrainingWithInvitesDto trainingDto, int teamId)
     {
         Trainings train = new();
 
-        train.TeamsId = trainingDto.teamId;
+        train.TeamsId = teamId;
         train.Name = trainingDto.name;
         train.dateTime = trainingDto.dateTime;
         train.EstimatedTime = trainingDto.estimatedTime;
@@ -271,6 +274,41 @@ public static class Extensions
         return results;
     }
     
+    public static Prizes AsPrize(this CreatePrizeDto prizeDto)
+    {
+        Prizes prize = new();
+
+        prize.Name = prizeDto.name;
+
+        return prize;
+    }
+    
+    public static ReturnAchievementDto AsReturnAchievement(this Achievements achievement)
+    {
+        ReturnAchievementDto achievementDto = new();
+
+        achievementDto.AchievementTypeId = achievement.AchievementTypesId;
+        achievementDto.achievementTime = achievement.achievementTime;
+        achievementDto.date = achievement.date;
+        achievementDto.PlacesId = achievement.PlacesId;
+
+        return achievementDto;
+    }
+
+    //public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
+    
+    public static Achievements AsAchievement(this ReturnAchievementDto achievementDto)
+    {
+        Achievements achievement = new();
+
+        achievement.Name = achievementDto.Name;
+        achievement.AchievementTypesId = achievementDto.AchievementTypeId;
+        achievement.achievementTime = achievementDto.achievementTime;
+        achievement.date = achievementDto.date;
+        achievement.PlacesId = achievementDto.PlacesId;
+
+        return achievement;
+    }
     public static Plans AsPlan(this CreatePlanDto planDto)
     {
         Plans plan = new();
@@ -279,8 +317,18 @@ public static class Extensions
         plan.startTime = planDto.startTime;
         plan.finishTime = planDto.finishTime;
         plan.EstimatedTime = planDto.estimatedTime;
-        
+
         return plan;
+    }
+
+    public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
+    {
+        AthleteFederationRequests output = new();
+
+        output.AthletesId = athleteId;
+        output.FederationsId = dto.federationId;
+
+        return output;
     }
 
     public static TeamFederationRequests AsTeamFederationRequest(this GetTeamFederationRequestDto dto)
@@ -293,13 +341,32 @@ public static class Extensions
         return output;
     }
 
-    public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto)
+
+    public static ReturnUserDto AsReturnUserDto(this Users user)
     {
-        AthleteFederationRequests output = new();
-
-        output.AthletesId = dto.athleteId;
-        output.FederationsId = dto.federationId;
-
-        return output;
+        return new ReturnUserDto
+        {
+            id = user.Id,
+            username = user.username,
+            birthDate = user.birthDate.ToShortDateString(),
+            contact = user.contact,
+            placeId = user.PlacesId,
+            userTypeId = user.UserTypesId,
+            email = user.email
+        };
     }
+
+    public static ReturnConsultResultRaceDto AsReturnConsultResultRace(this RaceResults consultresultrace)
+    {
+        ReturnConsultResultRaceDto consultRRDto = new();
+
+        consultRRDto.athletesId = consultresultrace.AthletesId;
+        consultRRDto.racesId = (int)consultresultrace.RacesId;
+
+        return consultRRDto;
+    }
+
+
+    
+
 }

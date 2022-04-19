@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record GetUpdatePasswordDto(int userId, int code, string newPassword);
+    public record GetUpdatePasswordDto(int code, string newPassword);
 }
