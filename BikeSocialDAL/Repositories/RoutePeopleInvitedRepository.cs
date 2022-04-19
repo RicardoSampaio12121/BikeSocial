@@ -23,5 +23,18 @@ namespace BikeSocialDAL.Repositories
             await _dataContext.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> AcepteRouteInvite(List<RouteInvites> people)
+        {
+            await _dataContext.AddRangeAsync(people);
+            await _dataContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> RejectRouteInvite(List<RouteInvites> people)
+        {
+            await _dataContext.AddRangeAsync(people);
+            await _dataContext.SaveChangesAsync();
+            return true;
+        }
     }
 }
