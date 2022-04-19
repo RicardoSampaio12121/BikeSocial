@@ -21,21 +21,28 @@ namespace BikeSocialBLL.Services
             _routePeopleInviredRepository = peopleInvitedRepository;
         }
 
-        public async Task<bool> Add(CreateRouteDto createRoutDto)
+        public async Task<bool> Add(int userId, CreateRouteDto createRoutDto)
         {
-            await _routeRepository.Add(createRoutDto.AsRoute()); //TODO: Verificar se retornou com sucesso
+            // Verificar se user já tem uma rota para a mesma hora
+            var route = await _routeRepository.Get(query => query.UsersId == userId && query.dateTime == createRoutDto.dateTime);
+            if (route != null) throw new Exception("You already created a route for the same date");
+
+            // Adicionar rota
+            await _routeRepository.Add(createRoutDto.AsRoute(userId));
             return true;
         }
 
-        public async Task<bool> AddWithPeople(CreateRoutePeopleDto createRoutePeopleDto)
+        public async Task<bool> AddWithPeople(int userId, CreateRoutePeopleDto createRoutePeopleDto)
         {
-            // TODO: Verificar se rota já existe
+            // Verificar se rota já existe
+            var route = await _routeRepository.Get(query => query.UsersId == userId && query.dateTime == createRoutePeopleDto.dateTime);
+            if (route != null) throw new Exception("You already created a route for the same date");
 
             // Adicionar rota
-            await _routeRepository.Add(createRoutePeopleDto.AsRoute()); //TODO: Verificar se retornou com sucesso
+            await _routeRepository.Add(createRoutePeopleDto.AsRoute(userId));
 
             // Buscar id da rota
-            var createdRoute = await _routeRepository.Get(routeQuery => routeQuery.UsersId == createRoutePeopleDto.userId && routeQuery.dateTime == createRoutePeopleDto.dateTime && routeQuery.PlacesId == createRoutePeopleDto.placeId);
+            var createdRoute = await _routeRepository.Get(routeQuery => routeQuery.UsersId == userId && routeQuery.dateTime == createRoutePeopleDto.dateTime && routeQuery.PlacesId == createRoutePeopleDto.placeId);
 
             // Adicionar convites
             await _routePeopleInviredRepository.InvitePeopleToRoute(createRoutePeopleDto.AsListRoutePeopleInvited(createdRoute.Id));
@@ -47,8 +54,7 @@ namespace BikeSocialBLL.Services
         {
             // Verifica se user já está convidado
             var _ = await _routePeopleInviredRepository.Get(query => query.UsersId == dto.userId && query.RoutesId == dto.routeId);
-
-            if (_ != null) return false;
+            if (_ != null) throw new Exception("User is already invited to this route.");
 
             // Adiciona invite
             await _routePeopleInviredRepository.Add(dto.AsRouteInvite());
@@ -56,14 +62,14 @@ namespace BikeSocialBLL.Services
 
         }
         
-        public async Task<bool> ChangeRouteVisibility(int routeId)
+        public async Task<bool> ChangeRouteVisibility(int userId, int routeId)
         {
             // Verificar se o percurso existe
-            var searchResult = await _routeRepository.Get(query => query.Id == routeId);
-            if (searchResult == null) return false;
-            
-            // Procurar informações do percurso
-            var route = await _routeRepository.Get(query => query.Id == searchResult.Id);
+            var route = await _routeRepository.Get(query => query.Id == routeId);
+            if (route == null) throw new Exception("Route does not exist");
+
+            // Verificar se o percurso foi criado pelo utilizador a aceder a esta função
+            if (route.UsersId != userId) throw new Exception("You did not create this route.");
             
             // Atualizar a tabela dos percursos
             route.Public = !route.Public; // trocar valor (público->privado OU privado->público)
