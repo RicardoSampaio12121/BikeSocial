@@ -96,10 +96,7 @@ namespace BikeSocialBLL.Services
             user.password = PasswordsUtils.Encrypt(user.password);
 
             // Adicionar utilizador à base de dados
-            await _userRepository.Add(user.AsUser());
-
-            // Buscar utilizador acabado de adicionar
-            var addedUser = await _userRepository.Get(query => query.email == user.email);
+            var addedUser = await _userRepository.Add(user.AsUser());
 
             return addedUser.AsReturnUserDto();
 

@@ -365,4 +365,19 @@ public static class Extensions
 
         return consultRRDto;
     }
+
+    //public static GetUserRegisterDto AsGetUserRegisterDto(this Users entity)
+    //{
+    //    GetUserRegisterDto output = new()
+    //    {
+    //        username = entity.username,
+    //        email = entity.email,
+    //        password = entity.password,
+    //        birthdate = entity.birthDate,
+    //        contact = entity.contact,
+    //        placeId = entity.PlacesId,
+    //        userTypeId = entity.UserTypesId
+    //    };
+    //    return output;
+    //}
 }

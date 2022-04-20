@@ -39,10 +39,10 @@ namespace BikeSocialBLL.Services
             if (route != null) throw new Exception("You already created a route for the same date");
 
             // Adicionar rota
-            await _routeRepository.Add(createRoutePeopleDto.AsRoute(userId));
+            var createdRoute = await _routeRepository.Add(createRoutePeopleDto.AsRoute(userId));
 
             // Buscar id da rota
-            var createdRoute = await _routeRepository.Get(routeQuery => routeQuery.UsersId == userId && routeQuery.dateTime == createRoutePeopleDto.dateTime && routeQuery.PlacesId == createRoutePeopleDto.placeId);
+            //var createdRoute = await _routeRepository.Get(routeQuery => routeQuery.UsersId == userId && routeQuery.dateTime == createRoutePeopleDto.dateTime && routeQuery.PlacesId == createRoutePeopleDto.placeId);
 
             // Adicionar convites
             await _routePeopleInviredRepository.InvitePeopleToRoute(createRoutePeopleDto.AsListRoutePeopleInvited(createdRoute.Id));
