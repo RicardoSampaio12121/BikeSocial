@@ -9,10 +9,12 @@ namespace BikeSocialBLL.Services
     public class PlanService : IPlanService
     {
         private readonly IPlanRepository _planRepository;
+        private readonly IAthleteRepository _athleteRepo;
         
-        public PlanService(IPlanRepository planRepository)
+        public PlanService(IPlanRepository planRepository, IAthleteRepository athleteRepo)
         {
             _planRepository = planRepository;
+            _athleteRepo = athleteRepo;
         }
         
         // Criar um plano novo
@@ -26,6 +28,19 @@ namespace BikeSocialBLL.Services
             
             await _planRepository.Add(plan.AsPlan());
             return true;
+        }
+
+        //Consultar plano de treino de outros utilizadores
+        public async Task<Plans> ConsultPlanTrainingsOtherUser(int athletesId)
+        {
+            // Buscar id do plano
+            Athletes consult = await _athleteRepo.Get(consultQuery => consultQuery.Id == athletesId);
+            if (consult == null) throw new Exception("Athlete doesn't have an assigned training plan.");
+
+            // Buscar plano
+            var plan = await _planRepository.Get(query => query.Id == consult.PlansId);
+
+            return plan;
         }
     }
 }
