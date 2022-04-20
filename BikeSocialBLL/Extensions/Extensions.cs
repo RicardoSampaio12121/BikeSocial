@@ -365,8 +365,4 @@ public static class Extensions
 
         return consultRRDto;
     }
-
-
-    
-
 }
