@@ -77,6 +77,35 @@ namespace BikeSocialBLL.Services
 
             return true;
         }
-        
+
+        public async Task<bool> AcceptRouteInvite(int inviteId, int userId)
+        {
+            // Verificar se o invite existe
+            var invite = await _routePeopleInviredRepository.Get(query => query.RoutesId == inviteId && query.UsersId == userId);
+            if (invite == null) throw new Exception("Invite does not exists.");
+
+            if (invite.UsersId != userId) throw new Exception("Cannot accept invites from other users.");
+
+            // Update à tabela de atletas
+            invite.Confirmation = true;
+            await _routePeopleInviredRepository.Update(invite);
+
+            return true;
+        }
+
+        public async Task<bool> RejectRouteInvite(int inviteId, int userId)
+        {
+            // Verificar se o invite existe
+            var invite = await _routePeopleInviredRepository.Get(query => query.RoutesId == inviteId && query.UsersId == userId);
+            if (invite == null) throw new Exception("Invite does not exists.");
+
+            if (invite.UsersId != userId) throw new Exception("Cannot accept invites from other users.");
+
+            // Update à tabela de atletas
+            invite.Confirmation = false;
+            await _routePeopleInviredRepository.Update(invite);
+
+            return true;
+        }
     }
 }

@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FakeItEasy" Version="7.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="Moq" Version="4.17.2" />
@@ -24,7 +29,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BikeSocialAPI\BikeSocialAPI.csproj" />
+    <ProjectReference Include="..\BikeSocialDAL\BikeSocialDAL.csproj" />
     <ProjectReference Include="..\BikeSocialBLL\BikeSocialBLL.csproj" />
+    <ProjectReference Include="..\BikeSocialEntities\BikeSocialEntities.csproj" />
+    <ProjectReference Include="..\BikeSocialDTOs\BikeSocialDTOs.csproj" />
+    <ProjectReference Include="..\BikeSocialUtils\BikeSocialDI.csproj" />
   </ItemGroup>
 
 </Project>
