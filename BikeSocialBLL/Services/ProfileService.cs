@@ -110,5 +110,20 @@ namespace BikeSocialBLL.Services
 
             return true;
         }
+
+        public async Task<bool> UpdateDescription(int profileId, GetUpdatedDescriptionDto dto)
+        {
+            // Atualizar dados
+            // Enviar para a base de dados
+            
+            // Verificar se o perfil existe
+            var profileSearchResult = await _profileRepository.Get(profileQuery => profileQuery.Id == profileId);
+            if (profileSearchResult == null) return false;
+            
+            // Atualizar a descrição do perfil
+            profileSearchResult.description = dto.newDescription;
+            
+            return true;
+        }
     }
 }
