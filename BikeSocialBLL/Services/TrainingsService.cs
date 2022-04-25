@@ -73,7 +73,7 @@ namespace BikeSocialBLL.Services
             var athlete = await _athleteRepo.Get(query => query.Id == dto.athleteId);
 
             // Verificar se atleta pertence à equipa do coach
-            if (coach.TeamsId != athlete.TeamsId) throw new Exception("Coach can only invite athletes from it's team");
+            if ((coach.TeamsId != athlete.TeamsId) || (coach.TeamsId == null)) throw new Exception("Coach can only invite athletes from it's team");
 
             // Verificar se ainda não está convidado
             var training = await _invitesRepository.Get(query => query.TrainingsId == dto.trainingId && query.AthletesId == dto.athleteId);
