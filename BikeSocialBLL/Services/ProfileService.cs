@@ -113,15 +113,15 @@ namespace BikeSocialBLL.Services
 
         public async Task<bool> UpdateDescription(int profileId, GetUpdatedDescriptionDto dto)
         {
-            // Atualizar dados
-            // Enviar para a base de dados
-            
             // Verificar se o perfil existe
             var profileSearchResult = await _profileRepository.Get(profileQuery => profileQuery.Id == profileId);
             if (profileSearchResult == null) return false;
             
             // Atualizar a descrição do perfil
             profileSearchResult.description = dto.newDescription;
+            
+            // Atualizar base de dados
+            await _profileRepository.Update(profileSearchResult);
             
             return true;
         }
