@@ -406,4 +406,16 @@ public static class Extensions
             federationId = team.FederationsId
         };
     }
+
+    public static ReturnPlanDto AsReturnPlanDto(this Plans plan)
+    {
+        return new ReturnPlanDto
+        {
+            Id = plan.Id,
+            description = plan.description,
+            startTime = plan.startTime,
+            finishTime = plan.finishTime,
+            EstimatedTime = plan.EstimatedTime
+        };
+    }
 }

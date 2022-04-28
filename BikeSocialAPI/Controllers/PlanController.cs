@@ -17,12 +17,18 @@ namespace BikeSocialAPI.Controllers
             _planService = planService;
         }
         
-        // TODO: Retornar CreatedAtAction
+        [HttpGet("GetPlan/{planId}")]
+        public async Task<ReturnPlanDto> GetPlan(int planId)
+        {
+            var plan = await _planService.GetPlan(planId);
+            return plan;
+        }
+
         [HttpPost("create")]
         public async Task<IActionResult> Create(CreatePlanDto plan)
         {
-            await _planService.Create(plan);
-            return Ok();
+            var createdPlan = await _planService.Create(plan);
+            return CreatedAtAction(nameof(GetPlan), new {planId = createdPlan.Id}, createdPlan);
         }
 
         //Consultar planos de treinos de outros utilizadores
