@@ -394,4 +394,16 @@ public static class Extensions
             PlanId = athlete.PlansId
         };
     }
+
+    public static ReturnEquipaDto AsReturnTeamDto(this Teams team)
+    {
+        return new ReturnEquipaDto
+        {
+            id = team.Id,
+            name = team.Name,
+            placeId = team.PlacesId,
+            clubeId = team.ClubsId,
+            federationId = team.FederationsId
+        };
+    }
 }

@@ -66,7 +66,6 @@ namespace BikeSocialAPI.Controllers
             return NoContent();
         }
 
-        // Todo: Retornar created at action
         [HttpPost("federationRequest")]
         public async Task<ActionResult> FederationRequest(GetAthleteFederationRequestDto dto)
         {
