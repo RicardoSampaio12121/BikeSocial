@@ -17,11 +17,11 @@ namespace BikeSocialDAL.Repositories
             _dbContext = dataContext;
         }
 
-        public async Task<bool> SaveResults(List<RaceResults> raceResults)
+        public async Task<List<RaceResults>> SaveResults(List<RaceResults> raceResults)
         {
             await _dbContext.AddRangeAsync(raceResults);
             await _dbContext.SaveChangesAsync();
-            return true;
+            return raceResults;
         }
     }
 }

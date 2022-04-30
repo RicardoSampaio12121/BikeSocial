@@ -427,4 +427,20 @@ public static class Extensions
             Name = prize.Name
         };
     }
+
+    public static ReturnRaceDto AsReturnRaceDto(this Races race)
+    {
+        return new ReturnRaceDto
+        {
+            Id = race.Id,
+            Description = race.description,
+            Distance = race.distance,
+            EstimatedTime = race.estimateTime,
+            dateTime = race.dateTime,
+            FederationId = race.FederationsId,
+            RaceTypeId = race.RaceTypesId,
+            PlaceId = race.PlacesId,
+            State = race.State
+        };
+    }
 }

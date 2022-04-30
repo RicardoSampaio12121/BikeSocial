@@ -10,5 +10,6 @@ namespace BikeSocialDTOs
         public int FederationId { get; set; }
         public int RaceTypeId { get; set; }
         public int PlaceId { get; set; }
+        public string State { get; set; }
     }
 }

@@ -18,16 +18,22 @@ namespace BikeSocialAPI.Controllers
             _userService = userService;
         }
         
-        // Retornar createdAtAction
+        [HttpGet("GetRace/{raceId}")]
+        [Authorize]
+        public async Task<ReturnRaceDto> GetRace(int raceId)
+        {
+            var race = await _raceService.GetRace(raceId);
+            return race;
+        }
+
         [HttpPost("create")]
         [Authorize(Roles = "federationFunc")]
         public async Task<IActionResult> Create(CreateRaceDto race)
         {
-            await _raceService.Create(race);
-            return Ok();
+            var createdRace = await _raceService.Create(race);
+            return CreatedAtAction(nameof(GetRace), new {raceId = createdRace.Id}, createdRace);
         }
 
-        // Retornar createdAtAction
         [HttpPost("inscricao")]
         [Authorize(Roles = "coach")]
         public async Task<IActionResult> Adicionar(GetRaceInviteDto adcionar)
@@ -44,16 +50,16 @@ namespace BikeSocialAPI.Controllers
         [Authorize(Roles = "federationFunc")]
         public async Task<ActionResult> PublishResults(GetPublishResultsDto dto)
         {
-            await _raceService.SaveResults(dto);
-            return Ok();
+            var publishedResults = await _raceService.SaveResults(dto);
+            return CreatedAtAction(nameof(GetResults), new { raceId = publishedResults[0].Id }, publishedResults);
         }
 
         [HttpGet("getResults")]
         [Authorize]
-        public async Task<ActionResult> GetResults(int raceId)
+        public async Task<List<ReturnResultsDto>> GetResults(int raceId)
         {
-            await _raceService.GetResults(raceId);
-            return Ok();
+            var results = await _raceService.GetResults(raceId);
+            return results;
         }
     }
 }
