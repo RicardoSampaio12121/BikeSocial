@@ -4,6 +4,8 @@ using BikeSocialBLL.Services.IServices;
 
 namespace BikeSocialAPI.Controllers
 {
+    //TODO: Quem cria os Prizes? Falta por a role
+
     [ApiController]
     [Route("prize")]
     public class PrizeController : Controller
@@ -14,14 +16,19 @@ namespace BikeSocialAPI.Controllers
         {
             _prizeService = prizeService;
         }
+
+        [HttpGet("Get/{prizeId}")]
+        public async Task<ReturnPrizeDto> GetPrize(int prizeId)
+        {
+            var prize = await _prizeService.Get(prizeId);
+            return prize;
+        }
         
         [HttpPost("create")]
         public async Task<IActionResult> Create(CreatePrizeDto prize)
         {
-            if (await _prizeService.Create(prize) == false)
-                return BadRequest();
-
-            return Ok();
+            var createdPrize = await _prizeService.Create(prize);
+            return CreatedAtAction(nameof(GetPrize), new { prizeId = createdPrize.Id }, createdPrize);
         }
     }
 }

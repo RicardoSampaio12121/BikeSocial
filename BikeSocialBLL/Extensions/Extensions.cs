@@ -418,4 +418,13 @@ public static class Extensions
             EstimatedTime = plan.EstimatedTime
         };
     }
+
+    public static ReturnPrizeDto AsReturnPrizeDto(this Prizes prize)
+    {
+        return new ReturnPrizeDto
+        {
+            Id = prize.Id,
+            Name = prize.Name
+        };
+    }
 }
