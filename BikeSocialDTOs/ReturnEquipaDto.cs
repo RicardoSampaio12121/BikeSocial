@@ -11,8 +11,8 @@ namespace BikeSocialDTOs
     {
         public int id { get; set; }
         public string name { get; set; }
-        public string local { get; set; }
-        public int coachId { get; set; }
+        public int? placeId { get; set; }
         public int clubeId { get; set; }
+        public int? federationId { get; set; }
     }
 }

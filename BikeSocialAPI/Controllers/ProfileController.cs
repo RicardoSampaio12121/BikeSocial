@@ -35,15 +35,15 @@ namespace BikeSocialAPI.Controllers
         [HttpDelete("removeAchievement")]
         public async Task<IActionResult> RemoveAchievementProfile(int profileId, int achievementId)
         {
-            if (await _profileService.RemoveAchievementProfile(profileId, achievementId) == false) return BadRequest();
-            return Ok();
+            await _profileService.RemoveAchievementProfile(profileId, achievementId);
+            return NoContent();
         }
 
         [HttpPut("updateDescription")]
         public async Task<ActionResult> UpdateDescription(int profileId, GetUpdatedDescriptionDto dto)
         {
-            if (await _profileService.UpdateDescription(profileId, dto) == false) return BadRequest();
-            return Ok();
+            await _profileService.UpdateDescription(profileId, dto);
+            return NoContent();
         }
     }
 }

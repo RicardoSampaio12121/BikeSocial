@@ -21,6 +21,13 @@ namespace BikeSocialAPI.Controllers
             _userService = userService;
         }
 
+        [HttpGet("getTraining/{trainingId}")]
+        public async Task<ReturnTrainingDto> GetTraining(int trainingId)
+        {
+            var training = await _trainingsService.GetTraining(trainingId);
+            return training;
+        }
+
         // TODO: Retornar createdAtAction
         [HttpPost("create")]
         public async Task<IActionResult> Create(CreateTrainingDto training)
@@ -28,12 +35,11 @@ namespace BikeSocialAPI.Controllers
             // Buscar id do user pelo token
             var userId = _userService.GetUserIdFromToken();
 
-            await _trainingsService.Create(userId, training);
-            return Ok();
+            var createdTraining = await _trainingsService.Create(userId, training);
+            return CreatedAtAction(nameof(GetTraining), new { trainingId = createdTraining.Id }, createdTraining);
         }
 
 
-        // Todo: Retornar createdAtAction
         [HttpPost("createWithInvites")]
         public async Task<ActionResult> CreateWithInvites(CreateTrainingWithInvitesDto dto)
         {
@@ -44,7 +50,6 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
-        // Todo: Retornar createdAtAction
         [HttpPost("sendInite")]
         public async Task<ActionResult> SendInvite(GetInviteToTrainingDto dto)
         {

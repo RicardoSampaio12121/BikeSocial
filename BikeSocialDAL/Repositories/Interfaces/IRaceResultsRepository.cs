@@ -9,6 +9,6 @@ namespace BikeSocialDAL.Repositories.Interfaces
 {
     public interface IRaceResultsRepository : IGenericRepository<RaceResults>
     {
-        Task<bool> SaveResults(List<RaceResults> raceResults);
+        Task<List<RaceResults>> SaveResults(List<RaceResults> raceResults);
     }
 }

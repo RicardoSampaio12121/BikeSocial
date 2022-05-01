@@ -24,7 +24,14 @@ namespace BikeSocialAPI.Controllers
             _athleteService = athleteService;
         }
 
-        //TODO: Retornar createdAtAction
+        [HttpGet("Get/{teamId}")]
+        [Authorize(Roles = "director")]
+        public async Task<ReturnEquipaDto> GetTeam(int teamId)
+        {
+            var team = await _equipaService.Get(teamId);
+            return team;
+        }
+
         [HttpPost("criar")]
         [Authorize(Roles = "director")]
         public async Task<IActionResult> Equipa(CreateEquipaDto equipa)
@@ -32,11 +39,10 @@ namespace BikeSocialAPI.Controllers
             // Buscar id do utilizador a partir do token
             var userId = _userService.GetUserIdFromToken();
 
-            await _equipaService.Create(userId, equipa);
-            return Ok();
+            var createdTeam = await _equipaService.Create(userId, equipa);
+            return CreatedAtAction(nameof(GetTeam), new { teamId = createdTeam.Id }, createdTeam);
         }
 
-        //TODO: Retornar createdAtAction
         [HttpPost("conviteAtleta")]
         [Authorize(Roles = "coach")]
         public async Task<IActionResult> Convite(CreateConvAtletaEquiDto convite)
@@ -45,12 +51,9 @@ namespace BikeSocialAPI.Controllers
             var userId = _userService.GetUserIdFromToken();
 
             await _equipaService.ConviteAE(userId, convite);
-
             return Ok();
-
         }
 
-        //TODO: Retornar createdAtAction
         [HttpPost("conviteTreinador")]
         [Authorize(Roles = "director")]
         public async Task<IActionResult> Convite(CreateConvCoachEquiDto convite)
@@ -62,7 +65,6 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
-        //TODO: Retornar createdAtAction
         [HttpPost("federationRequest")]
         [Authorize(Roles = "director")]
         public async Task<IActionResult> FederationRequest(GetTeamFederationRequestDto dto)

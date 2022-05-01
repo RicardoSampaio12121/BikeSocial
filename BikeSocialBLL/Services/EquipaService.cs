@@ -35,8 +35,13 @@ namespace BikeSocialBLL.Services
             _coachesRepo = coachesRepo;
         }
 
+        public async Task<ReturnEquipaDto> Get(int teamId)
+        {
+            var team = await _equipaRepository.Get(query => query.Id == teamId);
+            return team.AsReturnTeamDto();
+        }
 
-        public async Task<bool> Create(int userId, CreateEquipaDto equipa)
+        public async Task<Teams> Create(int userId, CreateEquipaDto equipa)
         {
             // Buscar info do director
             var director = await _directorsRepo.Get(query => query.UsersId == userId);
@@ -48,8 +53,8 @@ namespace BikeSocialBLL.Services
             if (team != null) throw new Exception("Team with the same informationa already exists");
 
             // Criar equipa
-            await _equipaRepository.Add(equipa.AsTeam(director.ClubsId));
-            return true;
+            var createdTeam = await _equipaRepository.Add(equipa.AsTeam(director.ClubsId));
+            return createdTeam;
         }
 
         public async Task<bool> ConviteAE(int userId, CreateConvAtletaEquiDto convite)
@@ -116,6 +121,8 @@ namespace BikeSocialBLL.Services
             await _teamFederationRequestRepo.Add(dto.AsTeamFederationRequest());
 
             return true;
-        }   
+        }
+
+       
     }
 }

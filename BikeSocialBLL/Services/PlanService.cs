@@ -16,9 +16,15 @@ namespace BikeSocialBLL.Services
             _planRepository = planRepository;
             _athleteRepo = athleteRepo;
         }
-        
+
+        public async Task<ReturnPlanDto> GetPlan(int planId)
+        {
+            var plan = await _planRepository.Get(query => query.Id == planId);
+            return plan.AsReturnPlanDto();
+        }
+
         // Criar um plano novo
-        public async Task<bool> Create(CreatePlanDto plan)
+        public async Task<Plans> Create(CreatePlanDto plan)
         {
             // Verificar se já existe um plano com a mesma descrição e a mesma data de início ("iguais")
             Plans pl = await _planRepository.Get(planQuery => planQuery.description == plan.description.ToString() &&
@@ -26,8 +32,8 @@ namespace BikeSocialBLL.Services
             // Não podem existir 2 planos "iguais"
             if (pl != null) throw new Exception("Plan already exists");
             
-            await _planRepository.Add(plan.AsPlan());
-            return true;
+            var createdPlan = await _planRepository.Add(plan.AsPlan());
+            return createdPlan;
         }
 
         //Consultar plano de treino de outros utilizadores
@@ -42,5 +48,7 @@ namespace BikeSocialBLL.Services
 
             return plan;
         }
+
+       
     }
 }

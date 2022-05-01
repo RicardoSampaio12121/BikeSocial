@@ -23,8 +23,14 @@ namespace BikeSocialBLL.Services
             _athleteRepo = athleteRepo;
         }
 
+        public async Task<ReturnRaceDto> GetRace(int raceId)
+        {
+            var race = await _raceRepository.Get(query => query.Id == raceId);
+            return race.AsReturnRaceDto();
+        }
+
         // Criar uma prova nova
-        public async Task<bool> Create(CreateRaceDto race)
+        public async Task<Races> Create(CreateRaceDto race)
         {
             // Verificar se já existe uma prova com a mesma descrição e a mesma data ("iguais")
             Races rc = await _raceRepository.Get(raceQuery => raceQuery.description == race.description.ToString() &&
@@ -33,8 +39,8 @@ namespace BikeSocialBLL.Services
             if (rc != null) throw new Exception("There is already a race with the same specifications.");
             
             // Adicionar race
-            await _raceRepository.Add(race.AsRace());
-            return true;
+            var createdRace = await _raceRepository.Add(race.AsRace());
+            return createdRace;
         }
 
         public async Task<bool> AdicionarAP(int userId, GetRaceInviteDto adicionar)
@@ -61,7 +67,7 @@ namespace BikeSocialBLL.Services
             return true;
         }
 
-        public async Task<bool> SaveResults(GetPublishResultsDto dto)
+        public async Task<List<RaceResults>> SaveResults(GetPublishResultsDto dto)
         {
             // Verificar se resultados já não foram publicados
             var results = await _raceResultsRepository.Get(query => query.RacesId == dto.raceId);
@@ -69,8 +75,8 @@ namespace BikeSocialBLL.Services
             if (results != null) throw new Exception("Results for this race are already published");
 
             // Adicionar os resultados
-            await _raceResultsRepository.SaveResults(dto.AsListRaceResult());
-            return true;
+            var createdResults = await _raceResultsRepository.SaveResults(dto.AsListRaceResult());
+            return createdResults;
         }
 
         public async Task<List<ReturnResultsDto>> GetResults(int raceId)
@@ -87,5 +93,7 @@ namespace BikeSocialBLL.Services
 
             return resultsDto;
         }
+
+     
     }
 }

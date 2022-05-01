@@ -27,7 +27,15 @@ namespace BikeSocialBLL.Services
             _athleteRepo = athleteRepo;
         }
 
-        public async Task<bool> Create(int userId, CreateTrainingDto training)
+        public async Task<ReturnTrainingDto> GetTraining(int trainingId)
+        {
+            var training = await _repository.Get(query => query.Id == trainingId);
+            if (training == null) throw new Exception("There is no training assigned with that id");
+
+            return training.AsReturnTrainingDto();
+        }
+
+        public async Task<Trainings> Create(int userId, CreateTrainingDto training)
         {
             // Buscar info do coach
             var coach = await _coachesRepo.Get(query => query.UsersId == userId);
@@ -37,9 +45,9 @@ namespace BikeSocialBLL.Services
             if (_ != null) throw new Exception("There is already a training with the same info created");
 
             // Adicionar treino
-            await _repository.Add(training.AsTraining(coach.TeamsId ?? default(int)));
+            var createdTraining = await _repository.Add(training.AsTraining(coach.TeamsId ?? default(int)));
 
-            return true;
+            return createdTraining;
         }
 
         public async Task<bool> CreateWithInvites(int userId, CreateTrainingWithInvitesDto dto)

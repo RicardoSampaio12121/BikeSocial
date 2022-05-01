@@ -380,4 +380,99 @@ public static class Extensions
     //    };
     //    return output;
     //}
+
+    public static ReturnAthleteDto AsReturnAthleteDto(this Athletes athlete)
+    {
+        return new ReturnAthleteDto
+        {
+            Id = athlete.Id,
+            UserId = athlete.UsersId,
+            TeamId = athlete.TeamsId,
+            ParentId = athlete.AthleteParentsId,
+            AthleteTypeId = athlete.AthleteTypesId,
+            FederationId = athlete.FederationsId,
+            PlanId = athlete.PlansId
+        };
+    }
+
+    public static ReturnEquipaDto AsReturnTeamDto(this Teams team)
+    {
+        return new ReturnEquipaDto
+        {
+            id = team.Id,
+            name = team.Name,
+            placeId = team.PlacesId,
+            clubeId = team.ClubsId,
+            federationId = team.FederationsId
+        };
+    }
+
+    public static ReturnPlanDto AsReturnPlanDto(this Plans plan)
+    {
+        return new ReturnPlanDto
+        {
+            Id = plan.Id,
+            description = plan.description,
+            startTime = plan.startTime,
+            finishTime = plan.finishTime,
+            EstimatedTime = plan.EstimatedTime
+        };
+    }
+
+    public static ReturnPrizeDto AsReturnPrizeDto(this Prizes prize)
+    {
+        return new ReturnPrizeDto
+        {
+            Id = prize.Id,
+            Name = prize.Name
+        };
+    }
+
+    public static ReturnRaceDto AsReturnRaceDto(this Races race)
+    {
+        return new ReturnRaceDto
+        {
+            Id = race.Id,
+            Description = race.description,
+            Distance = race.distance,
+            EstimatedTime = race.estimateTime,
+            dateTime = race.dateTime,
+            FederationId = race.FederationsId,
+            RaceTypeId = race.RaceTypesId,
+            PlaceId = race.PlacesId,
+            State = race.State
+        };
+    }
+
+    public static ReturnRouteDto AsReturnRouteDto(this Routes route)
+    {
+        return new ReturnRouteDto
+        {
+            Id = route.Id,
+            UsersId = route.UsersId,
+            Public = route.Public,
+            Description = route.Description,
+            DateTime = route.dateTime,
+            EstimatedTime = route.EstimatedTime,
+            Distance = route.Distance,
+            PlacesId = route.PlacesId,
+            RouteTypesId = route.RouteTypesId
+        };
+    }
+
+    public static ReturnTrainingDto AsReturnTrainingDto(this Trainings training)
+    {
+        return new ReturnTrainingDto
+        {
+            Id = training.Id,
+            teamId = training.TeamsId,
+            name = training.Name,
+            dateTime = training.dateTime,
+            estimatedTime = training.EstimatedTime,
+            distance = training.Distance,
+            placesId = training.PlacesId,
+            trainingTypesId = training.TrainingTypesId,
+            plansId = training.PlacesId
+        };
+    }
 }

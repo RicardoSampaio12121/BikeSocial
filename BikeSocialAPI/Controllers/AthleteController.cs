@@ -29,16 +29,20 @@ namespace BikeSocialAPI.Controllers
             _consultAchievementAthleteService = consultAchievementAthleteService;
         }
         
+        [HttpGet("Get/{athleteId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<ReturnAthleteDto>> GetAthlete(int athleteId)
+        {
+            var athlete = await _athleteService.GetAthlete(athleteId);
+            return Ok(athlete);        
+        }
 
-        //TODO: Retornar um createdAtAction
         [HttpPost("create")]
         [AllowAnonymous]
         public async Task<IActionResult> Create(CreateAthleteDto athlete)
         {
-            if (await _athleteService.Create(athlete) == false)
-                return BadRequest();
-
-            return Ok();
+            var createdAthlete = await _athleteService.Create(athlete);
+            return CreatedAtAction(nameof(GetAthlete), new { athleteId = createdAthlete.Id }, createdAthlete);
         }
 
         [HttpPut("acceptTeamInvite/{inviteId}")]
@@ -62,7 +66,6 @@ namespace BikeSocialAPI.Controllers
             return NoContent();
         }
 
-        // Todo: Retornar created at action
         [HttpPost("federationRequest")]
         public async Task<ActionResult> FederationRequest(GetAthleteFederationRequestDto dto)
         {
