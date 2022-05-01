@@ -443,4 +443,36 @@ public static class Extensions
             State = race.State
         };
     }
+
+    public static ReturnRouteDto AsReturnRouteDto(this Routes route)
+    {
+        return new ReturnRouteDto
+        {
+            Id = route.Id,
+            UsersId = route.UsersId,
+            Public = route.Public,
+            Description = route.Description,
+            DateTime = route.dateTime,
+            EstimatedTime = route.EstimatedTime,
+            Distance = route.Distance,
+            PlacesId = route.PlacesId,
+            RouteTypesId = route.RouteTypesId
+        };
+    }
+
+    public static ReturnTrainingDto AsReturnTrainingDto(this Trainings training)
+    {
+        return new ReturnTrainingDto
+        {
+            Id = training.Id,
+            teamId = training.TeamsId,
+            name = training.Name,
+            dateTime = training.dateTime,
+            estimatedTime = training.EstimatedTime,
+            distance = training.Distance,
+            placesId = training.PlacesId,
+            trainingTypesId = training.TrainingTypesId,
+            plansId = training.PlacesId
+        };
+    }
 }

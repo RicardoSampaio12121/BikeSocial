@@ -19,18 +19,23 @@ namespace BikeSocialAPI.Controllers
             _userService = userService;
         }
 
-        //TODO: Retornar createdAtAction
+        [HttpGet("getRoute/{routeId}")]
+        public async Task<ReturnRouteDto> GetRoute(int routeId)
+        {
+            var createdRoute = await _routesService.Get(routeId);
+            return createdRoute;
+        }
+
         [HttpPost("add")]
         public async Task<ActionResult> Add(CreateRouteDto routeServiceDto)
         {
             // Buscar user id a partir do token
             var userId = _userService.GetUserIdFromToken();
 
-            await _routesService.Add(userId, routeServiceDto);
-            return Ok();
+            var createdRoute = await _routesService.Add(userId, routeServiceDto);
+            return CreatedAtAction(nameof(GetRoute), new {routeId = createdRoute.Id}, createdRoute);
         }
 
-        // TODO: Retornar createdAtAction
         [HttpPost("addWithInvites")]
         public async Task<ActionResult> AddWithInvites(CreateRoutePeopleDto dto)
         {
@@ -41,7 +46,6 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
-        // TODO: Retornar createdAtAction
         [HttpPost("invite")]
         public async Task<ActionResult> Invite(GetInviteToRouteDto dto)
         {

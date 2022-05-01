@@ -7,6 +7,7 @@ using BikeSocialDTOs;
 using BikeSocialBLL.Services.IServices;
 using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialBLL.Extensions;
+using BikeSocialEntities;
 
 namespace BikeSocialBLL.Services
 {
@@ -21,15 +22,23 @@ namespace BikeSocialBLL.Services
             _routePeopleInviredRepository = peopleInvitedRepository;
         }
 
-        public async Task<bool> Add(int userId, CreateRouteDto createRoutDto)
+        public async Task<ReturnRouteDto> Get(int routeId)
+        {
+            var route = await _routeRepository.Get(query => query.Id == routeId);
+            if (route == null) throw new Exception("There is no route assigned with that id");
+
+            return route.AsReturnRouteDto();
+        }
+
+        public async Task<Routes> Add(int userId, CreateRouteDto createRoutDto)
         {
             // Verificar se user já tem uma rota para a mesma hora
             var route = await _routeRepository.Get(query => query.UsersId == userId && query.dateTime == createRoutDto.dateTime);
             if (route != null) throw new Exception("You already created a route for the same date");
 
             // Adicionar rota
-            await _routeRepository.Add(createRoutDto.AsRoute(userId));
-            return true;
+            var createdRoute = await _routeRepository.Add(createRoutDto.AsRoute(userId));
+            return createdRoute;
         }
 
         public async Task<bool> AddWithPeople(int userId, CreateRoutePeopleDto createRoutePeopleDto)
