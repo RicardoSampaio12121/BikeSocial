@@ -9,7 +9,8 @@ namespace BikeSocialBLL.Services.IServices
 {
     public interface IConsultResultRaceService
     {
-        Task<ReturnConsultResultRaceDto> ConsultResult(int athletesId);
         
+        Task<List<ReturnConsultResultRaceDto>> ConsultResult(int athletesId);
+       
     }
 }
