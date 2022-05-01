@@ -78,10 +78,16 @@ namespace BikeSocialAPI.Controllers
 
         //Consultar resultados de Provas
         [HttpGet("consultResultRace")]
+        [AllowAnonymous]
+        //TODO: RETIRA...
+
+        //RETIRA A LINHA ACIMA para voltar a funcionar só com autorização
+        //
         public async Task<IActionResult> ConsultResult(int athletesId)
         {
-            await _consultResultRaceService.ConsultResult(athletesId);
-            return Ok();
+
+            var consult = await _consultResultRaceService.ConsultResult(athletesId);
+            return Ok(consult);
         }
 
         //Consultar medalhas

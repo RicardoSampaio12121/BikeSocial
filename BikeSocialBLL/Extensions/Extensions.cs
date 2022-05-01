@@ -356,12 +356,16 @@ public static class Extensions
         };
     }
 
-    public static ReturnConsultResultRaceDto AsReturnConsultResultRace(this RaceResults consultresultrace)
+    public static ReturnConsultResultRaceDto AsReturnConsultResultRace(this RaceResults consultresultrace, Races races)
     {
         ReturnConsultResultRaceDto consultRRDto = new();
 
         consultRRDto.athletesId = consultresultrace.AthletesId;
         consultRRDto.racesId = (int)consultresultrace.RacesId;
+        consultRRDto.position = consultresultrace.Position;
+        consultRRDto.description = races.description;
+        consultRRDto.distance = races.distance;
+        consultRRDto.dateTime = races.dateTime;
 
         return consultRRDto;
     }
