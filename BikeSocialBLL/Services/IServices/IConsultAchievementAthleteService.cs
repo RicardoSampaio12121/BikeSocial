@@ -9,6 +9,6 @@ namespace BikeSocialBLL.Services.IServices
 {
     public interface IConsultAchievementAthleteService
     {
-        Task<ReturnConsltAchievementAthleteDto> ConsultAchievementAthlete(int athteleId);
+        Task<List<ReturnConsultAchievementAthleteDto>> ConsultAchievementAthlete(int athteleId);
     }
 }

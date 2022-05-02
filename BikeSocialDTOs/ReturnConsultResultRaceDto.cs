@@ -17,8 +17,11 @@ namespace BikeSocialDTOs
         public string description { get; set; }
         public float distance { get; set; }
         public DateTime dateTime { get; set; }
+        public string City { get; set; }
+        public string PlaceName { get; set; }
+        public string NameTypeRace { get; set; }
 
-       
+
 
 
     }
