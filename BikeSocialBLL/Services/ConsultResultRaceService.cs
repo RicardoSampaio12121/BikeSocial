@@ -26,7 +26,8 @@ namespace BikeSocialBLL.Services
 
         public async Task<List<ReturnConsultResultRaceDto>> ConsultResult(int athletesId)
         {
-             var athleteRaceResult = await _consultResultRaceRepository.Get(consultQuery => consultQuery.AthletesId == athletesId);
+            //VER SE E NECESSARIO 
+            //var athleteRaceResult = await _consultResultRaceRepository.Get(consultQuery => consultQuery.AthletesId == athletesId);
 
             List<RaceResults> consult = await _consultResultRaceRepository.GetList(consultQuery => consultQuery.AthletesId == athletesId);
             if (consult == null) throw new Exception("impossible consult.");

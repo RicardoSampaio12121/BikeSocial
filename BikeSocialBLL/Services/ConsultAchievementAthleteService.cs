@@ -20,45 +20,92 @@ namespace BikeSocialBLL.Services
         private readonly IAchievementRepository _achievementRepository;
         //AthleteAchievements
         private readonly IAthleteAchievementsRepository _athleteAchievementsRepository;
+        //Place
+        private readonly IPlaceRepository _placeRepository;
+
+
 
         public ConsultAchievementAthleteService(IConsultAchievementAthleteRepository consultAchievementAthleteRepository,
             IAchievementRepository achievementRepository,
-            IAthleteAchievementsRepository athleteAchievementsRepository)
+            IAthleteAchievementsRepository athleteAchievementsRepository,
+            IPlaceRepository placeRepository)
         {
             _consultAchievementAthleteRepository = consultAchievementAthleteRepository;
             _achievementRepository = achievementRepository;
             _athleteAchievementsRepository = athleteAchievementsRepository;
+            _placeRepository = placeRepository;
+           
+
         }
 
 
-        public async Task<ReturnConsltAchievementAthleteDto> ConsultAchievementAthlete(int athteleId)
+        public async Task<List<ReturnConsultAchievementAthleteDto>> ConsultAchievementAthlete(int athteleId)
         {
-           
-            //verificar se existe o atleta na tabela AthleteAchievements
-            var athleteAchievements = await _athleteAchievementsRepository.Get(
+            //Procurar na tabela AthleteAchievements
+            List<AthleteAchievements> athleteAchievements = await _athleteAchievementsRepository.GetList(
                 athleteAchievementsQuery => athleteAchievementsQuery.AthletesId == athteleId);
-
-            if (athleteAchievements == null) throw new Exception("conquista nao existente");
             
-            // achievementId fica com o valor do id da tabela Achievements
-            var achievementId = await _achievementRepository.Get(
-                achievementIdQuery => achievementIdQuery.Id == athleteAchievements.AchievementsId);
-
-            var achievementType = await _consultAchievementAthleteRepository.Get(
-                achievementTypeQuery => achievementTypeQuery.Id == achievementId.AchievementTypesId);
+            if (athleteAchievements == null) throw new Exception("conquista nao existente");
 
 
-            ReturnConsltAchievementAthleteDto output = new()
+            List<int> idAchievements = new List<int>();
+
+            foreach (AthleteAchievements r in athleteAchievements)
             {
-                athleteId = athleteAchievements.AthletesId,
-                date = athleteAchievements.AchievementDate,
-                achievementId = achievementId.Id,
-                name = achievementType.Name
-            };
+                idAchievements.Add((int)r.AchievementsId);
+            }
+
+            int[] myValues = idAchievements.ToArray();
 
 
 
-            return output;
+            //Procurar na tabela Achievements
+            List<Achievements> achievements = await _achievementRepository.GetList(achievementstQuery => myValues.Contains(achievementstQuery.Id));
+
+            List<int> idAchievementPlace = new List<int>();
+
+            foreach (Achievements i in achievements)
+            {
+                idAchievementPlace.Add((int)i.PlacesId);
+            }
+
+            int[] myValues2 = idAchievementPlace.ToArray();
+
+
+            //Procurar na tabela Place
+            List<Places> idPlace = await _placeRepository.GetList(achievementstQuery => myValues.Contains(achievementstQuery.Id));
+
+            List<int> idPlacesID = new List<int>();
+
+            foreach (Achievements i in achievements)
+            {
+                idPlacesID.Add((int)i.PlacesId);
+            }
+
+            int[] myValues3 = idPlacesID.ToArray();
+
+
+            var outputList2 = new List<ReturnConsultAchievementAthleteDto>();
+
+
+            for (int i = 0; i < achievements.Count; i++)
+            {
+                var consultIndex = athleteAchievements.FindIndex(search => search.AchievementsId == achievements[i].Id);
+                var consultIndex2 = idPlace.FindIndex(search => search.Id == achievements[i].PlacesId);
+
+                outputList2.Add(new ReturnConsultAchievementAthleteDto
+                {
+                    athleteId = athleteAchievements[i].AthletesId,
+                    achievementId = athleteAchievements[i].AchievementsId,
+                    name = achievements[i].Name,
+                    date = athleteAchievements[i].AchievementDate,
+                    City = idPlace[i].City,
+                    PlaceName=idPlace[i].PlaceName,
+                });
+            }
+
+
+            return outputList2;
 
         }
     }
