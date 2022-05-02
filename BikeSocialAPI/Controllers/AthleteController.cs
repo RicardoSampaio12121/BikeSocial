@@ -81,6 +81,7 @@ namespace BikeSocialAPI.Controllers
         [AllowAnonymous]
         //TODO: RETIRA...
 
+        //nao funciona com o token
         //RETIRA A LINHA ACIMA para voltar a funcionar só com autorização
         //
         public async Task<IActionResult> ConsultResult(int athletesId)
@@ -94,7 +95,8 @@ namespace BikeSocialAPI.Controllers
         [HttpGet("consultAchievementtAthlete")]
         [AllowAnonymous]
         //TODO: RETIRA...
-
+        
+        //nao funciona com o token
         //RETIRA A LINHA ACIMA para voltar a funcionar só com autorização
         //
         public async Task<IActionResult> ConsultAchievement(int athletesId)

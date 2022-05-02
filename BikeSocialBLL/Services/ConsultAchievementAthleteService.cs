@@ -22,6 +22,9 @@ namespace BikeSocialBLL.Services
         private readonly IAthleteAchievementsRepository _athleteAchievementsRepository;
         //Place
         private readonly IPlaceRepository _placeRepository;
+        // AchievementType
+       
+
 
 
 
@@ -59,7 +62,7 @@ namespace BikeSocialBLL.Services
 
 
 
-            //Procurar na tabela Achievements
+            //Procurar na tabela Achievements e guardar os id do campo placesId
             List<Achievements> achievements = await _achievementRepository.GetList(achievementstQuery => myValues.Contains(achievementstQuery.Id));
 
             List<int> idAchievementPlace = new List<int>();
@@ -71,18 +74,22 @@ namespace BikeSocialBLL.Services
 
             int[] myValues2 = idAchievementPlace.ToArray();
 
-
-            //Procurar na tabela Place
-            List<Places> idPlace = await _placeRepository.GetList(achievementstQuery => myValues.Contains(achievementstQuery.Id));
-
-            List<int> idPlacesID = new List<int>();
+            //Para ir buscar o ID do AchievemenType
+            List<int> idAchievementRaceType = new List<int>();
 
             foreach (Achievements i in achievements)
             {
-                idPlacesID.Add((int)i.PlacesId);
+                idAchievementRaceType.Add((int)i.AchievementTypesId);
             }
 
-            int[] myValues3 = idPlacesID.ToArray();
+            int[] AchievemenTypeID = idAchievementRaceType.ToArray();
+
+
+            //Procurar na tabela Place os id's
+            List<Places> idPlace = await _placeRepository.GetList(idPlaceQuery => myValues2.Contains(idPlaceQuery.Id));
+
+            //Procurar na tabela AchievementType os id's
+            List<AchievementTypes> type = await _consultAchievementAthleteRepository.GetList(typeAchivementQuery => AchievemenTypeID.Contains(typeAchivementQuery.Id));
 
 
             var outputList2 = new List<ReturnConsultAchievementAthleteDto>();
@@ -92,6 +99,7 @@ namespace BikeSocialBLL.Services
             {
                 var consultIndex = athleteAchievements.FindIndex(search => search.AchievementsId == achievements[i].Id);
                 var consultIndex2 = idPlace.FindIndex(search => search.Id == achievements[i].PlacesId);
+                var consultIndex3 = type.FindIndex(search => search.Id == achievements[i].AchievementTypesId);
 
                 outputList2.Add(new ReturnConsultAchievementAthleteDto
                 {
@@ -101,6 +109,7 @@ namespace BikeSocialBLL.Services
                     date = athleteAchievements[i].AchievementDate,
                     City = idPlace[i].City,
                     PlaceName=idPlace[i].PlaceName,
+                    NameTypeAchievement= type[i].Name
                 });
             }
 

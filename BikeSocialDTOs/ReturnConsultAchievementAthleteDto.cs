@@ -14,6 +14,7 @@ namespace BikeSocialDTOs
         public DateTime date { get; init; }
         public string City { get; set; }
         public string PlaceName { get; set; }
+        public string NameTypeAchievement { get; set; }
     }
 
 }
