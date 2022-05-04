@@ -10,5 +10,6 @@ namespace BikeSocialDTOs
     {
         public int userId {get; set;}
         public string description { get; set; }
+        public int profileVisibility { get; set; }
     }
 }

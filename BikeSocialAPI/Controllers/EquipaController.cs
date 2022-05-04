@@ -26,10 +26,10 @@ namespace BikeSocialAPI.Controllers
 
         [HttpGet("Get/{teamId}")]
         [Authorize(Roles = "director")]
-        public async Task<ReturnEquipaDto> GetTeam(int teamId)
+        public async Task<ActionResult<ReturnEquipaDto>> GetTeam(int teamId)
         {
             var team = await _equipaService.Get(teamId);
-            return team;
+            return Ok(team);
         }
 
         [HttpPost("criar")]
