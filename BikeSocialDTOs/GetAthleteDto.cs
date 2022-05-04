@@ -1,5 +1,6 @@
 namespace BikeSocialDTOs
 {
+    /*
     public class GetAthleteDto
     {
         public string name { get; set; }
@@ -12,5 +13,5 @@ namespace BikeSocialDTOs
         public int CoachId { get; set; }
         public int FederationId { get; set; }
         public int PlanId { get; set; }
-    }
+    }*/
 }

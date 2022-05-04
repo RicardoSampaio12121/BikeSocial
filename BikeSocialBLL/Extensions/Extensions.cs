@@ -25,6 +25,7 @@ public static class Extensions
         
         profileDto.userId = profile.UsersId;
         profileDto.description = profile.description;
+        profileDto.profileVisibility = profile.profileVisibility;
 
         return profileDto;
     }
@@ -87,7 +88,7 @@ public static class Extensions
         race.FederationsId = raceDto.FederationId;
         race.RaceTypesId = raceDto.RaceTypeId;
         race.PlacesId = raceDto.placeId;
-        race.State = "Active";
+        race.State = raceDto.state;
 
         return race;
     }
@@ -153,6 +154,8 @@ public static class Extensions
         athlete.AthleteParentsId = athleteDto.parentId;
         athlete.AthleteTypesId = athleteDto.athleteTypeId;
         athlete.FederationsId = athleteDto.federationId;
+        athlete.TrainingsId = athleteDto.trainingsId;
+        athlete.PlansId = athleteDto.plansId;
 
         return athlete;
     }
@@ -164,6 +167,8 @@ public static class Extensions
         equipa.Name = equipaDto.name;
         equipa.PlacesId = equipaDto.placeId;
         equipa.ClubsId = clubId;
+        equipa.FederationsId= equipaDto.federationId;
+
 
         return equipa;
     }
@@ -356,19 +361,19 @@ public static class Extensions
         };
     }
 
-    public static ReturnConsultResultRaceDto AsReturnConsultResultRace(this RaceResults consultresultrace, Races races)
-    {
-        ReturnConsultResultRaceDto consultRRDto = new();
+    //public static ReturnConsultResultRaceDto AsReturnConsultResultRace(this RaceResults consultresultrace, Races races)
+    //{
+    //    ReturnConsultResultRaceDto consultRRDto = new();
 
-        consultRRDto.athletesId = consultresultrace.AthletesId;
-        consultRRDto.racesId = (int)consultresultrace.RacesId;
-        consultRRDto.position = consultresultrace.Position;
-        consultRRDto.description = races.description;
-        consultRRDto.distance = races.distance;
-        consultRRDto.dateTime = races.dateTime;
+    //    consultRRDto.athletesId = consultresultrace.AthletesId;
+    //    consultRRDto.racesId = (int)consultresultrace.RacesId;
+    //    consultRRDto.position = consultresultrace.Position;
+    //    consultRRDto.description = races.description;
+    //    consultRRDto.distance = races.distance;
+    //    consultRRDto.dateTime = races.dateTime;
 
-        return consultRRDto;
-    }
+    //    return consultRRDto;
+    //}
 
     //public static GetUserRegisterDto AsGetUserRegisterDto(this Users entity)
     //{
@@ -395,7 +400,8 @@ public static class Extensions
             ParentId = athlete.AthleteParentsId,
             AthleteTypeId = athlete.AthleteTypesId,
             FederationId = athlete.FederationsId,
-            PlanId = athlete.PlansId
+            PlanId = athlete.PlansId,
+            TrainingsId = athlete.TrainingsId
         };
     }
 
@@ -406,8 +412,7 @@ public static class Extensions
             id = team.Id,
             name = team.Name,
             placeId = team.PlacesId,
-            clubeId = team.ClubsId,
-            federationId = team.FederationsId
+            clubeId = team.ClubsId
         };
     }
 

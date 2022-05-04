@@ -13,6 +13,5 @@ namespace BikeSocialDTOs
         public string name { get; set; }
         public int? placeId { get; set; }
         public int clubeId { get; set; }
-        public int? federationId { get; set; }
     }
 }

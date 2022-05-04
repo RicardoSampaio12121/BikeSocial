@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record ReturnConCoachEqui
-    {
-        public int idCoach { get; set; }
-        public int idEquipa { get; set; }
-    }
+    //public record ReturnConCoachEqui
+    //{
+    //    public int idCoach { get; set; }
+    //    public int idEquipa { get; set; }
+    //}
 }
