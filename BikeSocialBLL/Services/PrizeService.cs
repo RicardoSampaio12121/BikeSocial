@@ -3,16 +3,19 @@ using BikeSocialBLL.Services.IServices;
 using BikeSocialDTOs;
 using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialBLL.Extensions;
+using BikeSocialDAL.Repositories;
 
 namespace BikeSocialBLL.Services
 {
     public class PrizeService : IPrizeService
     {
         private readonly IPrizeRepository _prizeRepository;
+        private readonly IRaceRepository _raceRepository;
         
-        public PrizeService(IPrizeRepository prizeRepository)
+        public PrizeService(IPrizeRepository prizeRepository, IRaceRepository raceRepository)
         {
             _prizeRepository = prizeRepository;
+            _raceRepository = raceRepository;
         }
 
         public async Task<ReturnPrizeDto> Get(int prizeId)
@@ -31,7 +34,11 @@ namespace BikeSocialBLL.Services
             
             // Não podem existir 2 prémios "iguais"
             if (pr != null) throw new Exception("There is already a prize with the same name.");
+
+            var raceAssociated = await _raceRepository.Get(query => prize.raceId == query.Id);
             
+            if (raceAssociated == null) throw new Exception("There is no existing race.");
+
             var createdPrize = await _prizeRepository.Add(prize.AsPrize());
             
             return createdPrize;
