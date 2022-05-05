@@ -284,6 +284,7 @@ public static class Extensions
         Prizes prize = new();
 
         prize.Name = prizeDto.name;
+        prize.raceId = prizeDto.raceId;
 
         return prize;
     }
