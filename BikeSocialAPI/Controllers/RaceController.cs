@@ -45,9 +45,9 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
-        [HttpPost("accept")]
+        [HttpGet("accept/{raceId}")]
         [Authorize(Roles = "athlete")]
-        public async Task<IActionResult> AcceptRace(GetRaceInviteDto raceInvite)
+        public async Task<IActionResult> AcceptRace(int raceInvite)
         {
             var userId = _userService.GetUserIdFromToken();
 
@@ -55,9 +55,9 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
-        [HttpPost("reject")]
+        [HttpDelete("reject/{raceId}")]
         [Authorize(Roles = "athlete")]
-        public async Task<IActionResult> RejectRace(GetRaceInviteDto raceInvite)
+        public async Task<IActionResult> RejectRace(int raceInvite)
         {
             var userId = _userService.GetUserIdFromToken();
 
