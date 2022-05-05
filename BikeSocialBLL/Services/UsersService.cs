@@ -102,7 +102,7 @@ namespace BikeSocialBLL.Services
 
             newProfile.UsersId = addedUser.Id;
             newProfile.description = "";
-            newProfile.profileVisibility = 1;
+            newProfile.profileVisibility = 0;
 
             var addedProfile = await _profileRepository.Add(newProfile);
 
