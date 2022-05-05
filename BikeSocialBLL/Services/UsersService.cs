@@ -98,6 +98,14 @@ namespace BikeSocialBLL.Services
             // Adicionar utilizador à base de dados
             var addedUser = await _userRepository.Add(user.AsUser());
 
+            Profile newProfile = new();
+
+            newProfile.UsersId = addedUser.Id;
+            newProfile.description = "";
+            newProfile.profileVisibility = 1;
+
+            var addedProfile = await _profileRepository.Add(newProfile);
+
             return addedUser.AsReturnUserDto();
 
         }
