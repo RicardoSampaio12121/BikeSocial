@@ -7,6 +7,8 @@ namespace BikeSocialBLL.Services.IServices
     {
         Task<ReturnAthleteDto> GetAthlete(int athleteId);
         Task<Athletes> Create(CreateAthleteDto athleteDto);
+        Task<AthleteAchievements> CreateAchievement(CreateAthleteAchievemenDto athlete);
+
         Task<bool> AcceptTeamInvite(int userId, int inviteId);
         Task<bool> RejectTeamInvite(int userId, int inviteId);
         Task<bool> MakeFederationRequest(GetAthleteFederationRequestDto dto);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record CreateConsultAchievementAthleteDto(int athleteId, 
-        int achievementId, string name, DateTime date);
+    public record CreateAthleteAchievemenDto(int athleteId, 
+        int achievementId, DateTime date);
   
 }
