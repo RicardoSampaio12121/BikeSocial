@@ -67,6 +67,23 @@ namespace BikeSocialBLL.Services
             return true;
         }
 
+        public async Task<bool> AcceptInvite(int userId, int raceId)
+        {
+            var raceInviteQuery = await _raceInvitesRepository.Get(query => query.RacesId == raceId);
+            if (raceInviteQuery == null) throw new Exception("There is no race with the given id.");
+            raceInviteQuery.Confirmation = true;
+            await _raceInvitesRepository.Update(raceInviteQuery);
+            return true;
+        }
+
+        public async Task<bool> RejectInvite(int userId, int raceId)
+        {
+            var raceInviteQuery = await _raceInvitesRepository.Get(query => query.RacesId == raceId);
+            if (raceInviteQuery == null) throw new Exception("There is no race with the given id.");
+            await _raceInvitesRepository.Delete(raceInviteQuery);
+            return true;
+        }
+
         public async Task<List<RaceResults>> SaveResults(GetPublishResultsDto dto)
         {
             // Verificar se resultados já não foram publicados
