@@ -160,6 +160,16 @@ public static class Extensions
         return athlete;
     }
 
+    public static AthleteAchievements AchiAthlete(this CreateAthleteAchievemenDto athlete)
+    {
+        AthleteAchievements achi = new();
+        achi.AchievementsId = athlete.achievementId;
+        achi.AthletesId = athlete.athleteId;
+        achi.AchievementDate = athlete.date;
+
+        return achi;
+    }
+
     public static Teams AsTeam(this CreateEquipaDto equipaDto, int clubId)
     {
         Teams equipa = new();
