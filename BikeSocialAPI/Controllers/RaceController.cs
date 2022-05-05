@@ -45,6 +45,26 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
+        [HttpPost("accept")]
+        [Authorize(Roles = "athlete")]
+        public async Task<IActionResult> AcceptRace(GetRaceInviteDto raceInvite)
+        {
+            var userId = _userService.GetUserIdFromToken();
+
+            await _raceService.AcceptInvite(userId, raceInvite);
+            return Ok();
+        }
+
+        [HttpPost("reject")]
+        [Authorize(Roles = "athlete")]
+        public async Task<IActionResult> RejectRace(GetRaceInviteDto raceInvite)
+        {
+            var userId = _userService.GetUserIdFromToken();
+
+            await _raceService.RejectInvite(userId, raceInvite);
+            return Ok();
+        }
+
         // Retornar createdAtAction
         [HttpPost("publishResults")]
         [Authorize(Roles = "federationFunc")]
