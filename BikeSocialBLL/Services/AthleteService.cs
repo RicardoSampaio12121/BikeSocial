@@ -13,14 +13,20 @@ namespace BikeSocialBLL.Services
         private readonly IAthleteFederationRequestsRepository _athleteFederationRequestsRepo;
         private readonly ITrainingInvitesRepository _trainingInvRepo;
         private readonly ITeamAthletesInviteRepository _trainingAthletesInvite;
+        private readonly IAthleteAchievementsRepository _achievementsAthleteRepo;
 
-        public AthleteService(IAthleteRepository athleteRepository, ITeamAthletesInviteRepository conAtletaEquiRepository, IAthleteFederationRequestsRepository athleteFederationRequestsRepo, ITrainingInvitesRepository trainingInvRepo)
+        public AthleteService(IAthleteRepository athleteRepository, 
+            ITeamAthletesInviteRepository conAtletaEquiRepository, 
+            IAthleteFederationRequestsRepository athleteFederationRequestsRepo, 
+            ITrainingInvitesRepository trainingInvRepo,
+            IAthleteAchievementsRepository achievementsRepo)
         {
             _athleteRepository = athleteRepository;
             _teamAthletesInvite = conAtletaEquiRepository;
             _athleteFederationRequestsRepo = athleteFederationRequestsRepo;
             _trainingInvRepo = trainingInvRepo;
             _trainingAthletesInvite = conAtletaEquiRepository;
+            _achievementsAthleteRepo = achievementsRepo;
         }
         
         public async Task<ReturnAthleteDto> GetAthlete(int athleteId)
@@ -42,6 +48,19 @@ namespace BikeSocialBLL.Services
             
             var createdAthlete = await _athleteRepository.Add(athlete.AsAthlete());
             return createdAthlete;
+        }
+
+        public async Task<AthleteAchievements> CreateAchievement(CreateAthleteAchievemenDto athleteACHI)
+        {
+            //verificar se ja existe
+            var achi = await _achievementsAthleteRepo.Get(athleteAchiQuery => athleteAchiQuery.AthletesId == athleteACHI.athleteId &&
+            athleteAchiQuery.AchievementsId== athleteACHI.achievementId);
+
+
+            if (achi != null) throw new Exception("Achievement already exists!!");
+
+            var createAchiAth = await _achievementsAthleteRepo.Add(athleteACHI.AchiAthlete());
+            return createAchiAth;
         }
 
         public async Task<bool> AcceptTeamInvite(int userId, int inviteId)

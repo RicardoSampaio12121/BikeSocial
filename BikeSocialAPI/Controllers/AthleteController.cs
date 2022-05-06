@@ -45,6 +45,15 @@ namespace BikeSocialAPI.Controllers
             return CreatedAtAction(nameof(GetAthlete), new { athleteId = createdAthlete.Id }, createdAthlete);
         }
 
+        [HttpPost("createAchivement")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateAchievement(CreateAthleteAchievemenDto athlete)
+        {
+            var createdAthlete = await _athleteService.CreateAchievement(athlete);
+            return CreatedAtAction(nameof(GetAthlete), new { athleteId = createdAthlete.Id }, createdAthlete);
+        }
+
+
         [HttpPut("acceptTeamInvite/{inviteId}")]
         public async Task<ActionResult> AcceptTeamInvite(int inviteId)
         {
