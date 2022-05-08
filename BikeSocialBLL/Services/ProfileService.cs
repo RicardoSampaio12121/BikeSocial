@@ -40,34 +40,40 @@ namespace BikeSocialBLL.Services
 
             return profileToRetrieve.AsReturnProfile();
         }
-
-        // No futuro impôr número máximo de conquistas que se podem mostrar no perfil 
+        
         public async Task<bool> AddAchievementProfile(int profileId, int achievementId)
         {
+            int maxProfileAchievements = 5; // max = 5, valor para testes = 2
+            
             // Verificar se o perfil existe
             var profileSearchResult = await _profileRepository.Get(profileQuery => profileQuery.Id == profileId);
-            if (profileSearchResult == null) throw new Exception("Profile does not exists");
+            if (profileSearchResult == null) throw new Exception("Profile does not exist.");
 
             // Verificar se a conquista existe (na tabela das conquistas)
             var achievementSearchResult = await _achievementService.ViewAchievement(achievementId);
-            if (achievementSearchResult == null) throw new Exception("Achievement does not exist");
+            if (achievementSearchResult == null) throw new Exception("Achievement does not exist.");
 
             // Verificar se o utilizador tem a conquista que quer mostrar----------------------------------------------
             // Procurar atleta
             var athleteSearchResult = await _athleteRepository.Get(
                 athleteQuery => athleteQuery.UsersId == profileSearchResult.UsersId);
-            if (athleteSearchResult == null) throw new Exception("User doesn't have this achievement");
+            if (athleteSearchResult == null) throw new Exception("User is not an athlete.");
             // Verificar se o atleta tem a conquista
             var athleteAchievementsSearchResult = await _athleteAchievementsRepository.Get(
                 query => athleteSearchResult.Id == query.AthletesId && 
                                             query.AchievementsId == achievementId);
-            if (athleteAchievementsSearchResult == null) throw new Exception("Athlete does not have this achievement");
+            if (athleteAchievementsSearchResult == null) throw new Exception("Athlete does not have this achievement.");
             // --------------------------------------------------------------------------------------------------------
 
             // Verificar se a conquista já está no perfil (para não mostrar conquistas duplicadas)
             var profileAchievementsSearchResult = await _profileAchievementsRepository.Get(
                 query => query.AthleteAchievementId == athleteAchievementsSearchResult.Id);
             if (profileAchievementsSearchResult != null) throw new Exception("Achievement is already in display.");
+            
+            // Verificar se o perfil ainda tem "espaço" para mais conquistas
+            List<ProfileAchievements> profileAchievements = await _profileAchievementsRepository.GetList(
+                query => query.ProfileId == profileId);
+            if (profileAchievements.Count >= maxProfileAchievements) throw new Exception("No more achievement slots available.");
 
             // Adicionar nova conquista no perfil
             ProfileAchievements pAchiev = new();
@@ -82,28 +88,28 @@ namespace BikeSocialBLL.Services
         {
             // Verificar se o perfil existe
             var profileSearchResult = await _profileRepository.Get(profileQuery => profileQuery.Id == profileId);
-            if (profileSearchResult == null) throw new Exception("Profile already exists");
+            if (profileSearchResult == null) throw new Exception("Profile does not exist.");
             
             // Verificar se a conquista existe (na tabela das conquistas)
             var achievementSearchResult = await _achievementService.ViewAchievement(achievementId);
-            if (achievementSearchResult == null) throw new Exception("Achievement does not exist");
+            if (achievementSearchResult == null) throw new Exception("Achievement does not exist.");
             
             // Verificar se o utilizador tem a conquista que quer remover----------------------------------------------
             // Procurar atleta
             var athleteSearchResult = await _athleteRepository.Get(
                 athleteQuery => athleteQuery.UsersId == profileSearchResult.UsersId);
-            if (athleteSearchResult == null) throw new Exception("Athlete does not have this achievement");
+            if (athleteSearchResult == null) throw new Exception("User is not an athlete.");
             // Verificar se o atleta tem a conquista
             var athleteAchievementsSearchResult = await _athleteAchievementsRepository.Get(
                 query => athleteSearchResult.Id == query.AthletesId && 
                          query.AchievementsId == achievementId);
-            if (athleteAchievementsSearchResult == null) throw new Exception("Athlete does not have this achievement");
+            if (athleteAchievementsSearchResult == null) throw new Exception("Athlete does not have this achievement.");
             // --------------------------------------------------------------------------------------------------------
 
             // Verificar se a conquista está no perfil
             var profileAchievementsSearchResult = await _profileAchievementsRepository.Get(
                 query => query.AthleteAchievementId == athleteAchievementsSearchResult.Id);
-            if (profileAchievementsSearchResult == null) throw new Exception("Achievement is no in the profile");
+            if (profileAchievementsSearchResult == null) throw new Exception("Achievement is not in display.");
             
             // Remover conquista da lista de conquistas do perfil
             await _profileAchievementsRepository.Delete(profileAchievementsSearchResult);
