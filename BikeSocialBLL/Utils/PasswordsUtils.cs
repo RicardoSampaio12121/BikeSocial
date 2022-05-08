@@ -30,6 +30,27 @@ namespace BikeSocialBLL.Utils
             return Convert.ToBase64String(hashBytes);
         }
 
+        public static void ValidatePassword(string inputPassword, string dbPassword)
+        {
+            // Pegar na hashed password guardada na BD
+            string savedPasswordHash = dbPassword;
+
+            // Extrair os bytes
+            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+
+            // Obter o "salt"
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+
+            // Calcular a hash na pass que o user acabou de introduzir
+            var pbkdf2 = new Rfc2898DeriveBytes(inputPassword, salt, 100000);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            // Comparar os resultados
+            for (int i = 0; i < 20; i++)
+                if (hashBytes[i + 16] != hash[i])
+                    throw new UnauthorizedAccessException("Wrong Password");
+        }
       
         public static int GenerateRecoveryPasswordCode()
         {

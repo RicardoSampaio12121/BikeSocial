@@ -44,36 +44,13 @@ namespace BikeSocialBLL.Services
         /// <exception cref="UnauthorizedAccessException"></exception>
         public async Task<ReturnLoginDto> Login(GetLoginDto user)
         {
-            // Verificar se o utilizador existe
+            // Verificar se o utilizador existe (através do e-mail)
             Users us = await _userRepository.Get(userQuery => userQuery.email == user.email.ToString());
             // Se não existir, não pode fazer login
             if (us == null) throw new Exception("There is no user assigned to that email");
-
-
-            //TODO : Passar esta função de decript para uma função independente
-            ///////////////////////////////////////////////////////////////
-            /* Comparar passwords (versão HASH) */
-
-            // Pegar na hashed password guardada na BD
-            string savedPasswordHash = us.password;
-
-            // Extrair os bytes
-            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
-
-            // Obter o "salt"
-            byte[] salt = new byte[16];
-            Array.Copy(hashBytes, 0, salt, 0, 16);
-
-            // Calcular a hash na pass que o user acabou de introduzir
-            var pbkdf2 = new Rfc2898DeriveBytes(user.password, salt, 100000);
-            byte[] hash = pbkdf2.GetBytes(20);
-
-            // Comparar os resultados
-            for (int i = 0; i < 20; i++)
-                if (hashBytes[i + 16] != hash[i])
-                    throw new UnauthorizedAccessException("Wrong Password");
-            ///////////////////////////////////////////////////////////////
-
+            
+            // Validar password introduzida (comparar com a guardada na base de dados)
+            PasswordsUtils.ValidatePassword(user.password, us.password);
 
             // Gerar token
             var token = OAuth.CreateToken(us.Id, user.email, (Roles)us.UserTypesId);
