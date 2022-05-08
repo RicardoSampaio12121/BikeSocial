@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BikeSocialBLL.Services.IServices;
+﻿using BikeSocialBLL.Services.IServices;
 using BikeSocialDTOs;
 using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialEntities;
 using BikeSocialBLL.Extensions;
-
 
 namespace BikeSocialBLL.Services
 {

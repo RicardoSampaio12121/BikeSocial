@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BikeSocialDTOs
+﻿namespace BikeSocialDTOs
 {
     /// <summary>
     /// função que returna os resultados da consulta de resultados de provas

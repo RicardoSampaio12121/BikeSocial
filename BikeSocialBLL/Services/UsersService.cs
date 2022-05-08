@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using BikeSocialBLL.Extensions;
-using BikeSocialDAL.Repositories;
+﻿using BikeSocialBLL.Extensions;
 using BikeSocialEntities;
-using BikeSocialDAL.DataContext;
 using BikeSocialBLL.Services.IServices;
 using BikeSocialDTOs;
 using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialBLL.Utils;
-using System.Web.Http;
-using System.Net;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
@@ -33,7 +23,6 @@ namespace BikeSocialBLL.Services
             _profileRepository = profileRepository;
             _httpContextAccessor = httpContextAccessor;
         }
-
 
         /// <summary>
         /// 

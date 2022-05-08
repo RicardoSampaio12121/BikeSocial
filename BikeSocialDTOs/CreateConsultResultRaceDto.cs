@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BikeSocialDTOs
+﻿namespace BikeSocialDTOs
 {
     ///// <summary>
     ///// Para criar uma consulta de resultados de provas

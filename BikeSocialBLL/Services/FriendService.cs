@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BikeSocialBLL.Services.IServices;
+﻿using BikeSocialBLL.Services.IServices;
 using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialDTOs;
 using BikeSocialEntities;
 using BikeSocialBLL.Extensions;
-//2h
+
 namespace BikeSocialBLL.Services
 {
     public class FriendService : IFriendService

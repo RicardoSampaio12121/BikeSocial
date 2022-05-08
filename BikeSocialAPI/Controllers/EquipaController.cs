@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BikeSocialDTOs;
-using BikeSocialBLL.Services;
 using BikeSocialBLL.Services.IServices;
-using BikeSocialEntities;
 using Microsoft.AspNetCore.Authorization;
-
 
 namespace BikeSocialAPI.Controllers
 {
-
     [ApiController]
     [Route("equipa")]
     public class EquipaController : Controller

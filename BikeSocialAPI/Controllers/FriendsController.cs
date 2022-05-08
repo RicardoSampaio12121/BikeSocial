@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using BikeSocialBLL.Services.IServices;
 using BikeSocialDTOs;
 using Microsoft.AspNetCore.Authorization;

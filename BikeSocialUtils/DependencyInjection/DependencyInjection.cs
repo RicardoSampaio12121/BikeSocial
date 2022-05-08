@@ -1,6 +1,5 @@
 ﻿//This file contains the source code to the api dependency injections needed
 
-using BikeSocialDAL;
 using BikeSocialDAL.DataContext;
 using BikeSocialDAL.Repositories;
 using BikeSocialDAL.Repositories.Interfaces;

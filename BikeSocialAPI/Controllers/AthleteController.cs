@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using BikeSocialDTOs;
 using BikeSocialBLL.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
-using BikeSocialBLL.Utils;
 
 namespace BikeSocialAPI.Controllers
 {

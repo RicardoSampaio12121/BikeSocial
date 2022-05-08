@@ -1,5 +1,4 @@
-﻿using BikeSocialAPI.Controllers;
-using BikeSocialBLL.Services;
+﻿using BikeSocialBLL.Services;
 using BikeSocialBLL.Services.IServices;
 using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialDTOs;
@@ -7,9 +6,7 @@ using BikeSocialEntities;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
