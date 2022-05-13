@@ -7,7 +7,9 @@ namespace BikeSocialBLL.Services.IServices
     {
         Task<ReturnPlanDto> GetPlan(int planId);
         Task<Plans> Create(CreatePlanDto planDto);
-        Task<Plans> ConsultPlanTrainingsOtherUser(int athletesId);
+        //Task<List<PlanTrainingResults>> SaveResultsPlanTrainingsOtherUser(GetPublishResultsTrainingDto dto);
+        Task<ReturnPlanDto> ConsultPlan(int athleteId);
+        //Task<List<ReturnResultsTrainingDto>> GetResultsPlanTrainingsOtherUser(int planId);
 
     }
 }

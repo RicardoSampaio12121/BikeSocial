@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record GetPublishResultsDto(int raceId, Dictionary<int, int> placements);
+    public record GetPublishResultsTrainingDto(int planId, Dictionary<int, int> placements);
 }

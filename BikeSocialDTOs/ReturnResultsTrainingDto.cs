@@ -6,5 +6,9 @@ using System.Threading.Tasks;
 
 namespace BikeSocialDTOs
 {
-    public record GetInviteToRouteDto(int athleteId, int routeId);
+    public record ReturnResultsTrainingDto
+    {
+        public int atheleteId;
+        public int training_result;
+    }
 }

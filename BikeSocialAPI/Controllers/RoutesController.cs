@@ -57,24 +57,24 @@ namespace BikeSocialAPI.Controllers
         public async Task<ActionResult> ChangeRouteVisibility(int routeId)
         {
             // Buscar user id a partir do token
-            var userId = _userService.GetUserIdFromToken();
+            var athleteId = _userService.GetUserIdFromToken();
 
-            await _routesService.ChangeRouteVisibility(userId, routeId);
+            await _routesService.ChangeRouteVisibility(athleteId, routeId);
             return NoContent();
         }
 
         [HttpPut("ConfirmRouteInvite")]
         public async Task<ActionResult> ConfirmRouteInvite(GetRouteConfirmationDto dto)
         {
-            var userId = _userService.GetUserIdFromToken();
+            var athleteId = _userService.GetUserIdFromToken();
 
             if (dto.confirmation)
             {
-                await _routesService.AcceptRouteInvite(dto.routeId, userId);
+                await _routesService.AcceptRouteInvite(dto.routeId, athleteId);
             }
             else
             {
-                await _routesService.RejectRouteInvite(dto.routeId, userId);
+                await _routesService.RejectRouteInvite(dto.routeId, athleteId);
             }
             return NoContent();
         }

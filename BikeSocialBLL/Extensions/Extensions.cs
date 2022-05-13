@@ -37,6 +37,7 @@ public static class Extensions
 
         return resultsDto;
     }
+  
     public static Friend AsNewFriend(this CreateFriendDto friendDto, int userId)
     {
         Friend friend = new();
@@ -205,7 +206,7 @@ public static class Extensions
     {
         RouteInvites output = new();
 
-        output.UsersId = dto.userId;
+        output.UsersId = dto.athleteId;
         output.RoutesId = dto.routeId;
 
         return output;
@@ -319,6 +320,15 @@ public static class Extensions
         plan.EstimatedTime = planDto.estimatedTime;
 
         return plan;
+    }
+
+    public static ReturnResultsTrainingDto AsReturnResultsTraining(this PlanTrainingResults resultsTraining)
+    {
+        ReturnResultsTrainingDto results_TrainingDto = new();
+        results_TrainingDto.atheleteId = resultsTraining.AthletesId;
+        results_TrainingDto.training_result = resultsTraining.Position;
+
+        return results_TrainingDto;
     }
 
     public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)

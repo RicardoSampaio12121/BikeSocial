@@ -15,7 +15,7 @@ namespace BikeSocialBLL.Services.IServices
         Task<bool> AddWithPeople(int userId, CreateRoutePeopleDto createRoutePeopleDto);
         Task<bool> Invite(GetInviteToRouteDto dto);
         Task<bool> ChangeRouteVisibility(int userId, int routeId);
-        Task<bool> AcceptRouteInvite(int inviteId, int userId);
-        Task<bool> RejectRouteInvite(int inviteId, int userId);
+        Task<bool> AcceptRouteInvite(int inviteId, int athleteId);
+        Task<bool> RejectRouteInvite(int inviteId, int athleteId);
     }
 }

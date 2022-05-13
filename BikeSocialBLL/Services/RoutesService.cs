@@ -62,9 +62,9 @@ namespace BikeSocialBLL.Services
         public async Task<bool> Invite(GetInviteToRouteDto dto)
         {
             // Verifica se user já está convidado
-            var _ = await _routePeopleInviredRepository.Get(query => query.UsersId == dto.userId && query.RoutesId == dto.routeId);
+            var _ = await _routePeopleInviredRepository.Get(query => query.UsersId == dto.athleteId && query.RoutesId == dto.routeId);
             if (_ != null) throw new Exception("User is already invited to this route.");
-
+            
             // Adiciona invite
             await _routePeopleInviredRepository.Add(dto.AsRouteInvite());
             return true;
@@ -100,7 +100,7 @@ namespace BikeSocialBLL.Services
             await _routePeopleInviredRepository.Update(invite);
 
             return true;
-        }
+        }//Perdi-me
 
         public async Task<bool> RejectRouteInvite(int inviteId, int userId)
         {
