@@ -304,8 +304,6 @@ public static class Extensions
         ReturnAchievementDto achievementDto = new();
 
         achievementDto.AchievementTypeId = achievement.AchievementTypesId;
-        achievementDto.achievementTime = achievement.achievementTime;
-        achievementDto.date = achievement.date;
         achievementDto.PlacesId = achievement.PlacesId;
 
         return achievementDto;
@@ -313,18 +311,16 @@ public static class Extensions
 
     //public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
     
-    public static Achievements AsAchievement(this ReturnAchievementDto achievementDto)
-    {
-        Achievements achievement = new();
+    //public static Achievements AsAchievement(this ReturnAchievementDto achievementDto)
+    //{
+    //    Achievements achievement = new();
 
-        achievement.Name = achievementDto.Name;
-        achievement.AchievementTypesId = achievementDto.AchievementTypeId;
-        achievement.achievementTime = achievementDto.achievementTime;
-        achievement.date = achievementDto.date;
-        achievement.PlacesId = achievementDto.PlacesId;
+    //    achievement.Name = achievementDto.Name;
+    //    achievement.AchievementTypesId = achievementDto.AchievementTypeId;
+    //    achievement.PlacesId = achievementDto.PlacesId;
 
-        return achievement;
-    }
+    //    return achievement;
+    //}
     public static Plans AsPlan(this CreatePlanDto planDto)
     {
         Plans plan = new();
