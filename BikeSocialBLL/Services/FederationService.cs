@@ -94,10 +94,7 @@ namespace BikeSocialBLL.Services
                 await _teamFederationRequestRepo.Update(exists);
             }
 
-
-            // Eliminar registo na tabela de pedidos
-            //await _teamFederationRequestRepo.Delete(exists);
-            
+                                   
             return true;
         }
     }

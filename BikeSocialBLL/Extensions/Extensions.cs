@@ -310,7 +310,7 @@ public static class Extensions
     }
 
     //public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
-    
+
     //public static Achievements AsAchievement(this ReturnAchievementDto achievementDto)
     //{
     //    Achievements achievement = new();
@@ -367,7 +367,6 @@ public static class Extensions
             email = user.email
         };
     }
-
     //public static ReturnConsultResultRaceDto AsReturnConsultResultRace(this RaceResults consultresultrace, Races races)
     //{
     //    ReturnConsultResultRaceDto consultRRDto = new();
@@ -396,7 +395,6 @@ public static class Extensions
     //    };
     //    return output;
     //}
-
     public static ReturnAthleteDto AsReturnAthleteDto(this Athletes athlete)
     {
         return new ReturnAthleteDto
