@@ -86,7 +86,7 @@ namespace BikeSocialAPI.Controllers
 
         //Consultar resultados de Provas
         [HttpGet("consultResultRace")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         //TODO: RETIRA...
 
         //nao funciona com o token
@@ -101,7 +101,7 @@ namespace BikeSocialAPI.Controllers
 
         //Consultar medalhas
         [HttpGet("consultAchievementtAthlete")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         //TODO: RETIRA...
         
         //nao funciona com o token
