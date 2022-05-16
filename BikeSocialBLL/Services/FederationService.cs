@@ -32,16 +32,29 @@ namespace BikeSocialBLL.Services
                 // Buscar informações do atleta
                 var athlete = await _athleteRepo.Get(query => query.Id == request.AthletesId);
 
+                request.Status = "validado";
                 // Atualizar informação
                 athlete.FederationsId = request.FederationsId ?? default;
 
                 // Enviar update
                 await _athleteRepo.Update(athlete);
+                await _athleteFederationRequestsRepo.Update(request);
             }
+            else {
+                // Buscar informações do atleta
+                var athlete = await _athleteRepo.Get(query => query.Id == request.AthletesId);
 
-            // Eliminar registo na tabela de pedidos
-            await _athleteFederationRequestsRepo.Delete(request);
+                // Atualizar informação
+                athlete.FederationsId = null!;
 
+                // Enviar update
+                await _athleteRepo.Update(athlete);
+
+                // Eliminar registo na tabela de pedidos
+                //await _athleteFederationRequestsRepo.Delete(request);
+                request.Status = "nao validado";
+                await _athleteFederationRequestsRepo.Update(request);
+            }
 
             return true;
         }
@@ -59,16 +72,29 @@ namespace BikeSocialBLL.Services
                 // Buscar informação da equipa
                 var team = await _teamRepo.Get(query => query.Id == exists.TeamsId);
 
+                exists.Status = "validado";
                 // Atualizar informação
                 team.FederationsId = exists.FederationsId;
+                
+                // Enviar update
+                await _teamRepo.Update(team);
+                await _teamFederationRequestRepo.Update(exists);
+            }
+            else
+            {
+                // Buscar informação da equipa
+                var team = await _teamRepo.Get(query => query.Id == exists.TeamsId);
+
+                // Atualizar informação
+                team.FederationsId = null!;
 
                 // Enviar update
                 await _teamRepo.Update(team);
+                exists.Status = "nao validado";
+                await _teamFederationRequestRepo.Update(exists);
             }
 
-            // Eliminar registo na tabela de pedidos
-            await _teamFederationRequestRepo.Delete(exists);
-            
+                                   
             return true;
         }
     }
