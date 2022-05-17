@@ -113,8 +113,7 @@ namespace BikeSocialBLL.Services
             PasswordRecoveryCodes newCode = new();
             newCode.UsersId = userId;
             newCode.code = code;
-            newCode.requestDate = 1;
-            //newCode.requestDate = int.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
+            newCode.requestDate = DateTime.Now;
 
 
             // Adicionar código novo
