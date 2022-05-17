@@ -304,27 +304,23 @@ public static class Extensions
         ReturnAchievementDto achievementDto = new();
 
         achievementDto.AchievementTypeId = achievement.AchievementTypesId;
-        achievementDto.achievementTime = achievement.achievementTime;
-        achievementDto.date = achievement.date;
         achievementDto.PlacesId = achievement.PlacesId;
 
         return achievementDto;
     }
 
     //public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
-    
-    public static Achievements AsAchievement(this ReturnAchievementDto achievementDto)
-    {
-        Achievements achievement = new();
 
-        achievement.Name = achievementDto.Name;
-        achievement.AchievementTypesId = achievementDto.AchievementTypeId;
-        achievement.achievementTime = achievementDto.achievementTime;
-        achievement.date = achievementDto.date;
-        achievement.PlacesId = achievementDto.PlacesId;
+    //public static Achievements AsAchievement(this ReturnAchievementDto achievementDto)
+    //{
+    //    Achievements achievement = new();
 
-        return achievement;
-    }
+    //    achievement.Name = achievementDto.Name;
+    //    achievement.AchievementTypesId = achievementDto.AchievementTypeId;
+    //    achievement.PlacesId = achievementDto.PlacesId;
+
+    //    return achievement;
+    //}
     public static Plans AsPlan(this CreatePlanDto planDto)
     {
         Plans plan = new();
@@ -371,7 +367,6 @@ public static class Extensions
             email = user.email
         };
     }
-
     //public static ReturnConsultResultRaceDto AsReturnConsultResultRace(this RaceResults consultresultrace, Races races)
     //{
     //    ReturnConsultResultRaceDto consultRRDto = new();
@@ -400,7 +395,6 @@ public static class Extensions
     //    };
     //    return output;
     //}
-
     public static ReturnAthleteDto AsReturnAthleteDto(this Athletes athlete)
     {
         return new ReturnAthleteDto

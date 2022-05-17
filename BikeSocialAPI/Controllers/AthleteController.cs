@@ -15,8 +15,7 @@ namespace BikeSocialAPI.Controllers
 
         private readonly IConsultResultRaceService _consultResultRaceService;
         private readonly IConsultAchievementAthleteService _consultAchievementAthleteService;
-        //private readonly ITrainingsService _repository;
-
+        
 
         public AthleteController(IAthleteService athleteService, IUserService userService, 
             IConsultResultRaceService consultResultRaceService,
@@ -86,13 +85,7 @@ namespace BikeSocialAPI.Controllers
 
         //Consultar resultados de Provas
         [HttpGet("consultResultRace")]
-        [AllowAnonymous]
-        //TODO: RETIRA...
-
-        //nao funciona com o token
-        //RETIRA A LINHA ACIMA para voltar a funcionar só com autorização
-        //
-        public async Task<IActionResult> ConsultResult(int athletesId)
+       public async Task<IActionResult> ConsultResult(int athletesId)
         {
 
             var consult = await _consultResultRaceService.ConsultResult(athletesId);
@@ -101,12 +94,6 @@ namespace BikeSocialAPI.Controllers
 
         //Consultar medalhas
         [HttpGet("consultAchievementtAthlete")]
-        [AllowAnonymous]
-        //TODO: RETIRA...
-        
-        //nao funciona com o token
-        //RETIRA A LINHA ACIMA para voltar a funcionar só com autorização
-        //
         public async Task<IActionResult> ConsultAchievement(int athletesId)
         {
             var consult = await _consultAchievementAthleteService.ConsultAchievementAthlete(athletesId);

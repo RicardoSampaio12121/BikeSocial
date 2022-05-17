@@ -21,7 +21,11 @@ namespace BikeSocialAPI.Controllers
             _federationService = federationService;
             _userService = userService;
         }
-
+        /// <summary>
+        /// função que valida/nao valida o atleta na federação
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [HttpPut("valitateAthlete")]
         public async Task<ActionResult> ValidateAthlete(GetValidateAthleteFedDto dto)
         {
@@ -29,6 +33,11 @@ namespace BikeSocialAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// funcao que valida/nao valida team na federacao
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [HttpPut("validateTeam")]
         public async Task<ActionResult> ValidateTeam(GetValidateTeamFedDto dto)
         {
