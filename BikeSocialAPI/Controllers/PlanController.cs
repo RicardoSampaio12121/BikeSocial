@@ -33,9 +33,9 @@ namespace BikeSocialAPI.Controllers
 
         //Consultar planos de treinos de outros utilizadores
         [HttpGet("consultPlanTrainingsOtherUsers/{athleteId}")]
-        public async Task<ActionResult> ConsultPlanTrainingsOtherUser(int athletesId)
+        public async Task<ActionResult> ConsultPlanTrainingsOtherUser(int athleteId)
         {
-            var plan = await _planService.ConsultPlanTrainingsOtherUser(athletesId);
+            var plan = await _planService.ConsultPlanTrainingsOtherUser(athleteId);
             return Ok(plan);
         }
     }

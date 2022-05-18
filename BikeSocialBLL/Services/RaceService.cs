@@ -108,10 +108,7 @@ namespace BikeSocialBLL.Services
             {
                 resultsDto.Add(i.AsReturnResults());
             }
-
             return resultsDto;
         }
-
-     
     }
 }

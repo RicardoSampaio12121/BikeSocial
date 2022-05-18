@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using BikeSocialDTOs;
 using BikeSocialBLL.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace BikeSocialAPI.Controllers
 {
@@ -76,10 +78,11 @@ namespace BikeSocialAPI.Controllers
 
         [HttpGet("getResults")]
         [Authorize]
-        public async Task<List<ReturnResultsDto>> GetResults(int raceId)
+        public async Task<ActionResult<String>> GetResults(int raceId)
         {
             var results = await _raceService.GetResults(raceId);
-            return results;
+            var coiso = JsonConvert.SerializeObject(results);
+            return coiso;
         }
     }
 }

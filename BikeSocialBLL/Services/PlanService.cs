@@ -42,7 +42,9 @@ namespace BikeSocialBLL.Services
         {
             // Buscar id do plano
             Athletes consult = await _athleteRepo.Get(consultQuery => consultQuery.Id == athletesId);
-            if (consult == null) throw new Exception("Athlete doesn't have an assigned training plan.");
+            if (consult == null) throw new Exception("There is no athlete assigned with that Id");
+
+            if(consult.PlansId == null) throw new Exception("Athlete doesn't have an assigned training plan.");
 
             // Buscar plano
             var plan = await _planRepository.Get(query => query.Id == consult.PlansId);
