@@ -20,6 +20,7 @@ namespace BikeSocialBLL.Services
         public async Task<ReturnPlanDto> GetPlan(int planId)
         {
             var plan = await _planRepository.Get(query => query.Id == planId);
+            if (plan == null) throw new Exception("Plan not exists");
             return plan.AsReturnPlanDto();
         }
 

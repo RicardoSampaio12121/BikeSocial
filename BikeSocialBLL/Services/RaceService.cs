@@ -26,6 +26,7 @@ namespace BikeSocialBLL.Services
         public async Task<ReturnRaceDto> GetRace(int raceId)
         {
             var race = await _raceRepository.Get(query => query.Id == raceId);
+            if (race == null) throw new Exception("Race not exists");
             return race.AsReturnRaceDto();
         }
 
