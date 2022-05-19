@@ -9,10 +9,10 @@ namespace BikeSocialBLL.Services
     public class CoachService : ICoachService
     {
         private readonly ICoachesRepository _coachesRepository;
-        private readonly ITeamCoachInviteRepository _teamCoachInvite;
+        private readonly ITeamCoachesInviteRepository _teamCoachInvite;
 
         public CoachService(ICoachesRepository coachRepository,
-            ITeamCoachInviteRepository teamCoachInvite)
+            ITeamCoachesInviteRepository teamCoachInvite)
         {
             _coachesRepository = coachRepository;
             _teamCoachInvite = teamCoachInvite;
@@ -43,13 +43,13 @@ namespace BikeSocialBLL.Services
         {
 
             // Receber info do invite
-            var invite = await _teamCoachInvite.GetCoach(query => query.Id == inviteId);
+            var invite = await _teamCoachInvite.Get(query => query.Id == inviteId);
 
             // Verificar se invite existe
             if (invite == null) throw new Exception("There is no invite assigned to the given id.");
 
             // Buscar informações do coach
-            var coach = await _coachesRepository.Get(query => query.Id == invite.CoachId);
+            var coach = await _coachesRepository.Get(query => query.Id == invite.CoachesId);
 
             // Verificar se pertence ao utilizador
             if (coach.UsersId != userId) throw new Exception("Invited id is not assigned to the gived coach.");
@@ -67,13 +67,13 @@ namespace BikeSocialBLL.Services
         public async Task<bool> RejectTeamInvite(int userId, int inviteId)
         {
             // Receber info do invite
-            var invite = await _teamCoachInvite.GetCoach(query => query.Id == inviteId);
+            var invite = await _teamCoachInvite.Get(query => query.Id == inviteId);
             
             // Verificar se o invite existe
             if (invite == null) throw new Exception("There is no invite assigned to the given id");
 
             // Buscar informações do atleta
-            var coach = await _coachesRepository.Get(query => query.Id == invite.CoachId);
+            var coach = await _coachesRepository.Get(query => query.Id == invite.CoachesId);
 
             // Verificar se pertence ao utilizador
             if (coach.UsersId != userId) throw new Exception("Invited id is not assigned to the gived coach.");
