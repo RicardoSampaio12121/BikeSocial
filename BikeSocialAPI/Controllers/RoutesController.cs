@@ -63,21 +63,27 @@ namespace BikeSocialAPI.Controllers
             return NoContent();
         }
 
-        [HttpPut("ConfirmRouteInvite")]
-        public async Task<ActionResult> ConfirmRouteInvite(GetRouteConfirmationDto dto)
+        [HttpPut("AcceptRouteInvite")]
+        public async Task<ActionResult> AcceptRouteInvite(GetRouteConfirmationDto dto)
         {
             var userId = _userService.GetUserIdFromToken();
 
-            if (dto.confirmation)
+            if (dto != null)
             {
                 await _routesService.AcceptRouteInvite(dto.routeId, userId);
             }
-            else
-            {
-                await _routesService.RejectRouteInvite(dto.routeId, userId);
-            }
+
             return NoContent();
         }
 
+        [HttpPut("RejectRouteInvite")]
+        public async Task<ActionResult> RejectRouteInvite(GetRouteConfirmationDto dto)
+        {
+            var userId = _userService.GetUserIdFromToken();
+           if(dto != null)
+                await _routesService.RejectRouteInvite(dto.routeId, userId);
+
+            return NoContent();
+        }
     }
 }
