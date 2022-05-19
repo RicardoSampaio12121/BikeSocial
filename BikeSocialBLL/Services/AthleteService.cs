@@ -147,8 +147,11 @@ namespace BikeSocialBLL.Services
 
 
             // Update à tabela de atletas
-            invite.Confirmation = false;
-            await _trainingInvRepo.Update(invite);
+            /*invite.Confirmation = false;
+            await _trainingInvRepo.Update(invite);*/
+            
+            //Apagar o convite.
+            await _trainingInvRepo.Delete(invite);
 
             return true;
         }
