@@ -106,8 +106,11 @@ namespace BikeSocialBLL.Services
             if (invite.UsersId != userId) throw new Exception("Cannot accept invites from other users.");
 
             // Update à tabela de atletas
-            invite.Confirmation = false;
-            await _routePeopleInviredRepository.Update(invite);
+            /*invite.Confirmation = false;
+            await _routePeopleInviredRepository.Update(invite);*/
+
+            //Apagar o convite
+            await _routePeopleInviredRepository.Delete(invite);
 
             return true;
         }
