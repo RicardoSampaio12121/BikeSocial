@@ -22,7 +22,8 @@ public static class Extensions
     public static ReturnProfileDto AsReturnProfile(this Profile profile)
     {
         ReturnProfileDto profileDto = new();
-        
+        //Sugestão melhoria, não usar o id do perfil para nada.
+        profileDto.profileId = profile.Id;
         profileDto.userId = profile.UsersId;
         profileDto.description = profile.description;
         profileDto.profileVisibility = profile.profileVisibility;

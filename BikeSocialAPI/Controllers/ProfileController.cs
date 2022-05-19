@@ -2,6 +2,7 @@
 using BikeSocialBLL.Services.IServices;
 using BikeSocialDTOs;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace BikeSocialAPI.Controllers
 {
@@ -18,10 +19,10 @@ namespace BikeSocialAPI.Controllers
         }
 
         [HttpGet("view/{userId}")]
-        public async Task<IActionResult> ViewProfile(int userId)
+        public async Task<ActionResult<String>> ViewProfile(int userId)
         {
-            await _profileService.ViewProfile(userId);
-            return Ok();
+            var profReturn = await _profileService.ViewProfile(userId);
+            return JsonConvert.SerializeObject(profReturn);
         }
 
         [HttpPost("addAchievement")]
