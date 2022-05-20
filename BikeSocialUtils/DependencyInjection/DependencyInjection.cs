@@ -60,6 +60,7 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<ITeamCoachesInviteRepository, TeamCoachesInviteRepository>();
             services.AddScoped<ITeamFederationRequestRepository, TeamFederationRequestRepository>();
 
+            services.AddScoped<ICoachService, CoachService>();
             services.AddScoped<ICoachesRepository, CoachesRepository>();
 
             services.AddScoped<IDirectorRepository, DirectorRepository>();

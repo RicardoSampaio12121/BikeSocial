@@ -490,4 +490,14 @@ public static class Extensions
             plansId = training.PlacesId
         };
     }
+
+    public static ReturnCoachDto AsReturnCoachDto(this Coaches coaches)
+    {
+        return new ReturnCoachDto
+        {
+            Id = coaches.Id,
+            UserId = coaches.UsersId,
+            TeamId = coaches.TeamsId
+        };
+    }
 }
