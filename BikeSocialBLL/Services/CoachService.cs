@@ -20,7 +20,7 @@ namespace BikeSocialBLL.Services
         
         public async Task<ReturnCoachDto> GetCoach(int coachId)
         {
-            var coach = await _coachesRepository.Get(query => query.Id == coachId);
+            var coach = await _coachesRepository.Get(query => query.UsersId == coachId);
             if (coach == null) throw new Exception("There is no athlete assigned with that Id");
 
             return coach.AsReturnCoachDto();
