@@ -168,6 +168,7 @@ namespace BikeSocialBLL.Services
         {
             var userProfile = await _profileRepository.Get(query => query.UsersId == userId);
             userProfile.profileVisibility = dto.profileVisibility;
+            userProfile.commentsPermission = dto.commentsPermission;
 
             await _profileRepository.Update(userProfile);
 
@@ -185,7 +186,14 @@ namespace BikeSocialBLL.Services
         public async Task<ReturnPrivacySettingsDto> GetPrivacySettings(int userId)
         {
             var profile = await _profileRepository.Get(query => query.UsersId == userId);
-            var output = new ReturnPrivacySettingsDto(profile.profileVisibility);
+            var output = new ReturnPrivacySettingsDto(profile.profileVisibility, 
+                                                      profile.commentsPermission, 
+                                                      profile.unfriendContactPermission, 
+                                                      profile.unfriendTrofyVisualization, 
+                                                      profile.privateTrainings, 
+                                                      profile.privateRaces, 
+                                                      profile.privateRoutes
+                                                      );
 
             return output;
         }
