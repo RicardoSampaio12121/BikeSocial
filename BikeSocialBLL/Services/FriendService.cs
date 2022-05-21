@@ -19,8 +19,11 @@ namespace BikeSocialBLL.Services
 
         public async Task<bool> AcceptFriend(int userId, GetFriendDto friend)
         {
+            if (userId != friend.solicitorId && userId != friend.recieptientId)
+                return false;
+
             //Query para buscar se já existe a relação.
-            Friend friendCheck = await _friendRepository.Get(friendQuery => friendQuery.solicitorId == userId && friendQuery.recieptientId == friend.recieptientId);
+            Friend friendCheck = await _friendRepository.Get(friendQuery => friendQuery.solicitorId == friend.solicitorId && friendQuery.recieptientId == friend.recieptientId);
 
             if (friendCheck == null) throw new Exception("Friends request does not exist.");
             if (friendCheck.status != false) return false;
@@ -53,8 +56,11 @@ namespace BikeSocialBLL.Services
 
         public async Task<bool> RemoveFriend(int userId, GetFriendDto friend)
         {
+            if (userId != friend.solicitorId && userId != friend.recieptientId)
+                return false;
+
             // Verificar se request existe
-            Friend friendCheck = await _friendRepository.Get(friendQuery => friendQuery.solicitorId == userId && friendQuery.recieptientId == friend.recieptientId);
+            Friend friendCheck = await _friendRepository.Get(friendQuery => friendQuery.solicitorId == friend.solicitorId && friendQuery.recieptientId == friend.recieptientId);
             if (friendCheck == null) throw new Exception("Friend request does not exists between this 2 users.");
 
             // Delete friend request
@@ -64,7 +70,6 @@ namespace BikeSocialBLL.Services
 
         public async Task<List<ReturnFriendDto>> ViewFriends(int userId)
         {
-
             // Verificar se utilizador tem amigos
             List<Friend> friendList = await _friendRepository.GetList(friendQuery => friendQuery.solicitorId == userId || friendQuery.recieptientId == userId);
             if (friendList == null) throw new Exception("User does not have any friends yet.");
