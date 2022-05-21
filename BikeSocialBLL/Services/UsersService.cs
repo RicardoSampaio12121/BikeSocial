@@ -181,5 +181,13 @@ namespace BikeSocialBLL.Services
 
             return output.AsReturnUserDto();
         }
+
+        public async Task<ReturnPrivacySettingsDto> GetPrivacySettings(int userId)
+        {
+            var profile = await _profileRepository.Get(query => query.UsersId == userId);
+            var output = new ReturnPrivacySettingsDto(profile.profileVisibility);
+
+            return output;
+        }
     }
 }

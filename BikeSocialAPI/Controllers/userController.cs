@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Cors;
 
 namespace BikeSocialAPI.Controllers
 {
@@ -111,6 +112,20 @@ namespace BikeSocialAPI.Controllers
 
             await _userService.EditInformation(userId, dto);
             return NoContent();
+        }
+
+        [HttpGet("getPrivacySettings")]
+        [AllowAnonymous]
+        public async Task<ReturnPrivacySettingsDto> GetPrivacySettings()
+        {
+            var userId = 2;
+
+            // Receber o id do utilizador a partir do token
+            //var userId = _userService.GetUserIdFromToken();
+            var settings = await _userService.GetPrivacySettings(userId);
+
+            return settings;
+
         }
 
         [HttpPut("updatePrivacySettings")]
