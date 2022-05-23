@@ -35,7 +35,7 @@ namespace BikeSocialAPI.Controllers
         public async Task<IActionResult> CreateFederation(CreateFederationDto fed)
         {
             var createFed = await _federationService.Create(fed);
-            return CreatedAtAction(nameof(GetFed), new { fedeId = createFed.Id }, createFed);
+            return CreatedAtAction(nameof(GetFed), new { federationId = createFed.Id }, createFed);
 
         }
 

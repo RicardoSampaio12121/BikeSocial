@@ -81,6 +81,7 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<IFederationService, FederationService>();
             
             services.AddScoped<IPlaceRepository, PlaceRepository>();
+            services.AddScoped<IPlaceService, PlaceService>();
 
             services.AddScoped<IRaceTypeRepository, RaceTypeRepository>();
 
@@ -100,6 +101,7 @@ namespace BikeSocialUtils.DependencyInjection
 
             services.AddScoped<IFederationRepository, FederationRepository>();
             services.AddScoped<IFederationService, FederationService>();
+
 
         }
     }
