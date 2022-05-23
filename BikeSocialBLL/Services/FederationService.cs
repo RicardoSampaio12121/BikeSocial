@@ -1,6 +1,8 @@
-﻿using BikeSocialBLL.Services.IServices;
-using BikeSocialDAL.Repositories.Interfaces;
+﻿using BikeSocialEntities;
+using BikeSocialBLL.Services.IServices;
 using BikeSocialDTOs;
+using BikeSocialDAL.Repositories.Interfaces;
+using BikeSocialBLL.Extensions;
 
 namespace BikeSocialBLL.Services
 {
@@ -10,15 +12,43 @@ namespace BikeSocialBLL.Services
         private readonly ITeamFederationRequestRepository _teamFederationRequestRepo;
         private readonly IAthleteRepository _athleteRepo;
         private readonly IEquipaRepository _teamRepo;
+        private readonly IFederationRepository _federationRepo;
 
-        public FederationService(IAthleteFederationRequestsRepository athleteFederationRequestsRepo, IAthleteRepository athleteRepo, ITeamFederationRequestRepository teamFederationRequestRepo, IEquipaRepository teamRepo)
+        public FederationService(IAthleteFederationRequestsRepository athleteFederationRequestsRepo, IAthleteRepository athleteRepo, 
+            ITeamFederationRequestRepository teamFederationRequestRepo, 
+            IEquipaRepository teamRepo,
+            IFederationRepository federation)
         {
             _athleteFederationRequestsRepo = athleteFederationRequestsRepo;
             _teamFederationRequestRepo = teamFederationRequestRepo;
             _athleteRepo = athleteRepo;
             _teamRepo = teamRepo;
+            _federationRepo = federation;
         }
+
         
+        public async Task<ReturnFederationsDto> GetFed(int fed)
+        {
+            var fede = await _federationRepo.Get(query => query.Id == fed);
+            if (fede == null) throw new Exception("Federation not exists");
+
+            return fede.AsReturnFedDto();
+        }
+
+         public async Task<Federations> Create(CreateFederationDto federation)
+        {
+            //verificar se ja existe uma federação com o mesmo nome
+            Federations fed = await _federationRepo.Get(federQuery => federQuery.Name == federation.name.ToString());
+
+            //nao pode existir dois nome iguais
+            if (fed != null) throw new Exception("equal names ");
+
+            var createFederation = await _federationRepo.Add(federation.AsFederations());
+            return createFederation;
+
+        }
+
+
         public async Task<bool> ValidateAthlete(GetValidateAthleteFedDto dto)
         {
             // Verificar se pedido existe
@@ -97,5 +127,7 @@ namespace BikeSocialBLL.Services
                                    
             return true;
         }
+
+        
     }
 }

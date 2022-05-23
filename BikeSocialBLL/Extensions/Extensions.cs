@@ -322,6 +322,14 @@ public static class Extensions
 
     //    return achievement;
     //}
+
+    public static Federations AsFederations(this CreateFederationDto federationDto)
+    {
+        Federations fed = new();
+        fed.Name = federationDto.name;
+
+        return fed;
+    }
     public static Plans AsPlan(this CreatePlanDto planDto)
     {
         Plans plan = new();
@@ -431,6 +439,15 @@ public static class Extensions
             startTime = plan.startTime,
             finishTime = plan.finishTime,
             EstimatedTime = plan.EstimatedTime
+        };
+    }
+
+    public static ReturnFederationsDto AsReturnFedDto(this Federations fed)
+    {
+        return new ReturnFederationsDto
+        {
+            Id = fed.Id,
+            name = fed.Name
         };
     }
 
