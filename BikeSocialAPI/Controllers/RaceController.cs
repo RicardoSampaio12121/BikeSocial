@@ -84,5 +84,20 @@ namespace BikeSocialAPI.Controllers
             var coiso = JsonConvert.SerializeObject(results);
             return coiso;
         }
+        
+        [HttpGet("getRaces")]
+        [Authorize]
+        public async Task<IActionResult> GetRaces()
+        {
+            var races = await _raceService.GetRaces();
+            return Ok(races);
+        }
+        
+        [HttpGet("getRaceInvites")]
+        public async Task<IActionResult> GetRaceInvites()
+        {
+            var raceInvites = await _raceService.GetRaceInvites();
+            return Ok(raceInvites);
+        }
     }
 }
