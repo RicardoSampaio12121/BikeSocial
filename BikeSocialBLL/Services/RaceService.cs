@@ -11,16 +11,29 @@ namespace BikeSocialBLL.Services
         private readonly IRaceRepository _raceRepository;
         private readonly IRaceInvitesRepository _raceInvitesRepository;
         private readonly IRaceResultsRepository _raceResultsRepository;
+        private readonly IFederationRepository _federationRepository;
+        private readonly IRaceTypeRepository _raceTypeRepository;
+        private readonly IPlaceRepository _placeRepository;
         private readonly ICoachesRepository _coachesRepo;
         private readonly IAthleteRepository _athleteRepo;
 
-        public RaceService(IRaceRepository raceRepository, IRaceInvitesRepository raceInvitesRepository, IRaceResultsRepository raceResultsRepository, ICoachesRepository coachesRepo, IAthleteRepository athleteRepo)
+        public RaceService(IRaceRepository raceRepository, 
+                           IRaceInvitesRepository raceInvitesRepository,
+                           IRaceResultsRepository raceResultsRepository,
+                           ICoachesRepository coachesRepo,
+                           IAthleteRepository athleteRepo,
+                           IFederationRepository federationRepo,
+                           IRaceTypeRepository raceTypeRepo,
+                           IPlaceRepository placeRepo)
         {
             _raceRepository = raceRepository;
             _raceInvitesRepository = raceInvitesRepository;
             _raceResultsRepository = raceResultsRepository;
             _coachesRepo = coachesRepo;
             _athleteRepo = athleteRepo;
+            _federationRepository = federationRepo;
+            _raceTypeRepository = raceTypeRepo;
+            _placeRepository = placeRepo;
         }
 
         public async Task<ReturnRaceDto> GetRace(int raceId)
@@ -184,14 +197,14 @@ namespace BikeSocialBLL.Services
                 raceDto.EstimatedTime = race.estimateTime;
                 raceDto.date = DateOnly.FromDateTime(race.dateTime);
                 raceDto.time = TimeOnly.FromDateTime(race.dateTime);
-                
-                // Criar FederationRepository.cs
-                
-                // raceDto.Federation = // get from repo 
-                // raceDto.RaceType = // get from repo
-                // raceDto.City = // get from repo campo
-                // raceDto.Town = // get from repo campo
-                // raceDto.PlaceName = // get from repo campo 
+                Federations f = await _federationRepository.Get(federation => federation.Id == race.FederationsId);
+                raceDto.Federation = f.Name;
+                RaceTypes rt = 
+
+                // raceDto.RaceType = // get from RaceTypeRepository
+                // raceDto.City = // get from PlaceRepository
+                // raceDto.Town = // get from PlaceRepository
+                // raceDto.PlaceName = // get from PlaceRepository 
 
                 racesListDto.Add(raceDto);
             }
