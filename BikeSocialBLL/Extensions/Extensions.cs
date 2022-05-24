@@ -340,6 +340,28 @@ public static class Extensions
 
         return plan;
     }
+
+    public static Profile AsProfile(this CreateProfileDto profileDto)
+    {
+        Profile profile = new();
+
+        profile.description = profileDto.description;
+        profile.UsersId = profileDto.userId;
+
+        return profile;
+    }
+
+    public static Coaches AsCoach(this CreateCoachDto coachDto)
+    {
+        Coaches coach = new();
+
+        coach.UsersId = coachDto.userId;
+        coach.TeamsId = coachDto.teamId;
+
+        return coach;
+    }
+
+
     public static Directors AsDirector(this CreateDirectorDto dierectorDto)
     {
         Directors director = new();

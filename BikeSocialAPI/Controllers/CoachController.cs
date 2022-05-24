@@ -1,4 +1,5 @@
-﻿using BikeSocialBLL.Services.IServices;
+﻿using BikeSocialDTOs;
+using BikeSocialBLL.Services.IServices;
 using BikeSocialBLL.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;
@@ -26,6 +27,14 @@ namespace BikeSocialAPI.Controllers
         {
             var output = await _coachService.GetCoach(coachId);
             return Ok(output);
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpPost("CreateCoach")]
+        [Authorize(Roles = "coach")]
+        public async Task<IActionResult> CreateCoach(CreateCoachDto coachDto)
+        {
+            var createCoach = await _coachService.CreateCoach(coachDto);
+            return CreatedAtAction(nameof(GetCoach), new { coachId = createCoach.Id }, createCoach); ;
         }
 
         [Microsoft.AspNetCore.Mvc.HttpPut("acceptTeamInvite")]

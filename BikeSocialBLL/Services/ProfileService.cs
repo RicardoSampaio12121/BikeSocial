@@ -40,7 +40,18 @@ namespace BikeSocialBLL.Services
 
             return profileToRetrieve.AsReturnProfile();
         }
-        
+
+
+        public async Task<Profile> CreateProfile(CreateProfileDto profileDto)
+        {
+            Profile profile = await _profileRepository.Get(profileQuery => profileQuery.UsersId == profileDto.userId);
+            if (profile != null) throw new Exception("Profile already exists");
+
+            var createProfile = await _profileRepository.Add(profileDto.AsProfile());
+            return createProfile;
+        }
+
+
         public async Task<bool> AddAchievementProfile(int profileId, int achievementId)
         {
             int maxProfileAchievements = 5; // max = 5, valor para testes = 2
