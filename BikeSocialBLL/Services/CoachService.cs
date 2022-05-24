@@ -26,6 +26,18 @@ namespace BikeSocialBLL.Services
             return coach.AsReturnCoachDto();
         }
 
+        public async Task<Coaches> CreateCoach(CreateCoachDto coachDto)
+        {
+            Coaches coach = await _coachesRepository.Get(coachQuery => coachQuery.TeamsId == coachDto.teamId &&
+                                                                       coachQuery.UsersId == coachDto.userId);
+            if (coach != null) throw new Exception("Coach already exists");
+
+            var createCoach = await _coachesRepository.Add(coachDto.AsCoach());
+            return createCoach;
+        }
+
+
+
         // Criar um atleta novo
         /*public async Task<Athletes> Create(CreateAthleteDto coach)
         {

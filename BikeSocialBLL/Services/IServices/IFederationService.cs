@@ -1,9 +1,5 @@
 ﻿using BikeSocialDTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BikeSocialEntities;
 
 namespace BikeSocialBLL.Services.IServices
 {
@@ -11,5 +7,8 @@ namespace BikeSocialBLL.Services.IServices
     {
         Task<bool> ValidateAthlete(GetValidateAthleteFedDto dto);
         Task<bool> ValidateTeam(GetValidateTeamFedDto dto);
+
+        Task<Federations> Create(CreateFederationDto federationDto);
+        Task<ReturnFederationsDto> GetFed(int federationId);
     }
 }

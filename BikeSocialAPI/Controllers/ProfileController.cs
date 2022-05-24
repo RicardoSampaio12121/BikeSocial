@@ -25,6 +25,15 @@ namespace BikeSocialAPI.Controllers
             return JsonConvert.SerializeObject(profReturn);
         }
 
+
+        [HttpPost("createProfile")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateProfile(CreateProfileDto profileDto)
+        {
+            var createProfile = await _profileService.CreateProfile(profileDto);
+            return CreatedAtAction(nameof(ViewProfile), new { userId = createProfile.Id }, createProfile);
+        }
+
         [HttpPost("addAchievement")]
         public async Task<IActionResult> AddAchievementProfile(int profileId, int achievementId)
         {

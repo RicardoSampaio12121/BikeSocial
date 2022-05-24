@@ -12,19 +12,23 @@ namespace BikeSocialAPI.Controllers
     {
         private readonly IAthleteService _athleteService;
         private readonly IUserService _userService;
-
+        private readonly IPlaceService _placeService;
         private readonly IConsultResultRaceService _consultResultRaceService;
         private readonly IConsultAchievementAthleteService _consultAchievementAthleteService;
-        
+        private readonly IAchievementService _achievementService;
 
         public AthleteController(IAthleteService athleteService, IUserService userService, 
             IConsultResultRaceService consultResultRaceService,
-            IConsultAchievementAthleteService consultAchievementAthleteService)
+            IConsultAchievementAthleteService consultAchievementAthleteService,
+            IPlaceService placeService,
+            IAchievementService achievementService)
         {
             _athleteService = athleteService;
             _userService = userService;
             _consultResultRaceService = consultResultRaceService;
             _consultAchievementAthleteService = consultAchievementAthleteService;
+            _placeService = placeService;
+            _achievementService = achievementService;
         }
         
         [HttpGet("Get/{athleteId}")]
@@ -114,6 +118,40 @@ namespace BikeSocialAPI.Controllers
             if (await _athleteService.RejectTrainingInvite(inviteId) == false)
                 return BadRequest();
             return Ok();
+        }
+
+        [HttpGet("GetPlace/{placeId}")]
+        [AllowAnonymous]
+        public async Task<ReturnPlacesDto> GetPlace(int placeId)
+        {
+            var place = await _placeService.GetPlace(placeId);
+            return place;
+        }
+
+        [HttpPost("createPlace")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreatePlace(CreatePlacesDto place)
+        {
+            var createPlace = await _placeService.CreatePlace(place);
+            return CreatedAtAction(nameof(GetPlace), new { placeId = createPlace.Id }, createPlace);
+        }
+
+
+        [HttpGet("GetAchievement/{achievementId}")]
+        [AllowAnonymous]
+        public async Task<ReturnAchievementDto> GetAchivement(int achievementId)
+        {
+            var achi = await _achievementService.GetAchivement(achievementId);
+            return achi;
+        }
+
+        [HttpPost("createAchievement")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateAchivement(CreateAchivementDto achievement)
+        {
+            var createAchive = await _achievementService.CreateAchivement(achievement);
+            // o nome que esta a seguir ao new tem de ser exatamente o mesmo que esta no argumento do get
+            return CreatedAtAction(nameof(GetAchivement), new { achievementId = createAchive.Id }, createAchive);
         }
 
     }

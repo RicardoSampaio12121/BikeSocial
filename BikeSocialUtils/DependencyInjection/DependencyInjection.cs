@@ -81,6 +81,7 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<IFederationService, FederationService>();
             
             services.AddScoped<IPlaceRepository, PlaceRepository>();
+            services.AddScoped<IPlaceService, PlaceService>();
 
             services.AddScoped<IRaceTypeRepository, RaceTypeRepository>();
 
@@ -97,6 +98,12 @@ namespace BikeSocialUtils.DependencyInjection
 
             services.AddScoped<IConsultAchievementAthleteService, ConsultAchievementAthleteService>();
             services.AddScoped<IConsultAchievementAthleteRepository, ConsultAchievementsAthleteRepository>();
+
+            services.AddScoped<IFederationRepository, FederationRepository>();
+            services.AddScoped<IFederationService, FederationService>();
+
+            services.AddScoped<IClubsRepository, ClubsRepository>();
+            services.AddScoped<IClubsService, ClubsService>();
         }
     }
 }
