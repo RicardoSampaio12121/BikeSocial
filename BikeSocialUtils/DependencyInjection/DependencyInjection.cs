@@ -102,7 +102,8 @@ namespace BikeSocialUtils.DependencyInjection
             services.AddScoped<IFederationRepository, FederationRepository>();
             services.AddScoped<IFederationService, FederationService>();
 
-
+            services.AddScoped<IClubsRepository, ClubsRepository>();
+            services.AddScoped<IClubsService, ClubsService>();
         }
     }
 }

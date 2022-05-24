@@ -118,6 +118,27 @@ namespace BikeSocialBLL.Services
             return true;
         }
 
-       
+
+        public async Task<ReturnDirectorDto> GetDirector(int directorId)
+        {
+            var director = await _directorsRepo.Get(query => query.Id == directorId);
+            if (director == null) throw new Exception("Director not exists");
+            return director.AsReturnDirectorDto();
+        }
+        public async Task<Directors> CreateDirector(CreateDirectorDto directorDto)
+        {
+            //verificar se ja existe um director com o club
+            Directors dire = await _directorsRepo.Get(direQuery => direQuery.UsersId == directorDto.UsersId && 
+                                                                    direQuery.ClubsId == directorDto.ClubsId);
+            if (dire != null) throw new Exception("Director already exists");
+
+            var createDirector = await _directorsRepo.Add(directorDto.AsDirector());
+
+            return createDirector;
+
+
+        }
+
+
     }
 }

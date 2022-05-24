@@ -340,6 +340,28 @@ public static class Extensions
 
         return plan;
     }
+    public static Directors AsDirector(this CreateDirectorDto dierectorDto)
+    {
+        Directors director = new();
+
+        director.DirectorTypesId = dierectorDto.DirectorTypesId;
+        director.ClubsId = dierectorDto.ClubsId;
+        director.UsersId = dierectorDto.UsersId;
+
+        return director;
+    }
+
+
+
+    public static Clubs AsClub(this CreateClubsDto clubDto)
+    {
+        Clubs club = new();
+
+        club.Name = clubDto.Name;
+        club.PlacesId = clubDto.PlacesId;
+
+       return club;
+    }
     public static Achievements AsAchi(this CreateAchivementDto achieDto)
     {
         Achievements achi = new();
@@ -459,6 +481,27 @@ public static class Extensions
             startTime = plan.startTime,
             finishTime = plan.finishTime,
             EstimatedTime = plan.EstimatedTime
+        };
+    }
+
+    public static ReturnDirectorDto AsReturnDirectorDto(this Directors director)
+    {
+        return new ReturnDirectorDto
+        {
+            Id = director.Id,
+            DirectorTypesId = director.DirectorTypesId,
+            ClubsId = director.ClubsId,
+            UsersId = director.UsersId
+        };
+    }
+
+    public static ReturnClubsDto AsReturnClubDto(this Clubs club)
+    {
+        return new ReturnClubsDto
+        {
+            Id = club.Id,
+            Name = club.Name,
+            PlacesId = club.PlacesId
         };
     }
 
