@@ -93,6 +93,14 @@ namespace BikeSocialAPI.Controllers
             return Ok(races);
         }
         
+        [HttpGet("viewRaces")]
+        [Authorize]
+        public async Task<IActionResult> ViewRaces()
+        {
+            var races = await _raceService.ViewRaces();
+            return Ok(races);
+        }
+        
         [HttpGet("getRaceInvites")]
         public async Task<IActionResult> GetRaceInvites()
         {

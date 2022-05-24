@@ -198,13 +198,16 @@ namespace BikeSocialBLL.Services
                 raceDto.date = DateOnly.FromDateTime(race.dateTime);
                 raceDto.time = TimeOnly.FromDateTime(race.dateTime);
                 Federations f = await _federationRepository.Get(federation => federation.Id == race.FederationsId);
+                if (f == null) throw new Exception("There is no federation with the given id.");
                 raceDto.Federation = f.Name;
-                RaceTypes rt = 
-
-                // raceDto.RaceType = // get from RaceTypeRepository
-                // raceDto.City = // get from PlaceRepository
-                // raceDto.Town = // get from PlaceRepository
-                // raceDto.PlaceName = // get from PlaceRepository 
+                RaceTypes rt = await _raceTypeRepository.Get(raceType => raceType.Id == race.RaceTypesId);
+                if (rt == null) throw new Exception("There is no race type with the given id.");
+                raceDto.RaceType = rt.Name;
+                Places p = await _placeRepository.Get(place => place.Id == race.PlacesId);
+                if (p == null) throw new Exception("There is no place with the given id.");
+                raceDto.City = p.City;
+                raceDto.Town = p.Town;
+                raceDto.PlaceName = p.PlaceName;
 
                 racesListDto.Add(raceDto);
             }
