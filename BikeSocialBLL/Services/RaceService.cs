@@ -195,8 +195,8 @@ namespace BikeSocialBLL.Services
                 raceDto.Description = race.description;
                 raceDto.Distance = race.distance;
                 raceDto.EstimatedTime = race.estimateTime;
-                raceDto.date = DateOnly.FromDateTime(race.dateTime);
-                raceDto.time = TimeOnly.FromDateTime(race.dateTime);
+                raceDto.date = race.dateTime.ToShortDateString();
+                raceDto.time = race.dateTime.ToShortTimeString();
                 Federations f = await _federationRepository.Get(federation => federation.Id == race.FederationsId);
                 if (f == null) throw new Exception("There is no federation with the given id.");
                 raceDto.Federation = f.Name;

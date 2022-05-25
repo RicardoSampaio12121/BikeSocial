@@ -102,6 +102,7 @@ namespace BikeSocialAPI.Controllers
         }
         
         [HttpGet("getRaceInvites")]
+        [Authorize]
         public async Task<IActionResult> GetRaceInvites()
         {
             var raceInvites = await _raceService.GetRaceInvites();
