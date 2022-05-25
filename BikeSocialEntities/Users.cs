@@ -10,8 +10,8 @@ namespace BikeSocialEntities
         public string password { get; set; }
         public string sex { get; set; }
         public DateTime birthDate { get; set; }
-        public int contact { get; set; }
-        public int PlacesId { get; set; }
+        public int? contact { get; set; }
+        public int? PlacesId { get; set; }
         public int UserTypesId { get; set; }
         public string? ApiToken { get; set; }
 

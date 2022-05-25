@@ -435,8 +435,8 @@ public static class Extensions
             id = user.Id,
             username = user.username,
             birthDate = user.birthDate.ToShortDateString(),
-            contact = user.contact,
-            placeId = user.PlacesId,
+            contact = user.contact != null ? user.contact ?? default(int) : 0,
+            placeId = user.PlacesId != null ? user.PlacesId ?? default(int) : 0,
             userTypeId = user.UserTypesId,
             email = user.email
         };

@@ -14,13 +14,15 @@ namespace BikeSocialBLL.Services
         private readonly IUserRepository _userRepository;
         private readonly IRecoveryPasswordCodesRepository _recoveryPasswordRepo;
         private readonly IProfileRepository _profileRepository;
+        private readonly IAthleteRepository _athleteRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo, IProfileRepository profileRepository, IHttpContextAccessor httpContextAccessor)
+        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo, IProfileRepository profileRepository, IAthleteRepository athleteRepo, IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
             _recoveryPasswordRepo = recoveryPasswordRepo;
             _profileRepository = profileRepository;
+            _athleteRepository = athleteRepo;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -72,6 +74,27 @@ namespace BikeSocialBLL.Services
             newProfile.profileVisibility = 0;
 
             var addedProfile = await _profileRepository.Add(newProfile);
+
+            switch (user.userTypeId)
+            {
+                case 1: // Caso seja atleta
+                    var athlete = new Athletes()
+                    {
+                        UsersId = addedUser.Id,
+                        AthleteTypesId = 1
+                    };
+
+                    await _athleteRepository.Add(athlete);
+                    break;
+                case 2: // Caso seja pai
+                    break;
+                case 3: // Caso seja diretor
+                    break;
+                case 4: // Caso seja treinador
+                    break;
+                case 5: // Caso seja funcionario
+                    break;
+            }
 
             return addedUser.AsReturnUserDto();
 
