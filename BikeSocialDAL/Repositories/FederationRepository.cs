@@ -1,3 +1,4 @@
+using BikeSocialDAL.Repositories.Interfaces;
 using BikeSocialEntities;
 
 namespace BikeSocialDAL.Repositories
