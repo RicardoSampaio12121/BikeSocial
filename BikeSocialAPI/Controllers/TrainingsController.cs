@@ -60,6 +60,11 @@ namespace BikeSocialAPI.Controllers
             return Ok();
         }
 
-        
+        [HttpGet("getTrainingInvites")]
+        public async Task<IActionResult> GetTrainingInvites()
+        {
+            var trainingInvites = await _trainingsService.GetTrainingInvites();
+            return Ok(trainingInvites);
+        }
     }
 }

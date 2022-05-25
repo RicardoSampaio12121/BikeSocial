@@ -85,5 +85,30 @@ namespace BikeSocialBLL.Services
             await _invitesRepository.Add(dto.AsTrainingAthletesInvite());
             return true;
         }
+        
+        public async Task<List<ReturnTrainingInviteDto>> GetTrainingInvites()
+        {
+            // Pegar em todas os convites para treinos da base de dados e pô-las numa lista
+            List<TrainingInvites> trainingInvitesList = await _invitesRepository.GetList();
+            
+            // Lista que vai ser retornada
+            List<ReturnTrainingInviteDto> trainingInvitesListDto = new List<ReturnTrainingInviteDto>();
+            
+            // Percorrer lista dos convites para treinos obtida da base de dados e passar os elementos para a nova
+            foreach (TrainingInvites trainingInvites in trainingInvitesList)
+            {
+                ReturnTrainingInviteDto trainingInvitesDto = new ReturnTrainingInviteDto();
+
+                trainingInvitesDto.Id = trainingInvites.Id;
+                trainingInvitesDto.TrainingsId = trainingInvites.TrainingsId;
+                trainingInvitesDto.AthletesId = trainingInvites.AthletesId;
+                trainingInvitesDto.Confirmation = trainingInvites.Confirmation;
+
+                trainingInvitesListDto.Add(trainingInvitesDto);
+            }
+            
+            // Devolver lista nova
+            return trainingInvitesListDto;
+        }
     }
 }
