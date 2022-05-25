@@ -154,11 +154,15 @@ namespace BikeSocialBLL.Services
         public async Task<bool> EditInformation(int userId, GetUpdatedInformationDto dto)
         {
             var user = await _userRepository.Get(query => query.Id == userId);
-            var newPw = PasswordsUtils.Encrypt(dto.newPassword);
+
+            if (dto.currentPassword != "")
+            {
+                PasswordsUtils.ValidatePassword(dto.currentPassword, user.password);
+                user.password = PasswordsUtils.Encrypt(dto.newPassword);
+            }
 
             user.email = dto.newEmail;
-            user.password = newPw;
-            user.birthDate = dto.newBirthDate;
+            user.sex = dto.sex;
 
             await _userRepository.Update(user);
             return true;
@@ -169,6 +173,11 @@ namespace BikeSocialBLL.Services
             var userProfile = await _profileRepository.Get(query => query.UsersId == userId);
             userProfile.profileVisibility = dto.profileVisibility;
             userProfile.commentsPermission = dto.commentsPermission;
+            userProfile.unfriendContactPermission = dto.unfriendContactPermission;
+            userProfile.unfriendTrofyVisualization = dto.unfriendTrodyVisualization;
+            userProfile.privateRaces = dto.privateRaces;
+            userProfile.privateRoutes = dto.privateRoutes;
+            userProfile.privateTrainings = dto.privateTrainings;
 
             await _profileRepository.Update(userProfile);
 
@@ -194,7 +203,20 @@ namespace BikeSocialBLL.Services
                                                       profile.privateRaces, 
                                                       profile.privateRoutes
                                                       );
+            return output;
+        }
 
+        public async Task<ReturnAccountSettingsDto> GetAccountSettings(int userId)
+        {
+            var user = await _userRepository.Get(query => query.Id == userId);
+
+
+
+            var output = new ReturnAccountSettingsDto(
+                user.username,
+                user.email,
+                user.sex,
+                user.password);
             return output;
         }
     }

@@ -8,6 +8,7 @@ namespace BikeSocialEntities
         public string username { get; set; }
         public string email { get; set; }
         public string password { get; set; }
+        public string sex { get; set; }
         public DateTime birthDate { get; set; }
         public int contact { get; set; }
         public int PlacesId { get; set; }

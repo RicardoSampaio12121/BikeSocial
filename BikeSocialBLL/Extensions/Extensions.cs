@@ -10,6 +10,7 @@ public static class Extensions
 
         user.username = dto.username;
         user.email = dto.email;
+        user.sex = dto.sex;
         user.password = dto.password;
         user.birthDate = dto.birthdate;
         user.contact = dto.contact;
