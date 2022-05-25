@@ -311,18 +311,25 @@ public static class Extensions
         return achievementDto;
     }
 
-    //public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
 
-    //public static Achievements AsAchievement(this ReturnAchievementDto achievementDto)
-    //{
-    //    Achievements achievement = new();
+    public static ReturnAchievementDto AsAchievement(this ReturnAchievementDto achievementDto)
+    {
+        ReturnAchievementDto achievement = new();
 
-    //    achievement.Name = achievementDto.Name;
-    //    achievement.AchievementTypesId = achievementDto.AchievementTypeId;
-    //    achievement.PlacesId = achievementDto.PlacesId;
+        achievement.Name = achievementDto.Name;
+        achievement.AchievementTypeId = achievementDto.AchievementTypeId;
+        achievement.PlacesId = achievementDto.PlacesId;
 
-    //    return achievement;
-    //}
+        return achievement;
+    }
+
+    public static Federations AsFederations(this CreateFederationDto federationDto)
+    {
+        Federations fed = new();
+        fed.Name = federationDto.name;
+
+        return fed;
+    }
     public static Plans AsPlan(this CreatePlanDto planDto)
     {
         Plans plan = new();
@@ -333,6 +340,71 @@ public static class Extensions
         plan.EstimatedTime = planDto.estimatedTime;
 
         return plan;
+    }
+
+    public static Profile AsProfile(this CreateProfileDto profileDto)
+    {
+        Profile profile = new();
+
+        profile.description = profileDto.description;
+        profile.UsersId = profileDto.userId;
+
+        return profile;
+    }
+
+    public static Coaches AsCoach(this CreateCoachDto coachDto)
+    {
+        Coaches coach = new();
+
+        coach.UsersId = coachDto.userId;
+        coach.TeamsId = coachDto.teamId;
+
+        return coach;
+    }
+
+
+    public static Directors AsDirector(this CreateDirectorDto dierectorDto)
+    {
+        Directors director = new();
+
+        director.DirectorTypesId = dierectorDto.DirectorTypesId;
+        director.ClubsId = dierectorDto.ClubsId;
+        director.UsersId = dierectorDto.UsersId;
+
+        return director;
+    }
+
+
+
+    public static Clubs AsClub(this CreateClubsDto clubDto)
+    {
+        Clubs club = new();
+
+        club.Name = clubDto.Name;
+        club.PlacesId = clubDto.PlacesId;
+
+       return club;
+    }
+    public static Achievements AsAchi(this CreateAchivementDto achieDto)
+    {
+        Achievements achi = new();
+
+        achi.Name = achieDto.Name;
+        achi.PlacesId = achieDto.PlacesId;
+        achi.AchievementTypesId = achieDto.AchievementTypesId;
+
+        return achi;
+    }
+
+    public static Places AsPlaces(this CreatePlacesDto placeDto)
+    {
+        Places place = new();
+
+        place.City = placeDto.City;
+        place.Town = placeDto.Town;
+        place.PlaceName = placeDto.PlaceName;
+
+        return place;
     }
 
     public static AthleteFederationRequests AsAthleteFederationRequest(this GetAthleteFederationRequestDto dto, int athleteId)
@@ -432,6 +504,58 @@ public static class Extensions
             startTime = plan.startTime,
             finishTime = plan.finishTime,
             EstimatedTime = plan.EstimatedTime
+        };
+    }
+
+    public static ReturnDirectorDto AsReturnDirectorDto(this Directors director)
+    {
+        return new ReturnDirectorDto
+        {
+            Id = director.Id,
+            DirectorTypesId = director.DirectorTypesId,
+            ClubsId = director.ClubsId,
+            UsersId = director.UsersId
+        };
+    }
+
+    public static ReturnClubsDto AsReturnClubDto(this Clubs club)
+    {
+        return new ReturnClubsDto
+        {
+            Id = club.Id,
+            Name = club.Name,
+            PlacesId = club.PlacesId
+        };
+    }
+
+    public static ReturnAchievementDto AsReturnAchiveDto(this Achievements achivv)
+    {
+        return new ReturnAchievementDto
+        {
+            Name = achivv.Name,
+            AchievementTypeId = achivv.AchievementTypesId,
+            PlacesId = achivv.PlacesId
+        };
+    }
+
+    public static ReturnPlacesDto AsReturnPlaceDto(this Places place)
+    {
+        return new ReturnPlacesDto
+        {
+            Id = place.Id,
+            City = place.City,
+            Town = place.Town,
+            PlaceName = place.PlaceName
+        };
+
+    }
+
+    public static ReturnFederationsDto AsReturnFedDto(this Federations fed)
+    {
+        return new ReturnFederationsDto
+        {
+            Id = fed.Id,
+            name = fed.Name
         };
     }
 

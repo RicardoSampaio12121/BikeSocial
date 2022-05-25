@@ -7,6 +7,8 @@ namespace BikeSocialBLL.Services.IServices
     {
         Task<ReturnCoachDto> GetCoach(int coachId);
         //Task<Athletes> Create(CreateCoachDto coachDto);
+        Task<Coaches> CreateCoach(CreateCoachDto coachDto);
+
 
         Task<bool> AcceptTeamInvite(int userId, int inviteId);
         Task<bool> RejectTeamInvite(int userId, int inviteId);

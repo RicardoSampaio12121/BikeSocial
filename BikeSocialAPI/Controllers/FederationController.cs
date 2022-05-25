@@ -21,6 +21,24 @@ namespace BikeSocialAPI.Controllers
             _federationService = federationService;
             _userService = userService;
         }
+
+        [HttpGet("GetFed/{federationId}")]
+        [AllowAnonymous]
+        public async Task<ReturnFederationsDto> GetFed(int federationId)
+        {
+            var federation = await _federationService.GetFed(federationId);
+            return federation;
+        }
+
+        [HttpPost("createFederation")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateFederation(CreateFederationDto fed)
+        {
+            var createFed = await _federationService.Create(fed);
+            return CreatedAtAction(nameof(GetFed), new { federationId = createFed.Id }, createFed);
+
+        }
+
         /// <summary>
         /// função que valida/nao valida o atleta na federação
         /// </summary>
