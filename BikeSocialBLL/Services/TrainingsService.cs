@@ -62,14 +62,49 @@ namespace BikeSocialBLL.Services
                 placeId = newPlace.Id;
             }
 
-
-
             // Adicionar treino
             var createdTraining = await _repository.Add(training.AsTraining(placeId,coach.TeamsId ?? default(int)));
 
             return createdTraining;
         }
 
+        public async Task<Trainings> CreateTPW(CreateTrainingDto training)
+        {
+            // Buscar info do coach
+
+
+            // Verificar se treino já existe
+            Trainings tg = await _repository.Get(trainingQuery => trainingQuery.Name == training.Name.ToString() &&
+                                                                   trainingQuery.Distance == training.distance);
+
+            if (tg != null) throw new Exception("There is already a training with the same info created");
+
+            // Verificar se lugar existe
+            var place = await _placeRepository.Get(query => query.City == training.cidade &&
+                                                            query.Town == training.localidade &&
+                                                            query.PlaceName == training.lugar);
+
+            int placeId;
+
+            //Se existe, buscar o id e inserir na nova race
+            if (place != null) placeId = place.Id;
+            else
+            {
+                //Se não existe, criar entrada na tabela Places, buscar id e inserir na nova race
+                var newPlace = await _placeRepository.Add(new Places()
+                {
+                    City = training.cidade,
+                    Town = training.localidade,
+                    PlaceName = training.lugar
+                });
+                placeId = newPlace.Id;
+            }
+
+            // Adicionar treino
+            var createdTraining = await _repository.Add(training.AsTrainingPW(placeId));
+
+            return createdTraining;
+        }
         public async Task<bool> CreateWithInvites(int userId, CreateTrainingWithInvitesDto dto)
         {
             //Buscar info do coach

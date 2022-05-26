@@ -68,7 +68,7 @@ public static class Extensions
         Trainings train = new();
 
         train.TeamsId = teamId;
-        train.Name = trainingDto.name;
+        train.Name = trainingDto.Name;
         train.dateTime = trainingDto.dateTime;
         train.EstimatedTime = trainingDto.estimatedTime;
         train.Distance = trainingDto.distance;
@@ -77,6 +77,21 @@ public static class Extensions
 
         return train;
     }
+
+    public static Trainings AsTrainingPW(this CreateTrainingDto trainingDto, int placeId)
+    {
+        Trainings train = new();
+
+        train.Name = trainingDto.Name;
+        train.dateTime = trainingDto.dateTime;
+        train.EstimatedTime = trainingDto.estimatedTime;
+        train.Distance = trainingDto.distance;
+        train.PlacesId = placeId;
+        train.TrainingTypesId = trainingDto.trainingTypeId;
+
+        return train;
+    }
+
 
 
     public static Races AsRace(this CreateRaceDto raceDto, int placeId)
