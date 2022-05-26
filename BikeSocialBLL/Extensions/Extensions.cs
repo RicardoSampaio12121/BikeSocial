@@ -78,7 +78,7 @@ public static class Extensions
     }
 
 
-    public static Races AsRace(this CreateRaceDto raceDto)
+    public static Races AsRace(this CreateRaceDto raceDto, int placeId)
     {
         Races race = new();
 
@@ -88,7 +88,7 @@ public static class Extensions
         race.dateTime = raceDto.dateTime;
         race.FederationsId = raceDto.FederationId;
         race.RaceTypesId = raceDto.RaceTypeId;
-        race.PlacesId = raceDto.placeId;
+        race.PlacesId = placeId;
         race.State = raceDto.state;
 
         return race;

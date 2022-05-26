@@ -22,6 +22,14 @@ namespace BikeSocialAPI.Controllers
             _userService = userService;
         }
 
+        [HttpGet("Federations")]
+        [AllowAnonymous]
+        public async Task<List<ReturnFederationsDto>> GetFederations()
+        {
+            var federations = await _federationService.GetFederation();
+            return federations;
+        }
+
         [HttpGet("GetFed/{federationId}")]
         [AllowAnonymous]
         public async Task<ReturnFederationsDto> GetFed(int federationId)
