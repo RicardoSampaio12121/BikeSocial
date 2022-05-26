@@ -67,6 +67,9 @@ namespace BikeSocialAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(GetUserRegisterDto user)
         {
+            Console.WriteLine("estra aqui");
+            Console.WriteLine($"UserType: {user.userTypeId}");
+
             var User = await _userService.Register(user);
             return CreatedAtAction(nameof(GetUserInformationById), new { userId = User.id }, User);
         }
@@ -118,14 +121,23 @@ namespace BikeSocialAPI.Controllers
         [AllowAnonymous]
         public async Task<ReturnPrivacySettingsDto> GetPrivacySettings()
         {
-            var userId = 2;
 
             // Receber o id do utilizador a partir do token
-            //var userId = _userService.GetUserIdFromToken();
+            var userId = _userService.GetUserIdFromToken();
+            
             var settings = await _userService.GetPrivacySettings(userId);
 
             return settings;
+        }
 
+        [HttpGet("getAccountSettings")]
+        public async Task<ReturnAccountSettingsDto> GetAccountSetting()
+        {
+            var userId = _userService.GetUserIdFromToken();
+
+            var account = await _userService.GetAccountSettings(userId);
+
+            return account;
         }
 
         [HttpPut("updatePrivacySettings")]

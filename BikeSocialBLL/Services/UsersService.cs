@@ -14,13 +14,15 @@ namespace BikeSocialBLL.Services
         private readonly IUserRepository _userRepository;
         private readonly IRecoveryPasswordCodesRepository _recoveryPasswordRepo;
         private readonly IProfileRepository _profileRepository;
+        private readonly IAthleteRepository _athleteRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo, IProfileRepository profileRepository, IHttpContextAccessor httpContextAccessor)
+        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo, IProfileRepository profileRepository, IAthleteRepository athleteRepo, IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
             _recoveryPasswordRepo = recoveryPasswordRepo;
             _profileRepository = profileRepository;
+            _athleteRepository = athleteRepo;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -72,6 +74,27 @@ namespace BikeSocialBLL.Services
             newProfile.profileVisibility = 0;
 
             var addedProfile = await _profileRepository.Add(newProfile);
+
+            switch (user.userTypeId)
+            {
+                case 1: // Caso seja atleta
+                    var athlete = new Athletes()
+                    {
+                        UsersId = addedUser.Id,
+                        AthleteTypesId = 1
+                    };
+
+                    await _athleteRepository.Add(athlete);
+                    break;
+                case 2: // Caso seja pai
+                    break;
+                case 3: // Caso seja diretor
+                    break;
+                case 4: // Caso seja treinador
+                    break;
+                case 5: // Caso seja funcionario
+                    break;
+            }
 
             return addedUser.AsReturnUserDto();
 
@@ -154,11 +177,15 @@ namespace BikeSocialBLL.Services
         public async Task<bool> EditInformation(int userId, GetUpdatedInformationDto dto)
         {
             var user = await _userRepository.Get(query => query.Id == userId);
-            var newPw = PasswordsUtils.Encrypt(dto.newPassword);
+
+            if (dto.currentPassword != "")
+            {
+                PasswordsUtils.ValidatePassword(dto.currentPassword, user.password);
+                user.password = PasswordsUtils.Encrypt(dto.newPassword);
+            }
 
             user.email = dto.newEmail;
-            user.password = newPw;
-            user.birthDate = dto.newBirthDate;
+            user.sex = dto.sex;
 
             await _userRepository.Update(user);
             return true;
@@ -169,6 +196,11 @@ namespace BikeSocialBLL.Services
             var userProfile = await _profileRepository.Get(query => query.UsersId == userId);
             userProfile.profileVisibility = dto.profileVisibility;
             userProfile.commentsPermission = dto.commentsPermission;
+            userProfile.unfriendContactPermission = dto.unfriendContactPermission;
+            userProfile.unfriendTrofyVisualization = dto.unfriendTrodyVisualization;
+            userProfile.privateRaces = dto.privateRaces;
+            userProfile.privateRoutes = dto.privateRoutes;
+            userProfile.privateTrainings = dto.privateTrainings;
 
             await _profileRepository.Update(userProfile);
 
@@ -194,7 +226,20 @@ namespace BikeSocialBLL.Services
                                                       profile.privateRaces, 
                                                       profile.privateRoutes
                                                       );
+            return output;
+        }
 
+        public async Task<ReturnAccountSettingsDto> GetAccountSettings(int userId)
+        {
+            var user = await _userRepository.Get(query => query.Id == userId);
+
+
+
+            var output = new ReturnAccountSettingsDto(
+                user.username,
+                user.email,
+                user.sex,
+                user.password);
             return output;
         }
     }

@@ -45,7 +45,7 @@ namespace BikeSocialBLL.Utils
                 if (hashBytes[i + 16] != hash[i])
                     throw new UnauthorizedAccessException("Wrong Password");
         }
-      
+
         public static int GenerateRecoveryPasswordCode()
         {
             string output;

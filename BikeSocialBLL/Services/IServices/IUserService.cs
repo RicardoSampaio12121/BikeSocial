@@ -14,5 +14,6 @@ namespace BikeSocialBLL.Services.IServices
         Task<bool> UpdatePrivacySettings(int userId, GetUpdatedPrivacySettingsDto dto);
         Task<ReturnUserDto> GetUserInformationById(int userId);
         Task<ReturnPrivacySettingsDto> GetPrivacySettings(int userId);
+        Task<ReturnAccountSettingsDto> GetAccountSettings(int userId);
     }
 }

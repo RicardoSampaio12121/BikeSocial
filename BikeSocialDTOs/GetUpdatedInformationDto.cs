@@ -1,4 +1,4 @@
 ﻿namespace BikeSocialDTOs
 {
-    public record GetUpdatedInformationDto(string newPassword, string newEmail, DateTime newBirthDate);
+    public record GetUpdatedInformationDto(string currentPassword, string newPassword, string newEmail, string sex);
 }
