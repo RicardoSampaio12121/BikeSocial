@@ -181,36 +181,6 @@ namespace BikeSocialTests
             await Assert.ThrowsAsync<Exception>(() => _service.RemoveAchievementProfile(profileId, achievementId));
         }
 
-        //[Fact]
-        //public async Task Remove_Achievement_Profile_Test_No_Achievement_Exception()
-        //{
-
-        //}
-
-        //[Fact]
-        //public async Task Remove_Achievement_Profile_Test_No_Athlete_Exception()
-        //{
-
-        //}
-
-        //[Fact]
-        //public async Task Remove_Achievement_Profile_Test_Non_Earned_Achievement_Exception()
-        //{
-
-        //}
-
-        //[Fact]
-        //public async Task Remove_Achievement_Profile_Test_Non_In_Display_Exception()
-        //{
-
-        //}
-
-        //[Fact]
-        //public async Task Remove_Achievement_Profile_Test()
-        //{
-
-        //}
-
         [Fact]
         public async Task Update_Description_Test_No_Profile_Exception()
         {
