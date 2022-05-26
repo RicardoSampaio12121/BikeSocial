@@ -63,7 +63,7 @@ public static class Extensions
 
     //        return friend;
     //    }
-    public static Trainings AsTraining(this CreateTrainingDto trainingDto, int teamId)
+    public static Trainings AsTraining(this CreateTrainingDto trainingDto,int placeId, int teamId)
     {
         Trainings train = new();
 
@@ -72,7 +72,7 @@ public static class Extensions
         train.dateTime = trainingDto.dateTime;
         train.EstimatedTime = trainingDto.estimatedTime;
         train.Distance = trainingDto.distance;
-        train.PlacesId = trainingDto.placeId;
+        train.PlacesId = placeId;
         train.TrainingTypesId = trainingDto.trainingTypeId;
 
         return train;
