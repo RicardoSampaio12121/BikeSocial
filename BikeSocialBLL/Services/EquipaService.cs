@@ -41,11 +41,13 @@ namespace BikeSocialBLL.Services
             // Buscar info do director
             var director = await _directorsRepo.Get(query => query.UsersId == userId);
 
+            if (director == null) throw new Exception("Director profile does not exist");
+
             // Verificar se equipa já existe
             var team = await _equipaRepository.Get(equipaQuery => equipaQuery.Name == equipa.name.ToString() &&
             equipaQuery.PlacesId == equipa.placeId && equipaQuery.ClubsId == director.ClubsId);
 
-            if (team != null) throw new Exception("Team with the same informationa already exists");
+            if (team != null) throw new Exception("Team with the same information already exists");
 
             // Criar equipa
             var createdTeam = await _equipaRepository.Add(equipa.AsTeam(director.ClubsId));
@@ -56,6 +58,8 @@ namespace BikeSocialBLL.Services
         {
             // Buscar info do treinador
             var coach = await _coachesRepo.Get(query => query.UsersId == userId);
+
+            if (coach == null) throw new Exception("Coach does not exist");
 
             // Verifica se invite já existe
             var invite = await _inviteAthleteTeamRepo.Get(conviteQuery => conviteQuery.TeamsId == coach.TeamsId &&
@@ -72,6 +76,7 @@ namespace BikeSocialBLL.Services
         {
             // Buscar info do diretor
             var director = await _directorsRepo.Get(query => query.UsersId == userId);
+            if (director == null) throw new Exception("Director does not exist");
 
             // Buscar info da equipa
             var team = await _equipaRepository.Get(query => query.Id == convite.idEquipa);
@@ -97,6 +102,8 @@ namespace BikeSocialBLL.Services
         {
             // Buscar info do diretor
             var director = await _directorsRepo.Get(query => query.UsersId == userId);
+
+            if (director == null) throw new Exception("Director does not exist");
 
             // Buscar info da equipa
             var team = await _equipaRepository.Get(query => query.Id == dto.teamId);

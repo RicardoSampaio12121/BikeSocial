@@ -39,6 +39,14 @@ namespace BikeSocialAPI.Controllers
             return CreatedAtAction(nameof(GetTraining), new { trainingId = createdTraining.Id }, createdTraining);
         }
 
+        [HttpPost("createPW")]
+        public async Task<IActionResult> CreatePW(CreateTrainingDto training)
+        {
+            
+            var createdTraining = await _trainingsService.CreateTPW(training);
+            return CreatedAtAction(nameof(GetTraining), new { trainingId = createdTraining.Id }, createdTraining);
+        }
+       
 
         [HttpPost("createWithInvites")]
         public async Task<ActionResult> CreateWithInvites(CreateTrainingWithInvitesDto dto)

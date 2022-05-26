@@ -12,13 +12,16 @@ namespace BikeSocialBLL.Services
         private readonly ITrainingInvitesRepository _invitesRepository;
         private readonly ICoachesRepository _coachesRepo;
         private readonly IAthleteRepository _athleteRepo;
+        private readonly IPlaceRepository _placeRepository;
 
-        public TrainingsService(ITrainingsRepository repository, ITrainingInvitesRepository invitesRepository, ICoachesRepository coachesRepo, IAthleteRepository athleteRepo)
+        public TrainingsService(ITrainingsRepository repository, IPlaceRepository placeRepo,
+            ITrainingInvitesRepository invitesRepository, ICoachesRepository coachesRepo, IAthleteRepository athleteRepo)
         {
             _repository = repository;
             _invitesRepository = invitesRepository;
             _coachesRepo = coachesRepo;
             _athleteRepo = athleteRepo;
+            _placeRepository = placeRepo;
         }
 
         public async Task<ReturnTrainingDto> GetTraining(int trainingId)
@@ -38,12 +41,70 @@ namespace BikeSocialBLL.Services
             var _ = await _repository.Get(query => query.TeamsId == coach.TeamsId && query.dateTime == training.dateTime);
             if (_ != null) throw new Exception("There is already a training with the same info created");
 
+            // Verificar se lugar existe
+            var place = await _placeRepository.Get(query => query.City == training.cidade &&
+                                                            query.Town == training.localidade && 
+                                                            query.PlaceName == training.lugar);
+
+            int placeId;
+
+            //Se existe, buscar o id e inserir na nova race
+            if (place != null) placeId = place.Id;
+            else
+            {
+                //Se não existe, criar entrada na tabela Places, buscar id e inserir na nova race
+                var newPlace = await _placeRepository.Add(new Places()
+                {
+                    City = training.cidade,
+                    Town = training.localidade,
+                    PlaceName = training.lugar
+                });
+                placeId = newPlace.Id;
+            }
+
             // Adicionar treino
-            var createdTraining = await _repository.Add(training.AsTraining(coach.TeamsId ?? default(int)));
+            var createdTraining = await _repository.Add(training.AsTraining(placeId,coach.TeamsId ?? default(int)));
 
             return createdTraining;
         }
 
+        public async Task<Trainings> CreateTPW(CreateTrainingDto training)
+        {
+            // Buscar info do coach
+
+
+            // Verificar se treino já existe
+            Trainings tg = await _repository.Get(trainingQuery => trainingQuery.Name == training.Name.ToString() &&
+                                                                   trainingQuery.Distance == training.distance);
+
+            if (tg != null) throw new Exception("There is already a training with the same info created");
+
+            // Verificar se lugar existe
+            var place = await _placeRepository.Get(query => query.City == training.cidade &&
+                                                            query.Town == training.localidade &&
+                                                            query.PlaceName == training.lugar);
+
+            int placeId;
+
+            //Se existe, buscar o id e inserir na nova race
+            if (place != null) placeId = place.Id;
+            else
+            {
+                //Se não existe, criar entrada na tabela Places, buscar id e inserir na nova race
+                var newPlace = await _placeRepository.Add(new Places()
+                {
+                    City = training.cidade,
+                    Town = training.localidade,
+                    PlaceName = training.lugar
+                });
+                placeId = newPlace.Id;
+            }
+
+            // Adicionar treino
+            var createdTraining = await _repository.Add(training.AsTrainingPW(placeId));
+
+            return createdTraining;
+        }
         public async Task<bool> CreateWithInvites(int userId, CreateTrainingWithInvitesDto dto)
         {
             //Buscar info do coach
