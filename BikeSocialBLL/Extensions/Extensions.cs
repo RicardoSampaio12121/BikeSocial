@@ -227,7 +227,7 @@ public static class Extensions
 
         invite.AthletesId = adicionarAR.id_atleta;
         invite.RacesId = adicionarAR.raceId;
-        invite.Confirmation = false;
+        invite.Confirmation = true;
 
         return invite;
 

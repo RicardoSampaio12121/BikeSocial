@@ -79,20 +79,14 @@ namespace BikeSocialBLL.Services
 
         public async Task<bool> AdicionarAP(int userId, GetRaceInviteDto adicionar)
         {
-            //Buscar info do coach
-            var coach = await _coachesRepo.Get(query => query.UsersId == userId);
-
             //Buscar info do atleta
-            var athlete = await _athleteRepo.Get(query => query.Id == adicionar.id_atleta);
+            var athlete = await _athleteRepo.Get(query => query.UsersId == userId);
 
             //Verificar se atleta existe
             if (athlete == null) throw new Exception("There is no athlete assigned with the given id.");
 
-            //Verificar se coach e atleta pertencem à mesma equipa
-            if (coach.TeamsId != athlete.TeamsId) throw new Exception("This athlete is not part of your team, so you can't invite him.");
-
             //Verificar se invite já existe
-            RaceInvites add = await _raceInvitesRepository.Get(adicionarQuery => adicionarQuery.AthletesId == adicionar.id_atleta && adicionarQuery.RacesId == adicionar.raceId);
+            RaceInvites add = await _raceInvitesRepository.Get(adicionarQuery => adicionarQuery.AthletesId == userId && adicionarQuery.RacesId == adicionar.raceId);
 
             if (add != null) throw new Exception("Athlete was already invited to the race");
 
