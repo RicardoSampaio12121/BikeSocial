@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace BikeSocialAPI.Controllers
 {
     [ApiController]
-    [Authorize(Roles = "coach")]
+    [Authorize(Roles = "athlete")]
     [Route("trainings")]
     public class TrainingsController : Controller
     {
