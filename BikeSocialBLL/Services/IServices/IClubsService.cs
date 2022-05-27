@@ -6,6 +6,6 @@ namespace BikeSocialBLL.Services.IServices
     public interface IClubsService
     {
         Task<ReturnClubsDto> GetClubs(int clubsId);
-        Task<Clubs> CreateClub(CreateClubsDto clubsDto);
+        Task<Clubs> CreateClub(CreateClubsDto clubsDto, int directorId);
     }
 }

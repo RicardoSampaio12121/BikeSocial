@@ -81,7 +81,8 @@ namespace BikeSocialBLL.Services
                     var athlete = new Athletes()
                     {
                         UsersId = addedUser.Id,
-                        AthleteTypesId = 1
+                        AthleteTypesId = 1,
+                        TeamsId = 1
                     };
 
                     await _athleteRepository.Add(athlete);
