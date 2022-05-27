@@ -128,6 +128,22 @@ namespace BikeSocialBLL.Services
             return true;
         }
 
-        
+        public async Task<List<ReturnFederationsDto>> GetFederation()
+        {
+            var output = new List<ReturnFederationsDto>();
+
+            var federations = await _federationRepo.GetList();
+
+            foreach(var fed in federations)
+            {
+                output.Add(new ReturnFederationsDto()
+                {
+                    Id = fed.Id,
+                    name = fed.Name
+                });
+            }
+
+            return output;
+        }
     }
 }

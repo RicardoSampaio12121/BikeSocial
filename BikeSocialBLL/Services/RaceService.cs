@@ -51,9 +51,29 @@ namespace BikeSocialBLL.Services
                                                     raceQuery.dateTime.ToString() == race.dateTime.ToString());
             // Não podem existir 2 provas "iguais"
             if (rc != null) throw new Exception("There is already a race with the same specifications.");
-            
+
+            // Verificar se lugar existe
+            var place = await _placeRepository.Get(query => query.City == race.cidade && 
+                                                            query.Town == race.localidade && query.PlaceName == race.lugar);
+
+            int placeId;
+
+            //Se existe, buscar o id e inserir na nova race
+            if (place != null) placeId = place.Id;
+            else
+            {
+                //Se não existe, criar entrada na tabela Places, buscar id e inserir na nova race
+                var newPlace = await _placeRepository.Add(new Places()
+                {
+                    City = race.cidade,
+                    Town = race.localidade,
+                    PlaceName = race.lugar
+                });
+                placeId = newPlace.Id;
+            }
+
             // Adicionar race
-            var createdRace = await _raceRepository.Add(race.AsRace());
+            var createdRace = await _raceRepository.Add(race.AsRace(placeId));
             return createdRace;
         }
 

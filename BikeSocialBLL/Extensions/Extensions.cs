@@ -63,23 +63,38 @@ public static class Extensions
 
     //        return friend;
     //    }
-    public static Trainings AsTraining(this CreateTrainingDto trainingDto, int teamId)
+    public static Trainings AsTraining(this CreateTrainingDto trainingDto,int placeId, int teamId)
     {
         Trainings train = new();
 
         train.TeamsId = teamId;
-        train.Name = trainingDto.name;
+        train.Name = trainingDto.Name;
         train.dateTime = trainingDto.dateTime;
         train.EstimatedTime = trainingDto.estimatedTime;
         train.Distance = trainingDto.distance;
-        train.PlacesId = trainingDto.placeId;
+        train.PlacesId = placeId;
+        train.TrainingTypesId = trainingDto.trainingTypeId;
+
+        return train;
+    }
+
+    public static Trainings AsTrainingPW(this CreateTrainingDto trainingDto, int placeId)
+    {
+        Trainings train = new();
+
+        train.Name = trainingDto.Name;
+        train.dateTime = trainingDto.dateTime;
+        train.EstimatedTime = trainingDto.estimatedTime;
+        train.Distance = trainingDto.distance;
+        train.PlacesId = placeId;
         train.TrainingTypesId = trainingDto.trainingTypeId;
 
         return train;
     }
 
 
-    public static Races AsRace(this CreateRaceDto raceDto)
+
+    public static Races AsRace(this CreateRaceDto raceDto, int placeId)
     {
         Races race = new();
 
@@ -89,7 +104,7 @@ public static class Extensions
         race.dateTime = raceDto.dateTime;
         race.FederationsId = raceDto.FederationId;
         race.RaceTypesId = raceDto.RaceTypeId;
-        race.PlacesId = raceDto.placeId;
+        race.PlacesId = placeId;
         race.State = raceDto.state;
 
         return race;

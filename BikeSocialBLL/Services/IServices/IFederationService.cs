@@ -10,5 +10,6 @@ namespace BikeSocialBLL.Services.IServices
 
         Task<Federations> Create(CreateFederationDto federationDto);
         Task<ReturnFederationsDto> GetFed(int federationId);
+        Task<List<ReturnFederationsDto>> GetFederation();
     }
 }
