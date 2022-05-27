@@ -97,7 +97,9 @@ namespace BikeSocialAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CreateClubs(CreateClubsDto clubs)
         {
-            var createclub = await _clubsService.CreateClub(clubs);
+            var user = _userService.GetUserIdFromToken();
+
+            var createclub = await _clubsService.CreateClub(clubs, user);
 
             return CreatedAtAction(nameof(GetClubs), new { clubsId = createclub.Id }, createclub);
         }
@@ -116,6 +118,7 @@ namespace BikeSocialAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CreateDirector(CreateDirectorDto directorDto)
         {
+
             var createdirector = await _equipaService.CreateDirector(directorDto);
 
             return CreatedAtAction(nameof(GetDirector), new { directorId = createdirector.Id }, createdirector);
