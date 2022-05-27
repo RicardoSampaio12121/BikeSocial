@@ -11,9 +11,10 @@ namespace BikeSocialBLL.Services
         private readonly IClubsRepository _clubsRepository;
         private readonly IDirectorRepository _directorRepository;
 
-        public ClubsService(IClubsRepository clubsRepository)
+        public ClubsService(IClubsRepository clubsRepository, IDirectorRepository dirRepo)
         {
             _clubsRepository = clubsRepository;
+            _directorRepository = dirRepo;
         }
 
         public async Task<ReturnClubsDto> GetClubs(int clubsId)
@@ -26,7 +27,7 @@ namespace BikeSocialBLL.Services
         {
             //verificar se já existe o club
             Clubs club = await _clubsRepository.Get(clubQuery => clubQuery.Name == clubsDto.Name.ToString());
-            Directors dir = await _directorRepository.Get(query => query.Id == userId);
+            Directors dir = await _directorRepository.Get(query => query.UsersId == userId);
 
             if (dir == null) throw new Exception("Director does not exist");
             //nao pode existir dois clubs com o mesmo nome
