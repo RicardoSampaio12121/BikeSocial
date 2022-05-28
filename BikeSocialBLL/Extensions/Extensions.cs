@@ -88,6 +88,7 @@ public static class Extensions
         train.Distance = trainingDto.distance;
         train.PlacesId = placeId;
         train.TrainingTypesId = trainingDto.trainingTypeId;
+        train.TeamsId = 1;
 
         return train;
     }
@@ -227,7 +228,7 @@ public static class Extensions
 
         invite.AthletesId = adicionarAR.id_atleta;
         invite.RacesId = adicionarAR.raceId;
-        invite.Confirmation = false;
+        invite.Confirmation = true;
 
         return invite;
 

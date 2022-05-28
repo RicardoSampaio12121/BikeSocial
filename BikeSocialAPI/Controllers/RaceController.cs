@@ -37,7 +37,7 @@ namespace BikeSocialAPI.Controllers
         }
 
         [HttpPost("inscricao")]
-        [Authorize(Roles = "coach")]
+        [Authorize(Roles = "athlete")]
         public async Task<IActionResult> Adicionar(GetRaceInviteDto adcionar)
         {
             // Buscar id do utilizador a partir do token
