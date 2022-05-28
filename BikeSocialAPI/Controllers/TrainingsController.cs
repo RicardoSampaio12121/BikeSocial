@@ -28,6 +28,14 @@ namespace BikeSocialAPI.Controllers
             return training;
         }
 
+        [HttpGet("getAvailableTrainings")]
+        public async Task<List<ReturnTrainingUIDto>> GetAvailableTrainingsForTrainingInvitesUI()
+        {
+            var userId = _userService.GetUserIdFromToken();
+
+            return await _trainingsService.GetAvailableTrainings(userId);
+        }
+
         // TODO: Retornar createdAtAction
         [HttpPost("create")]
         public async Task<IActionResult> Create(CreateTrainingDto training)
@@ -73,6 +81,15 @@ namespace BikeSocialAPI.Controllers
         {
             var trainingInvites = await _trainingsService.GetTrainingInvites();
             return Ok(trainingInvites);
+        }
+
+        [HttpPost("selfInvite")]
+        public async Task<IActionResult> SelfInvite(SelfInviteDto dto)
+        {
+            var userId = _userService.GetUserIdFromToken();
+            await _trainingsService.SelfInvite(dto);
+
+            return Ok();
         }
     }
 }

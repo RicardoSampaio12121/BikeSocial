@@ -88,6 +88,7 @@ public static class Extensions
         train.Distance = trainingDto.distance;
         train.PlacesId = placeId;
         train.TrainingTypesId = trainingDto.trainingTypeId;
+        train.TeamsId = 1;
 
         return train;
     }
