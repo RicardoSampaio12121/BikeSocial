@@ -41,10 +41,10 @@ namespace BikeSocialAPI.Controllers
         }
 
         [HttpGet("view/{userId}")]
-        public async Task<IActionResult> ViewFriends()
+        public async Task<IActionResult> ViewFriends(int userId)
         {
-            // Buscar id do user pelo token
-            var userId = _userService.GetUserIdFromToken();
+            if(userId == 0)
+                userId = _userService.GetUserIdFromToken();
 
             var friends = await _friendService.ViewFriends(userId);
             return Ok(friends);
