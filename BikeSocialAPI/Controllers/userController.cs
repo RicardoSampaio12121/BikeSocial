@@ -38,10 +38,11 @@ namespace BikeSocialAPI.Controllers
         [ActionName(nameof(GetUserInformationById))]
         public async Task<ActionResult> GetUserInformationById(int userId)
         {
+            
+            int userGrab = userId;
             if (userId == 0)
-                userId = _userService.GetUserIdFromToken();
-
-            var output = await _userService.GetUserInformationById(userId);
+                userGrab = _userService.GetUserIdFromToken();
+            var output = await _userService.GetUserInformationById(userGrab);
             return Ok(output);
         }
 

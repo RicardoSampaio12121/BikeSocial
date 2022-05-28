@@ -12,16 +12,21 @@ namespace BikeSocialAPI.Controllers
     public class ProfileController : Controller
     {
         private readonly IProfileService _profileService;
+        private readonly IUserService _userService;
 
-        public ProfileController(IProfileService profileService)
+        public ProfileController(IProfileService profileService, IUserService userService)
         {
+            _userService = userService;
             _profileService = profileService;
         }
 
         [HttpGet("view/{userId}")]
         public async Task<ActionResult<String>> ViewProfile(int userId)
         {
-            var profReturn = await _profileService.ViewProfile(userId);
+            int userGrab = userId;
+            if (userId == 0)
+                userGrab = _userService.GetUserIdFromToken();
+            var profReturn = await _profileService.ViewProfile(userGrab);
             return JsonConvert.SerializeObject(profReturn);
         }
 
