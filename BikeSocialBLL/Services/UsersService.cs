@@ -16,14 +16,20 @@ namespace BikeSocialBLL.Services
         private readonly IProfileRepository _profileRepository;
         private readonly IAthleteRepository _athleteRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPlaceRepository _placeRepository;
+        private readonly IEquipaRepository _equipaRepository;
+        private readonly IClubsRepository _clubsRepository;
 
-        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo, IProfileRepository profileRepository, IAthleteRepository athleteRepo, IHttpContextAccessor httpContextAccessor)
+        public UsersService(IUserRepository userRepository, IRecoveryPasswordCodesRepository recoveryPasswordRepo, IProfileRepository profileRepository, IAthleteRepository athleteRepo, IHttpContextAccessor httpContextAccessor, IPlaceRepository placeRepo, IEquipaRepository equipaRepo, IClubsRepository clubsRepo)
         {
             _userRepository = userRepository;
             _recoveryPasswordRepo = recoveryPasswordRepo;
             _profileRepository = profileRepository;
             _athleteRepository = athleteRepo;
             _httpContextAccessor = httpContextAccessor;
+            _placeRepository = placeRepo;
+            _equipaRepository = equipaRepo;
+            _clubsRepository = clubsRepo;
         }
 
 
@@ -242,6 +248,18 @@ namespace BikeSocialBLL.Services
                 user.sex,
                 user.password);
             return output;
+        }
+
+        public async Task<ReturnNeededInfoTrainInvUIDto> GetNeededInfoTrainUi(int userId)
+        {
+            var user = await _userRepository.Get(query => query.Id == userId);
+            var place = await _placeRepository.Get(query => query.Id == user.PlacesId);
+            var athlete = await _athleteRepository.Get(query => query.UsersId == userId);
+            var team = await _equipaRepository.Get(query => query.Id == athlete.TeamsId);
+            var club = await _clubsRepository.Get(query => query.Id == team.ClubsId);
+
+            return new ReturnNeededInfoTrainInvUIDto(athlete.Id, user.username, place.City, user.contact ?? default(int), club.Name, club.Id);
+
         }
     }
 }

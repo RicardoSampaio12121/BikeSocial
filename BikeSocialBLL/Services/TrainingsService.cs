@@ -9,19 +9,23 @@ namespace BikeSocialBLL.Services
     public class TrainingsService : ITrainingsService
     {
         private readonly ITrainingsRepository _repository;
+        private readonly ITrainingTypesRepository _trainingTypesRepository;
         private readonly ITrainingInvitesRepository _invitesRepository;
         private readonly ICoachesRepository _coachesRepo;
         private readonly IAthleteRepository _athleteRepo;
         private readonly IPlaceRepository _placeRepository;
+        private readonly IEquipaRepository _teamsRepository;
+        private readonly IPlacesRepository _placesRepository;
 
         public TrainingsService(ITrainingsRepository repository, IPlaceRepository placeRepo,
-            ITrainingInvitesRepository invitesRepository, ICoachesRepository coachesRepo, IAthleteRepository athleteRepo)
+            ITrainingInvitesRepository invitesRepository, ICoachesRepository coachesRepo, IAthleteRepository athleteRepo, ITrainingTypesRepository trainingTypesRepository)
         {
             _repository = repository;
             _invitesRepository = invitesRepository;
             _coachesRepo = coachesRepo;
             _athleteRepo = athleteRepo;
             _placeRepository = placeRepo;
+            _trainingTypesRepository = trainingTypesRepository;
         }
 
         public async Task<ReturnTrainingDto> GetTraining(int trainingId)
@@ -170,6 +174,56 @@ namespace BikeSocialBLL.Services
             
             // Devolver lista nova
             return trainingInvitesListDto;
+        }
+
+        public async Task<List<ReturnTrainingUIDto>> GetAvailableTrainings(int userId)
+        {
+            //Buscar equipa do utilizador
+            var athlete = await _athleteRepo.Get(query => query.UsersId == userId);
+
+            var trainings = await _repository.GetList(query => query.TeamsId == athlete.TeamsId);
+
+            Console.WriteLine(trainings[0]);
+
+            var output = new List<ReturnTrainingUIDto>();
+
+            foreach(var train in trainings)
+            {
+                var trainingType = await _trainingTypesRepository.Get(query => query.Id == train.Id);
+                var place = await _placeRepository.Get(query => query.Id == train.Id);
+
+                output.Add(new ReturnTrainingUIDto(
+                    train.Id,
+                    trainingType.Name,
+                    train.Id,
+                    place.City,
+                    place.Id,
+                    train.dateTime,
+                    train.EstimatedTime,
+                    train.Distance));
+            }
+
+            return output;
+        }
+
+        public async Task SelfInvite(SelfInviteDto dto)
+        {
+            var athlete = await _athleteRepo.Get(query => query.Id == dto.athleteId);
+
+            var training = await _repository.Get(query => query.Id == dto.trainingId);
+            if (athlete.TeamsId != training.TeamsId) throw new Exception("Athlete is not part of the team!");
+
+            var inv = await _invitesRepository.Get(query => query.TrainingsId == dto.trainingId && query.AthletesId == dto.athleteId);
+            if (inv != null) throw new Exception("User is already listed in this training");
+
+            var toAdd = new TrainingInvites()
+            {
+                TrainingsId = dto.trainingId,
+                AthletesId = dto.athleteId,
+                Confirmation = true
+            };
+
+            await _invitesRepository.Add(toAdd);
         }
     }
 }

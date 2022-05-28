@@ -40,7 +40,7 @@ namespace BikeSocialAPI.Controllers
             return NoContent();
         }
 
-        [HttpGet("view/{userId}")]
+        [HttpGet("view")]
         public async Task<IActionResult> ViewFriends()
         {
             // Buscar id do user pelo token

@@ -149,5 +149,14 @@ namespace BikeSocialAPI.Controllers
             await _userService.UpdatePrivacySettings(userId, dto);
             return NoContent();
         }
+
+        [HttpGet("GetNeededInfoTrainInvUI")]
+        public async Task<ReturnNeededInfoTrainInvUIDto> GetNeededInfoTrainUi()
+        {
+            var userId = _userService.GetUserIdFromToken();
+            return await _userService.GetNeededInfoTrainUi(userId);
+
+
+        }
     } 
 }    

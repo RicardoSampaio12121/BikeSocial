@@ -11,5 +11,7 @@ namespace BikeSocialBLL.Services.IServices
         Task<bool> CreateWithInvites(int userId, CreateTrainingWithInvitesDto dto);
         Task<bool> SendInvite(int userId, GetInviteToTrainingDto dto);
         Task<List<ReturnTrainingInviteDto>> GetTrainingInvites();
+        Task<List<ReturnTrainingUIDto>> GetAvailableTrainings(int userId);
+        Task SelfInvite(SelfInviteDto dto);
     }
 }
