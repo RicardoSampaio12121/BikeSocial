@@ -380,4 +380,18 @@ public static class Extensions
     //    };
     //    return output;
     //}
+
+    public static ReturnAthleteDto AsReturnAthleteDto(this Athletes dto)
+    {
+        return new ReturnAthleteDto
+        {
+            Id = dto.Id,
+            UserId = dto.UsersId,
+            TeamId = dto.TeamsId,
+            AthleteParentId = dto.AthleteParentsId,
+            AthleteTypeId = dto.AthleteTypesId,
+            FederationId = dto.FederationsId,
+            PlanId = dto.PlansId
+        };
+    }
 }

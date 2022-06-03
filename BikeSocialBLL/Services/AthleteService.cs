@@ -22,17 +22,27 @@ namespace BikeSocialBLL.Services
             _trainingInvRepo = trainingInvRepo;
             _trainingAthletesInvite = conAtletaEquiRepository;
         }
-        
+
+        public async Task<ReturnAthleteDto> GetAthlete(int athleteId)
+        {
+            var athlete = await _athleteRepository.Get(query => query.Id == athleteId);
+
+            if (athlete == null) throw new Exception("There is no athlete assigned to that id");
+
+            return athlete.AsReturnAthleteDto();
+        }
+
         // Criar um atleta novo
-        public async Task<bool> Create(CreateAthleteDto athlete)
+        public async Task<Athletes> Create(CreateAthleteDto athlete)
         {
             // É igual quando tem o mesmo nome e a mesma data de nascimento
             // Verificar se já existe um atleta com o mesmo nome e a mesma data de nascimento ("iguais")
             Athletes ath = await _athleteRepository.Get(athleteQuery => athleteQuery.UsersId == athlete.userId);
             // Não podem existir 2 atletas "iguais"
-            if (ath != null) return false;
-            else await _athleteRepository.Add(athlete.AsAthlete());
-            return true;
+            if (ath != null) throw new Exception("There is already an athlete with the same credentials");
+            
+            var createdAhlete = await _athleteRepository.Add(athlete.AsAthlete());
+            return createdAhlete;
         }
 
         public async Task<bool> AcceptTeamInvite(int userId, int inviteId)

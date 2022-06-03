@@ -3,6 +3,7 @@ using BikeSocialDTOs;
 using BikeSocialBLL.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using BikeSocialBLL.Utils;
+using BikeSocialEntities;
 
 namespace BikeSocialAPI.Controllers
 {
@@ -16,7 +17,6 @@ namespace BikeSocialAPI.Controllers
 
         private readonly IConsultResultRaceService _consultResultRaceService;
         private readonly IConsultAchievementAthleteService _consultAchievementAthleteService;
-        //private readonly ITrainingsService _repository;
 
 
         public AthleteController(IAthleteService athleteService, IUserService userService, 
@@ -29,16 +29,22 @@ namespace BikeSocialAPI.Controllers
             _consultAchievementAthleteService = consultAchievementAthleteService;
         }
         
+        [HttpGet("getAthlete")]
+        [AllowAnonymous]
+        public async Task<ActionResult<ReturnAthleteDto>> GetAthleteInformationById(int athleteId)
+        {
+            var athlete = await _athleteService.GetAthlete(athleteId);
+            return athlete;
+        }
 
-        //TODO: Retornar um createdAtAction
+
         [HttpPost("create")]
         [AllowAnonymous]
         public async Task<IActionResult> Create(CreateAthleteDto athlete)
         {
-            if (await _athleteService.Create(athlete) == false)
-                return BadRequest();
+            var createdAhlete = await _athleteService.Create(athlete);
 
-            return Ok();
+            return CreatedAtAction(nameof(GetAthleteInformationById), new { athleteId = createdAhlete.Id }, createdAhlete);
         }
 
         [HttpPut("acceptTeamInvite/{inviteId}")]
@@ -62,7 +68,6 @@ namespace BikeSocialAPI.Controllers
             return NoContent();
         }
 
-        // Todo: Retornar created at action
         [HttpPost("federationRequest")]
         public async Task<ActionResult> FederationRequest(GetAthleteFederationRequestDto dto)
         {
